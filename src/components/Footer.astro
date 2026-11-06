@@ -2,7 +2,360 @@
 // Markup/copy ported verbatim from index2.html's <footer> — already
 // written for MOBILISE's real IA (services/industries/case-studies/
 // resources/company), just with asset paths fixed.
-import RawSection from '@components/RawSection.astro';
+//
+// Migrated from raw HTML (RawSection + set:html of src/data/footer.html)
+// to a real Astro component: the 7 sitemap link columns collapsed into a
+// typed data array + a loop instead of 7 hand-copied blocks. Matching CSS
+// moved here (scoped) from reference-base.css. Same pattern as the
+// section migrations: shared utility classes (.text/.tone/.weight,
+// .button, .link, .wordmark, .measure--narrow) keep their original
+// data-astro-cid-* attribute; this component's own .footer/.footer-cta/
+// .footer-sitemap/.footer-contact classes use Astro's real auto-scoping.
+interface LinkItem {
+  label: string;
+  href: string;
+}
+interface SitemapGroup {
+  title: string;
+  links: LinkItem[];
+  wide?: boolean;
+}
+
+const sitemapGroups: SitemapGroup[] = [
+  {
+    title: 'Services',
+    links: [
+      { label: 'Full Service Marketing', href: '/services/full-service-marketing' },
+      { label: 'Creative Production', href: '/services/creative-production' },
+      { label: 'Sales Enablement', href: '/services/sales-enablement' },
+      { label: 'Marketing & Sales Strategy', href: '/services/strategy' },
+    ],
+  },
+  {
+    title: 'Industries',
+    links: [
+      { label: 'Technology', href: '/industries/technology' },
+      { label: 'SaaS', href: '/industries/saas' },
+      { label: 'eCommerce', href: '/industries/ecommerce' },
+    ],
+  },
+  {
+    title: 'Case Studies',
+    links: [
+      { label: 'Case Studies', href: '/case-studies' },
+      { label: 'Our Clients', href: '/clients' },
+    ],
+  },
+  {
+    title: 'Capabilities',
+    links: [
+      { label: 'Content & Campaigns', href: '/services/content-campaigns' },
+      { label: 'Demand Gen & ABM', href: '/services/demand-gen-abm' },
+      { label: 'Performance Reporting', href: '/services/performance-reporting' },
+    ],
+  },
+  {
+    title: 'Resources',
+    links: [
+      { label: 'Guides', href: '/resources/guides' },
+      { label: 'Blog', href: '/blog' },
+      { label: 'Whitepapers', href: '/resources' },
+      { label: 'Glossary', href: '/resources/glossary' },
+      { label: 'FAQ', href: '/blog/faq' },
+    ],
+  },
+  {
+    title: 'Company',
+    links: [
+      { label: 'About', href: '/about' },
+      { label: 'Careers', href: '/resources/careers' },
+      { label: 'Culture', href: '/inside' },
+      { label: 'Press', href: '/press' },
+    ],
+  },
+  {
+    title: 'Featured resources',
+    wide: true,
+    links: [
+      { label: 'AI & Marketing Ethics', href: '/blog/category/ai-marketing' },
+      { label: 'Attribution & Dark Social', href: '/blog/category/attribution' },
+      { label: 'Brand-Safe Marketing in the Age of AI', href: '/resources/brand-safe-marketing-ai' },
+      { label: 'Industries We Serve', href: '/industries' },
+    ],
+  },
+];
 ---
 
-<RawSection file="footer.html" />
+<footer class="footer" data-tone="canvas">
+  <div aria-hidden="true" class="footer__art">
+    <img alt="" class="footer__ground" decoding="async" height="960" loading="lazy" src="/images/assets_images_footer-canyon.webp" width="1440" />
+  </div>
+  <div class="column footer__content" data-astro-cid-5lyysmr3>
+    <div class="footer__inner">
+      <div class="footer-cta">
+        <h2 class="text text--h2 tone--on-canvas weight--300" data-astro-cid-io6xibmp>
+          Clarity where there's complexity, <br />precision where it matters
+        </h2>
+        <div class="footer-cta__promo">
+          <p class="text text--lead tone--on-canvas-muted measure--narrow" data-astro-cid-io6xibmp>Ready to MOBILISE?</p>
+          <div class="footer-cta__actions">
+            <a class="button button--outline button--sm" data-astro-cid-j6ocf6pu href="/case-studies">See our work</a>
+            <a class="button button--secondary button--sm" data-astro-cid-j6ocf6pu href="/contact">Let's Talk</a>
+          </div>
+        </div>
+      </div>
+
+      <nav aria-label="Footer" class="footer-sitemap">
+        <div class="footer-sitemap__group footer-sitemap__contact">
+          <p class="text text--body-lg tone--on-canvas-muted" data-astro-cid-io6xibmp>
+            Strategy, creative and execution — under one roof, with regional fluency across APAC, EMEA and the
+            Americas.
+          </p>
+          <div class="text text--lead tone--on-canvas weight--500" data-astro-cid-io6xibmp>
+            <ul class="footer-sitemap__rows">
+              <li>
+                <a class="link link--quiet link--tone-canvas" data-astro-cid-m3a5jv2b href="/resources">
+                  Download our capabilities deck
+                </a>
+              </li>
+              <li>
+                <a class="link link--quiet link--tone-canvas" data-astro-cid-m3a5jv2b href="/contact">
+                  Request our media kit
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="footer-contact__group">
+            <p class="text text--caption tone--on-canvas-muted" data-astro-cid-io6xibmp>Talk to us</p>
+            <div class="text text--lead tone--on-canvas weight--500" data-astro-cid-io6xibmp>
+              <a class="link link--quiet link--tone-canvas" data-astro-cid-m3a5jv2b href="mailto:info@mobilise.agency">
+                info@mobilise.agency
+              </a>
+            </div>
+          </div>
+          <div class="footer-contact__group">
+            <p class="text text--caption tone--on-canvas-muted" data-astro-cid-io6xibmp>Follow our socials</p>
+            <div class="text text--lead tone--on-canvas weight--500" data-astro-cid-io6xibmp>
+              <ul class="footer-sitemap__rows">
+                <li><a class="link link--quiet link--tone-canvas" data-astro-cid-m3a5jv2b href="#">LinkedIn</a></li>
+                <li><a class="link link--quiet link--tone-canvas" data-astro-cid-m3a5jv2b href="#">YouTube</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {
+          sitemapGroups.map((group) => (
+            <div class={`footer-sitemap__group${group.wide ? ' footer-sitemap__group--wide' : ''}`}>
+              <h3 class="text text--caption tone--on-canvas-muted" data-astro-cid-io6xibmp>
+                {group.title}
+              </h3>
+              <div class="text text--lead tone--on-canvas" data-astro-cid-io6xibmp>
+                <ul class="footer-sitemap__rows">
+                  {group.links.map((link) => (
+                    <li>
+                      <a class="link link--quiet link--tone-canvas" data-astro-cid-m3a5jv2b href={link.href}>
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))
+        }
+      </nav>
+
+      <div class="footer__bar">
+        <div class="footer__brand">
+          <img
+            alt="MOBILISE"
+            class="wordmark footer__brand-wordmark"
+            data-astro-cid-hkf3h753
+            src="/images/mobilise_new_logo.png"
+            style={{ height: '32px', width: 'auto', display: 'block' }}
+          />
+          <p class="text text--caption tone--on-canvas-muted" data-astro-cid-io6xibmp>Copyright MOBILISE 2026</p>
+        </div>
+        <ul class="footer__legal">
+          <li>
+            <a class="link link--quiet link--tone-canvas" data-astro-cid-m3a5jv2b href="/terms">
+              <span class="text text--caption tone--on-canvas-muted" data-astro-cid-io6xibmp>Terms of Service</span>
+            </a>
+          </li>
+          <li>
+            <a class="link link--quiet link--tone-canvas" data-astro-cid-m3a5jv2b href="/privacy">
+              <span class="text text--caption tone--on-canvas-muted" data-astro-cid-io6xibmp>Privacy Policy</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: transparent;
+    color: var(--color-body);
+    border-block-start: 1px solid var(--color-border);
+    isolation: isolate;
+    padding-block: var(--space-section);
+    position: relative;
+    --color-canvas: var(--color-page-secondary);
+    --color-canvas-raised: var(--color-surface);
+    --color-on-canvas: var(--color-body);
+    --color-on-canvas-muted: var(--color-muted);
+    --color-accent-on-canvas: var(--color-accent);
+    --color-canvas-line: var(--color-border);
+    --color-canvas-line-strong: var(--color-border-strong);
+  }
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    z-index: -1;
+    background:
+      radial-gradient(ellipse 60% 55% at 72% 75%, #cfe6e3 0, transparent 70%),
+      linear-gradient(180deg, var(--color-page, #fff) 0%, var(--color-surface-sunken, #e6f1ef) 100%);
+  }
+  .footer__art {
+    display: none;
+    pointer-events: none;
+    z-index: 0;
+    position: absolute;
+    inset: 0;
+    overflow: clip;
+  }
+  .footer > :global(.footer__content) {
+    z-index: 1;
+    position: relative;
+  }
+  .footer__ground {
+    object-fit: cover;
+    object-position: 50% 100%;
+    block-size: 100%;
+    inline-size: 100%;
+    position: absolute;
+    inset: 0;
+  }
+  .footer__art::after {
+    content: '';
+    image-rendering: pixelated;
+    mix-blend-mode: overlay;
+    opacity: 0.35;
+    background-image: url(/images/assets_images_grain.png);
+    background-size: 192px;
+    position: absolute;
+    inset: 0;
+  }
+  .footer__inner {
+    row-gap: var(--space-20);
+    display: grid;
+  }
+  .footer-cta {
+    gap: var(--space-16);
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    display: grid;
+  }
+  .footer-cta__promo {
+    align-content: start;
+    row-gap: var(--space-6);
+    display: grid;
+  }
+  .footer-cta__actions {
+    gap: var(--space-4);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: grid;
+  }
+  .footer-sitemap {
+    column-gap: var(--space-6);
+    row-gap: var(--space-12);
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    display: grid;
+  }
+  .footer-sitemap__contact {
+    row-gap: var(--space-8);
+    grid-area: span 2 / span 2;
+  }
+  .footer-sitemap__group--wide {
+    grid-column: span 2;
+  }
+  .footer-contact__group {
+    row-gap: var(--space-2);
+    display: grid;
+  }
+  .footer-sitemap__group {
+    align-content: start;
+    row-gap: var(--space-5);
+    display: grid;
+  }
+  .footer-sitemap__rows {
+    justify-items: start;
+    row-gap: var(--space-3);
+    list-style: none;
+    display: grid;
+  }
+  .footer__bar {
+    align-items: end;
+    gap: var(--space-4);
+    grid-template-columns: 1fr auto;
+    display: grid;
+  }
+  .footer__brand {
+    color: var(--color-on-canvas);
+    display: contents;
+  }
+  .footer__brand :global(.wordmark) {
+    grid-column: 1 / -1;
+  }
+  .footer__legal {
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+  }
+  @media (width <= 1199px) {
+    .footer-cta {
+      gap: var(--space-12);
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .footer-sitemap {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .footer-sitemap__contact {
+      grid-area: auto / 1 / auto / -1;
+    }
+    .footer-sitemap__group--wide {
+      grid-column: span 1;
+    }
+  }
+  @media (width <= 809px) {
+    .footer__inner {
+      row-gap: var(--space-16);
+    }
+    .footer-cta__actions {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .footer-sitemap {
+      column-gap: var(--space-4);
+      row-gap: var(--space-10);
+    }
+    .footer-sitemap__group--wide {
+      grid-column: 1 / -1;
+    }
+    .footer__bar {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+    .footer__legal {
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+  }
+</style>
