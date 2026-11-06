@@ -21,6 +21,142 @@
    .mb-hh/.mb-map/...), not part of the reference build's component CSS. */
 @import './reference-hero.css';
 
+/*
+  CTA brand color — single source of truth for every call-to-action button
+  and CTA-labeled link/card across the site (button--primary/secondary,
+  .tcar__cta, .proof__row-cta, .proof__card--call). Defined after the
+  reference imports above so these rules win the cascade without hand-
+  editing the scraped reference-base.css. Non-CTA accent uses (icons,
+  badges, nav rails, decorative tints) intentionally keep the brand teal
+  --accent-* scale — only literal CTAs switch to this color.
+*/
+:root {
+  --color-cta: #e5765c;
+  --color-cta-hover: #e88670;
+  --color-cta-pressed: #b35c48;
+  --color-on-cta: #fff;
+}
+.button--primary[data-astro-cid-j6ocf6pu] {
+  background: var(--color-cta);
+  color: var(--color-on-cta);
+}
+.button--primary[data-astro-cid-j6ocf6pu]:hover {
+  background: var(--color-cta-hover);
+}
+.button--secondary[data-astro-cid-j6ocf6pu] {
+  background: var(--color-cta);
+  color: var(--color-on-cta);
+}
+.button--secondary[data-astro-cid-j6ocf6pu]:hover {
+  background: var(--color-cta-hover);
+}
+.button--secondary[data-astro-cid-j6ocf6pu]:active {
+  background: var(--color-cta-pressed);
+}
+/*
+  .button__arrow's hover-translate is already defined in reference-base.css;
+  it only lacked a size/position since no markup used to render an icon
+  into it. Pinned to the button's top-right corner, hidden until hover/
+  focus so it reads as a reveal rather than a static inline glyph.
+*/
+.button[data-astro-cid-j6ocf6pu] {
+  position: relative;
+}
+.button[data-astro-cid-j6ocf6pu] .button__arrow {
+  display: flex;
+  flex: none;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  opacity: 0;
+  transition: opacity var(--duration-base, 0.2s) var(--ease, ease), translate var(--duration-base, 0.2s) var(--ease, ease);
+}
+.button[data-astro-cid-j6ocf6pu]:hover .button__arrow,
+.button[data-astro-cid-j6ocf6pu]:focus-visible .button__arrow {
+  opacity: 1;
+}
+.mb-b2 {
+  background: var(--color-cta);
+  border-color: var(--color-cta);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.mb-b2:not(.mb-s):hover {
+  background: var(--color-cta-hover);
+  border-color: var(--color-cta-hover);
+}
+/* Outline/secondary-style buttons (transparent fill, e.g. hero's "Who we
+   are", Footer's "See our work") fill with the CTA color on hover instead
+   of their default subtle tint, to match the rest of the CTA system. */
+.mb-b2.mb-s:hover {
+  background: var(--color-cta);
+  border-color: var(--color-cta);
+  color: var(--color-on-cta);
+}
+.button--outline[data-astro-cid-j6ocf6pu]:hover {
+  background: var(--color-cta);
+  border-color: var(--color-cta);
+  color: var(--color-on-cta);
+}
+
+/*
+  Eyebrow square mark (the small bullet before every section's eyebrow
+  label, e.g. "Who we are") — global, single rule covers every usage site-
+  wide instead of touching each section. Coral CTA fill + a black
+  arrow-up-right icon (same glyph used on the CTA buttons) drawn via
+  background-image since the mark is an empty aria-hidden span with no
+  room to inject real icon markup without editing ~18 call sites. Targets
+  the same .eyebrow--accent/--canvas compound selectors as the reference
+  CSS (not just .eyebrow__mark alone) to match their specificity, since
+  they set the `background` shorthand.
+*/
+.eyebrow--accent[data-astro-cid-zedojbgr] .eyebrow__mark[data-astro-cid-zedojbgr],
+.eyebrow--canvas[data-astro-cid-zedojbgr] .eyebrow__mark[data-astro-cid-zedojbgr] {
+  background-color: var(--color-cta);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 7h10v10'/%3E%3Cpath d='M7 17 17 7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 65%;
+}
+.mb-b2 {
+  position: relative;
+}
+.mb-b2 .button__arrow {
+  display: flex;
+  flex: none;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  opacity: 0;
+  color: currentColor;
+  transition: opacity var(--duration-base, 0.2s) var(--ease, ease), translate var(--duration-base, 0.2s) var(--ease, ease);
+}
+.mb-b2:not(.mb-s):hover .button__arrow,
+.mb-b2:not(.mb-s):focus-visible .button__arrow {
+  opacity: 1;
+  translate: 2px -2px;
+}
+
+/* Homepage hero: drop the radial/linear gradient wash behind .mb-hero. */
+.mb-hero::before {
+  background: none;
+}
+
+/*
+  Navbar: white at the top of the page, restoring its normal surface-tint
+  background once scrolled (data-scrolled is toggled by Header.astro's
+  scroll listener, since sticky elements expose no "stuck" state to CSS).
+*/
+.site-header[data-astro-cid-jae56hh5] {
+  background: #fff;
+}
+.site-header[data-astro-cid-jae56hh5][data-scrolled] {
+  background: var(--color-surface-sunken);
+}
+
 /* scroll-reveal utility — paired with src/scripts/motion.ts */
 [data-motion-rise] {
   opacity: 0;
@@ -219,6 +355,24 @@
 .tcar__logo--round {
   height: 36px;
 }
+.tcar__play {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  margin: auto;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #f5f1e6;
+  color: #171717;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+.tcar__play svg {
+  margin-left: 3px;
+}
 
 .tcar__info {
   display: flex;
@@ -251,8 +405,8 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.7rem 1.125rem;
-  background: #0a919b;
-  color: #fff;
+  background: var(--color-cta);
+  color: var(--color-on-cta);
   border-radius: 4px;
   font-size: 0.8125rem;
   font-weight: 600;
@@ -261,7 +415,7 @@
   transition: background 0.2s ease;
 }
 .tcar__cta:hover {
-  background: #0c7980;
+  background: var(--color-cta-hover);
 }
 .tcar__cta .icon {
   width: 0.7rem;
@@ -406,6 +560,15 @@
 .proof__row[open] .proof__row-trigger {
   background: var(--ember-800, #0b4247);
 }
+@media (hover: hover) {
+  .proof__row:not([open]) .proof__row-trigger:hover {
+    background: var(--color-page-secondary, #eef5f4);
+    color: var(--accent-400, #34a0a2);
+  }
+  .proof__row:not([open]) .proof__row-trigger:hover .proof__row-icon {
+    color: var(--accent-400, #34a0a2);
+  }
+}
 .proof__row-trigger::-webkit-details-marker,
 .proof__row-trigger::marker {
   display: none;
@@ -493,7 +656,7 @@
   padding-bottom: 2px;
 }
 .proof__row-cta:hover {
-  color: var(--accent-400, #34a0a2);
+  color: var(--color-cta);
 }
 .proof__row-cta .icon {
   width: 0.75rem;
@@ -673,6 +836,15 @@
   position: relative;
   background: #e3f1f0;
   border-radius: 0;
+  transition:
+    background-color var(--duration-base, 0.2s) var(--ease, ease),
+    translate var(--duration-base, 0.2s) var(--ease, ease);
+}
+@media (hover: hover) {
+  .wwd__stat:hover {
+    background: #d3e9e7;
+    translate: 0 -2px;
+  }
 }
 .wwd__stat-trend {
   position: absolute;
@@ -755,28 +927,70 @@
   display: flex;
 }
 .wwd__steps-rows .wwd__step {
+  position: relative;
   border-block-start: 1px solid var(--color-canvas-line, #ffffff1f);
   padding: var(--space-6, 1.5rem) var(--space-8, 2rem);
   gap: var(--space-5, 1.25rem);
-  align-items: flex-start;
+  align-items: center;
   border-radius: 0;
   display: flex;
+  transition:
+    background var(--duration-base, 0.2s) var(--ease, ease),
+    box-shadow var(--duration-base, 0.2s) var(--ease, ease);
 }
 .wwd__steps-rows .wwd__step:first-child {
   border-block-start: 0;
 }
+.wwd__steps-rows .wwd__step:hover {
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
 .wwd__steps-rows .wwd__badge {
   background: none;
-  border: 1px solid var(--color-canvas-line-strong, #ffffff4d);
-  color: var(--color-accent-on-canvas, #34a0a2);
-  inline-size: 28px;
-  block-size: 28px;
+  border: 0;
+  color: rgba(255, 255, 255, 0.16);
+  font-family: var(--font-mono, 'Martian Mono', monospace);
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: 1;
+  inline-size: auto;
+  block-size: auto;
   border-radius: 0;
   flex: none;
+}
+.wwd__steps-rows .wwd__step:hover .wwd__badge {
+  color: var(--accent-400, #34a0a2);
 }
 .wwd__step-copy {
   gap: var(--space-1, 0.25rem);
   display: grid;
+}
+.wwd__step-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  margin-inline-start: auto;
+  color: var(--color-canvas-line-strong, #ffffff4d);
+  flex: none;
+  transition: color var(--duration-base, 0.2s) var(--ease, ease);
+}
+.wwd__step-arrow-chevron {
+  display: flex;
+  width: 18px;
+  height: 18px;
+}
+.wwd__step-arrow-chevron:not(:first-child) {
+  margin-block-start: -7px;
+}
+.wwd__step-arrow-chevron svg {
+  width: 100%;
+  height: 100%;
+  stroke-width: 1.5;
+}
+.wwd__steps-rows .wwd__step:hover .wwd__step-arrow {
+  color: var(--accent-400, #34a0a2);
 }
 .wwd__step-copy .text--h3 {
   margin: 0;

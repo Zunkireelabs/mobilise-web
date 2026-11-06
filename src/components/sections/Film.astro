@@ -26,9 +26,8 @@
         data-motion-rise
         loop
         muted
-        autoplay
         playsinline
-        preload="auto"
+        preload="none"
         tabindex="-1"
       >
         <source media="(max-width: 809px) and (orientation: portrait)" src="/video/who-we-are.mp4" type="video/mp4" />
@@ -37,6 +36,23 @@
     </div>
   </div>
 </section>
+
+<script>
+  const video = document.querySelector<HTMLVideoElement>('[data-film]');
+  if (video) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          video.play().catch(() => {});
+          observer.unobserve(entry.target);
+        }
+      },
+      { rootMargin: '300px' }
+    );
+    observer.observe(video);
+  }
+</script>
 
 <style>
   .film__frame {

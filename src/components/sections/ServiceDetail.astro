@@ -1,0 +1,1142 @@
+---
+// Individual service detail page — structurally adapted from
+// buildops.com/platform/project-management-suite (dark hero w/ proof
+// stat, capabilities showcase, "you are here" platform-ecosystem
+// cross-links, closing CTA band). Per DESIGN_ORCHESTRATOR.md's reference
+// principle: MOBILISE's own tokens/type/motion/copy throughout, not
+// BuildOps' branding or wording. Reuses ServicesListing.astro's
+// established visual language (numeral+icon visual panel, section--canvas
+// hero, wwd__steps reuse) rather than inventing a second system.
+//
+// Sections intentionally dropped from the reference (no MOBILISE content
+// exists for them): the zero-downtime-migration block and the
+// video-testimonial carousel — testimonials below reuse the real
+// Testimonials.astro component instead of inventing per-service quotes.
+import { getIcon } from '@utils/icon';
+import type { Service } from '@data/services';
+import Button from '@components/Button.astro';
+import Testimonials from '@components/sections/Testimonials.astro';
+import Close from '@components/sections/Close.astro';
+
+interface Props {
+  service: Service;
+  otherServices: Service[];
+}
+
+const { service, otherServices } = Astro.props;
+const arrowIcon = getIcon('arrow-up-right');
+const checkIcon = getIcon('badge-check');
+const arrowUpIcon = getIcon('arrow-up');
+const arrowDownIcon = getIcon('arrow-down');
+
+const process = [
+  { index: '1', title: 'Research', desc: 'Uncovers the market, audience and competitive signals that matter.' },
+  { index: '2', title: 'Strategy', desc: 'Shapes one system of messaging and creative for every channel.' },
+  { index: '3', title: 'Production', desc: 'Produces campaigns and content at the pace the market moves.' },
+  { index: '4', title: 'Measurement', desc: "Measures what's working and moves budget to it." },
+];
+
+// Same hero component as ServicesListing.astro (markup + CSS copied
+// verbatim, including this same 3-stat proof row) — only the
+// eyebrow/heading/lead/CTAs and the visual panel are service-specific.
+const stats = [
+  {
+    value: '4',
+    label: 'Global studios',
+    desc: 'Teams across Bangalore, Singapore, Dubai and Seattle.',
+  },
+  {
+    value: '+10',
+    label: 'Years of word-of-mouth relationships',
+    desc: 'Clients who stay — and send us the next one.',
+  },
+  {
+    value: '10',
+    label: 'Global client brands',
+    desc: 'Red Hat, Salesforce, HP and more, across every region.',
+  },
+];
+
+function offeringId(href: string) {
+  return href.split('#')[1] ?? '';
+}
+---
+
+<section
+  class="section section--canvas section--rhythm-base svc-hero"
+  aria-label={`${service.title} overview`}
+  data-astro-cid-pi6vcj26
+  data-section="service-hero"
+>
+  <div aria-hidden="true" class="rails rails--canvas" data-astro-cid-75uivqud></div>
+  <div class="column svc-hero__column" data-astro-cid-5lyysmr3>
+    <div class="svc-hero__layout" data-motion-rise>
+      <div class="svc-hero__copy">
+        <p class="eyebrow eyebrow--canvas" data-astro-cid-zedojbgr>
+          <span aria-hidden="true" class="eyebrow__mark" data-astro-cid-zedojbgr></span>
+          Service {service.index}
+        </p>
+        <h1 class="text text--display tone--on-canvas weight--300" data-astro-cid-io6xibmp>
+          {service.title}
+        </h1>
+        <p class="text text--lead tone--on-canvas-muted" data-astro-cid-io6xibmp>
+          {service.description}
+        </p>
+        <div class="svc-hero__ctas">
+          <Button href="/contact" variant="primary" size="md">Connect with our team</Button>
+          <Button href="#capabilities" variant="tertiary" size="md">See what's included</Button>
+        </div>
+      </div>
+
+      <div class="svc-hero__visual" data-tint={service.index}>
+        <img
+          class="svc-hero__visual-image"
+          src={service.image}
+          alt={service.imageAlt}
+          loading="eager"
+          width="960"
+          height="720"
+        />
+        <span class="svc-hero__visual-badge" aria-hidden="true">
+          <span class="svc-hero__visual-icon" set:html={getIcon(service.icon)} />
+          <span class="svc-hero__visual-index">{service.index}</span>
+        </span>
+      </div>
+    </div>
+
+    <ol class="svc-hero__stats" data-motion-rise>
+      {
+        stats.map((stat) => (
+          <li class="svc-hero__stat">
+            <div class="svc-hero__stat-top">
+              <svg class="svc-hero__stat-trend" aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 10L8 5L13 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M3 6L8 1L13 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.5" />
+              </svg>
+              <span class="text text--h2 tone--on-canvas weight--300 svc-hero__stat-value" data-astro-cid-io6xibmp>
+                {stat.value}
+              </span>
+              <p class="svc-hero__stat-label">{stat.label}</p>
+            </div>
+            <div class="svc-hero__stat-divider" aria-hidden="true" />
+            <p class="svc-hero__stat-desc">{stat.desc}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<section
+  class="section section--page section--rhythm-base svc-capabilities"
+  aria-label="What's included"
+  id="capabilities"
+  data-astro-cid-pi6vcj26
+  data-section="service-capabilities"
+>
+  <div aria-hidden="true" class="rails rails--ground" data-astro-cid-75uivqud></div>
+  <div class="column svc-capabilities__column" data-astro-cid-5lyysmr3>
+    <div class="svc-capabilities__stage" data-motion-rise>
+      <div class="svc-capabilities__backdrop" aria-hidden="true" data-tint={service.index} />
+
+      <div class="svc-capabilities__card-wrap" aria-hidden="true">
+        <div class="svc-capabilities__card-stack">
+          {
+            service.offerings.map((offering, i) => (
+              <div
+                class="svc-capabilities__card"
+                data-capability-card={offeringId(offering.href)}
+                data-active={i === 0 ? '' : undefined}
+              >
+                <img
+                  class="svc-capabilities__card-image"
+                  src={offering.image}
+                  alt={offering.imageAlt}
+                  loading="lazy"
+                  width="640"
+                  height="853"
+                />
+                <span class="svc-capabilities__corner svc-capabilities__corner--tl" />
+                <span class="svc-capabilities__corner svc-capabilities__corner--tr" />
+                <span class="svc-capabilities__corner svc-capabilities__corner--bl" />
+                <span class="svc-capabilities__corner svc-capabilities__corner--br" />
+                <span class="svc-capabilities__card-index">{String(i + 1).padStart(2, '0')}</span>
+                <div class="svc-capabilities__card-content">
+                  <span class="svc-capabilities__card-icon" set:html={getIcon(offering.icon)} />
+                  <p class="svc-capabilities__card-label">{offering.label}</p>
+                  <p class="svc-capabilities__card-desc">{offering.description}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="svc-capabilities__panel-pane">
+        <p class="eyebrow eyebrow--accent" data-astro-cid-zedojbgr>
+          <span aria-hidden="true" class="eyebrow__mark" data-astro-cid-zedojbgr></span>
+          What's included
+        </p>
+        <h2 class="text text--h2 tone--heading weight--300" data-astro-cid-io6xibmp>
+          Everything {service.title} covers
+        </h2>
+
+        <div class="svc-capabilities__accordion" data-accordion>
+          {
+            service.offerings.map((offering, i) => (
+              <details
+                class="svc-capabilities__item"
+                id={offeringId(offering.href)}
+                name={`capabilities-${service.slug}`}
+                open={i === 0}
+              >
+                <summary class="svc-capabilities__summary">
+                  <span class="svc-capabilities__item-index">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="svc-capabilities__item-icon" set:html={getIcon(offering.icon)} />
+                  <span class="svc-capabilities__item-label">{offering.label}</span>
+                  <span class="svc-capabilities__item-toggle" set:html={getIcon('plus')} />
+                </summary>
+                <div class="svc-capabilities__panel">
+                  <p class="svc-capabilities__panel-text">{offering.description}</p>
+                </div>
+              </details>
+            ))
+          }
+        </div>
+
+        <div class="svc-capabilities__footnote">
+          <span class="svc-capabilities__footnote-value">{service.stat.value}</span>
+          <span class="svc-capabilities__footnote-label">{service.stat.label}</span>
+          <a class="svc-capabilities__footnote-link" href="/contact">
+            Talk to our team
+            <span class="svc-capabilities__footnote-link-icon" set:html={arrowIcon} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Native name-grouped <details> already gives one-open-at-a-time when
+  // switching between items, but clicking the sole open item's own
+  // summary still closes it — collapsing the accordion below the
+  // floating card's height. Force at least one item to stay open, and
+  // keep the floating capability card in sync with whichever item is open.
+  document.querySelectorAll<HTMLElement>('[data-accordion]').forEach((accordion) => {
+    const items = Array.from(accordion.querySelectorAll('details'));
+    const stage = accordion.closest('.svc-capabilities__stage');
+    const cards = stage ? Array.from(stage.querySelectorAll<HTMLElement>('[data-capability-card]')) : [];
+
+    function showCard(id: string) {
+      cards.forEach((card) => {
+        if (card.dataset.capabilityCard === id) {
+          card.setAttribute('data-active', '');
+        } else {
+          card.removeAttribute('data-active');
+        }
+      });
+    }
+
+    items.forEach((item) => {
+      item.addEventListener('toggle', () => {
+        if (!item.open && !items.some((other) => other.open)) {
+          item.open = true;
+          return;
+        }
+        if (item.open) showCard(item.id);
+      });
+    });
+  });
+</script>
+
+<section
+  class="section section--page section--rhythm-base svc-ecosystem"
+  aria-label="Where this fits"
+  data-astro-cid-pi6vcj26
+  data-section="service-ecosystem"
+>
+  <div aria-hidden="true" class="rails rails--ground" data-astro-cid-75uivqud></div>
+  <div class="column svc-ecosystem__column" data-astro-cid-5lyysmr3>
+    <div class="svc-ecosystem__grid" data-motion-rise>
+      <div class="svc-ecosystem__intro" data-tint={service.index}>
+        <span class="svc-ecosystem__intro-icon" aria-hidden="true" set:html={getIcon(service.icon)} />
+        <p class="eyebrow eyebrow--canvas" data-astro-cid-zedojbgr>
+          <span aria-hidden="true" class="eyebrow__mark" data-astro-cid-zedojbgr></span>
+          One System, Every Function
+        </p>
+        <h2 class="text text--h2 tone--on-canvas weight--300" data-astro-cid-io6xibmp>
+          {service.title} is one layer of five
+        </h2>
+        <p class="text text--body-lg tone--on-canvas-muted" data-astro-cid-io6xibmp>
+          Every engagement draws on the same connected system — explore the rest of what we do.
+        </p>
+      </div>
+
+      <div class="svc-ecosystem__card svc-ecosystem__card--current">
+        <span class="svc-ecosystem__current-tag" set:html={checkIcon} />
+        <span class="svc-ecosystem__current-label">You're here</span>
+        <p class="svc-ecosystem__card-title">{service.title}</p>
+        <p class="svc-ecosystem__card-desc">{service.description}</p>
+      </div>
+
+      {
+        otherServices.map((other) => (
+          <a class="svc-ecosystem__card" href={`/services/${other.slug}`}>
+            <span class="svc-ecosystem__card-icon" set:html={getIcon(other.icon)} />
+            <p class="svc-ecosystem__card-title">{other.title}</p>
+            <p class="svc-ecosystem__card-desc">{other.description}</p>
+            <span class="svc-ecosystem__card-link">
+              Explore
+              <span class="svc-ecosystem__card-link-icon" set:html={arrowIcon} />
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section
+  class="section section--page section--rhythm-base"
+  aria-label="How we work"
+  data-astro-cid-pi6vcj26
+  data-section="service-process"
+>
+  <div aria-hidden="true" class="rails rails--ground" data-astro-cid-75uivqud></div>
+  <div class="column" data-astro-cid-5lyysmr3>
+    <div class="wwd__steps svc-steps" data-astro-cid-7xbdjwkz data-motion-rise>
+      <div class="wwd__steps-split">
+        <div class="wwd__steps-intro">
+          <p class="eyebrow eyebrow--accent" data-astro-cid-zedojbgr>
+            <span aria-hidden="true" class="eyebrow__mark" data-astro-cid-zedojbgr></span>
+            How we work
+          </p>
+          <h2 class="text text--h2 tone--heading weight--300 wwd__steps-heading" data-astro-cid-io6xibmp>
+            One process,<br />four markets in step.
+          </h2>
+          <p class="text text--body-lg tone--secondary wwd__steps-lede" data-astro-cid-io6xibmp>
+            Each phase feeds the next, so nothing stalls between strategy and delivery.
+          </p>
+          <Button href="/contact" variant="secondary" size="md" class="wwd__steps-cta">
+            Let's Talk
+          </Button>
+        </div>
+        <ol class="wwd__steps-rows">
+          {
+            process.map((step) => (
+              <li class="wwd__step" data-astro-cid-7xbdjwkz>
+                <span class="wwd__badge" data-astro-cid-7xbdjwkz>
+                  {step.index}
+                </span>
+                <div class="wwd__step-copy">
+                  <h3 class="text text--h3 tone--on-canvas" data-astro-cid-io6xibmp>
+                    {step.title}
+                  </h3>
+                  <p class="text text--caption tone--on-canvas-muted" data-astro-cid-io6xibmp>
+                    {step.desc}
+                  </p>
+                </div>
+                <span class="wwd__step-arrow" aria-hidden="true">
+                  {Array.from({ length: Number(step.index) }).map(() => (
+                    <span class="wwd__step-arrow-chevron" set:html={getIcon('chevron-down')} />
+                  ))}
+                </span>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<Testimonials />
+
+<section
+  class="section section--page section--rhythm-base svc-faq"
+  aria-label="Frequently asked questions"
+  data-astro-cid-pi6vcj26
+  data-section="service-faq"
+>
+  <div aria-hidden="true" class="rails rails--ground" data-astro-cid-75uivqud></div>
+  <div class="column svc-faq__column" data-astro-cid-5lyysmr3>
+    <div class="svc-faq__heading" data-motion-rise>
+      <p class="eyebrow eyebrow--accent" data-astro-cid-zedojbgr>
+        <span aria-hidden="true" class="eyebrow__mark" data-astro-cid-zedojbgr></span>
+        Common Questions
+      </p>
+      <h2 class="text text--h2 tone--heading weight--300" data-astro-cid-io6xibmp>
+        Frequently asked
+        <br />
+        questions
+      </h2>
+    </div>
+
+    <div aria-hidden="true" class="svc-faq__rail" />
+
+    <div class="svc-faq__list" data-motion-rise>
+      {
+        service.faqs.map((faq, i) => (
+          <details class="svc-faq__item" name="svc-faq" open={i === 0 ? true : undefined}>
+            <summary class="svc-faq__question">
+              <span>{faq.question}</span>
+              <span aria-hidden="true" class="svc-faq__toggle">
+                <span class="svc-faq__icon svc-faq__icon--up" set:html={arrowUpIcon} />
+                <span class="svc-faq__icon svc-faq__icon--down" set:html={arrowDownIcon} />
+              </span>
+            </summary>
+            <p class="svc-faq__answer">{faq.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<Close />
+
+<style>
+  .svc-hero__column {
+    /* Same gutter+24px fix as Hero.astro's .mb-hh.column — see global.css. */
+    padding-inline: calc(var(--gutter, 40px) + var(--space-6, 24px));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16, 4rem);
+  }
+
+  .svc-hero__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: var(--space-10, 2.5rem);
+    align-items: center;
+  }
+
+  .svc-hero__copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5, 1.25rem);
+  }
+  .svc-hero__copy h1,
+  .svc-hero__copy p {
+    margin: 0;
+  }
+  .svc-hero__copy .text--lead {
+    max-width: 42ch;
+  }
+
+  .svc-hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3, 0.75rem);
+    margin-block-start: var(--space-2, 0.5rem);
+  }
+
+  .svc-hero__stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-5, 1.25rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .svc-hero__stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4, 1rem);
+    padding: var(--space-6, 1.5rem);
+    background: var(--color-canvas-raised, #0f5f66);
+    clip-path: polygon(22px 0, 100% 0, 100% 100%, 0 100%, 0 22px);
+  }
+  .svc-hero__stat-top {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
+  }
+  .svc-hero__stat-trend {
+    flex: none;
+    align-self: center;
+    color: var(--accent-400, #34a0a2);
+  }
+  .svc-hero__stat-value {
+    margin: 0;
+  }
+  .svc-hero__stat-label {
+    flex: 1;
+    min-width: 8ch;
+    margin: 0;
+    margin-inline-start: auto;
+    font-family: var(--font-mono, 'Martian Mono', monospace);
+    font-size: var(--text-micro, 11px);
+    letter-spacing: var(--text-micro--tracking, 0.04em);
+    text-transform: uppercase;
+    text-align: right;
+    color: var(--color-on-canvas-muted, #fff9);
+  }
+  .svc-hero__stat-divider {
+    border-block-start: 1px dashed var(--color-canvas-line-strong, #ffffff4d);
+  }
+  .svc-hero__stat-desc {
+    margin: 0;
+    font-size: var(--text-caption, 14px);
+    line-height: 1.45;
+    color: var(--color-on-canvas-muted, #fff9);
+  }
+
+  @media (width <= 809px) {
+    .svc-hero__stats {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .svc-hero__visual {
+    position: relative;
+    aspect-ratio: 5 / 6;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+  .svc-hero__visual[data-tint='01'],
+  .svc-capabilities__backdrop[data-tint='01'] {
+    background: var(--ember-800, #0b4247);
+  }
+  .svc-hero__visual[data-tint='02'],
+  .svc-capabilities__backdrop[data-tint='02'] {
+    background: var(--ember-700, #0f5f66);
+  }
+  .svc-hero__visual[data-tint='03'],
+  .svc-capabilities__backdrop[data-tint='03'] {
+    background: var(--accent-600, #0f6a73);
+  }
+  .svc-hero__visual[data-tint='04'],
+  .svc-capabilities__backdrop[data-tint='04'] {
+    background: var(--ember-900, #04262a);
+  }
+  .svc-hero__visual[data-tint='05'],
+  .svc-capabilities__backdrop[data-tint='05'] {
+    background: var(--accent-800, #0b4247);
+  }
+  .svc-hero__visual-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .svc-hero__visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(190deg, rgba(4, 38, 42, 0.15) 0%, rgba(4, 38, 42, 0.75) 100%);
+    mix-blend-mode: multiply;
+  }
+  .svc-hero__visual[data-tint='01']::after {
+    background: linear-gradient(190deg, rgba(11, 66, 71, 0.2) 0%, rgba(11, 66, 71, 0.82) 100%);
+  }
+  .svc-hero__visual[data-tint='02']::after {
+    background: linear-gradient(190deg, rgba(15, 95, 102, 0.2) 0%, rgba(15, 95, 102, 0.82) 100%);
+  }
+  .svc-hero__visual[data-tint='03']::after {
+    background: linear-gradient(190deg, rgba(15, 106, 115, 0.2) 0%, rgba(15, 106, 115, 0.82) 100%);
+  }
+  .svc-hero__visual[data-tint='04']::after {
+    background: linear-gradient(190deg, rgba(4, 38, 42, 0.25) 0%, rgba(4, 38, 42, 0.85) 100%);
+  }
+  .svc-hero__visual[data-tint='05']::after {
+    background: linear-gradient(190deg, rgba(11, 66, 71, 0.2) 0%, rgba(11, 66, 71, 0.82) 100%);
+  }
+  .svc-hero__visual-badge {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3, 0.75rem);
+    padding: var(--space-6, 1.5rem) var(--space-8, 2rem);
+  }
+  .svc-hero__visual-index {
+    font-family: var(--font-mono, 'Martian Mono', monospace);
+    font-size: var(--text-index, 13px);
+    letter-spacing: var(--text-eyebrow--tracking, 0.04em);
+    color: rgba(255, 255, 255, 0.65);
+  }
+  .svc-hero__visual-icon {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    color: var(--accent-400, #34a0a2);
+  }
+  .svc-hero__visual-icon :global(svg) {
+    width: 100%;
+    height: 100%;
+    stroke-width: 1.25;
+  }
+
+  @media (width <= 809px) {
+    .svc-hero__layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .svc-hero__visual {
+      order: -1;
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  .svc-capabilities__column {
+    /* Same gutter+24px fix as Hero.astro's .mb-hh.column — see global.css. */
+    padding-inline: calc(var(--gutter, 40px) + var(--space-6, 24px));
+  }
+
+  /* "Card floats on an image, panel overlays the rest of it" composition —
+     adapted from the reference's screenshot-on-photo layout. The backdrop
+     (tinted, stands in for a product photo we don't have) spans the full
+     stage; the card floats over its left half with room for backdrop to
+     show around it, the light panel sits opaque over the right half,
+     flush, as if laid directly on top of the same backdrop. */
+  .svc-capabilities__stage {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    min-height: 460px;
+    overflow: hidden;
+  }
+
+  .svc-capabilities__backdrop {
+    position: absolute;
+    inset: 0;
+  }
+
+  .svc-capabilities__card-wrap {
+    position: relative;
+    z-index: 1;
+  }
+  .svc-capabilities__card-stack {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 460px;
+  }
+  .svc-capabilities__card {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    overflow: hidden;
+    background: var(--ember-900, #04262a);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s var(--ease-rise, cubic-bezier(0.22, 1, 0.36, 1));
+  }
+  .svc-capabilities__card[data-active] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .svc-capabilities__card-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .svc-capabilities__card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(4, 38, 42, 0.92) 0%, rgba(4, 38, 42, 0.5) 45%, rgba(4, 38, 42, 0.25) 100%);
+  }
+  .svc-capabilities__corner {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    color: var(--accent-400, #34a0a2);
+    border-style: solid;
+    border-width: 0;
+  }
+  .svc-capabilities__corner--tl {
+    top: 10px;
+    left: 10px;
+    border-top-width: 1.6px;
+    border-left-width: 1.6px;
+  }
+  .svc-capabilities__corner--tr {
+    top: 10px;
+    right: 10px;
+    border-top-width: 1.6px;
+    border-right-width: 1.6px;
+  }
+  .svc-capabilities__corner--bl {
+    bottom: 10px;
+    left: 10px;
+    border-bottom-width: 1.6px;
+    border-left-width: 1.6px;
+  }
+  .svc-capabilities__corner--br {
+    bottom: 10px;
+    right: 10px;
+    border-bottom-width: 1.6px;
+    border-right-width: 1.6px;
+  }
+  .svc-capabilities__card-index {
+    position: absolute;
+    top: var(--space-6, 1.5rem);
+    left: var(--space-6, 1.5rem);
+    z-index: 1;
+    font-family: var(--font-mono, 'Martian Mono', monospace);
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    font-weight: var(--font-weight-medium, 500);
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.14);
+    user-select: none;
+  }
+  .svc-capabilities__card-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3, 0.75rem);
+    width: calc(100% - var(--space-6, 1.5rem) * 2);
+    margin-bottom: var(--space-6, 1.5rem);
+    padding: var(--space-6, 1.5rem) var(--space-7, 1.75rem);
+    background: rgba(4, 38, 42, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  .svc-capabilities__card-icon {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    color: var(--accent-400, #34a0a2);
+  }
+  .svc-capabilities__card-icon :global(svg) {
+    width: 100%;
+    height: 100%;
+    stroke-width: 1.25;
+  }
+  .svc-capabilities__card-label {
+    margin: 0;
+    font-size: var(--text-body-lg, 18px);
+    font-weight: var(--font-weight-semibold, 600);
+    color: #fff;
+  }
+  .svc-capabilities__card-desc {
+    margin: 0;
+    font-size: var(--text-caption, 14px);
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .svc-capabilities__panel-pane {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4, 1rem);
+    justify-content: center;
+    padding: var(--space-10, 2.5rem) var(--space-8, 2rem);
+    background: var(--color-accent-surface, #e6f1ef);
+  }
+  .svc-capabilities__footnote {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2, 0.5rem) var(--space-4, 1rem);
+    margin-block-start: var(--space-2, 0.5rem);
+    padding-block-start: var(--space-5, 1.25rem);
+    border-block-start: 1px dashed var(--color-border-strong);
+  }
+  .svc-capabilities__footnote-value {
+    font-family: var(--font-mono, 'Martian Mono', monospace);
+    font-size: var(--text-h3, 28px);
+    font-weight: var(--font-weight-medium, 500);
+    color: var(--color-accent, #13808a);
+  }
+  .svc-capabilities__footnote-label {
+    flex: 1;
+    min-width: 12ch;
+    font-size: var(--text-caption, 14px);
+    color: var(--color-secondary);
+  }
+  .svc-capabilities__footnote-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2, 0.5rem);
+    font-weight: var(--font-weight-semibold, 600);
+    font-size: var(--text-caption, 14px);
+    color: var(--color-heading);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--color-border-strong);
+    padding-bottom: 2px;
+    transition:
+      color var(--duration-base, 0.2s) var(--ease, ease),
+      border-color var(--duration-base, 0.2s) var(--ease, ease);
+  }
+  .svc-capabilities__footnote-link:hover {
+    color: var(--color-accent, #13808a);
+    border-color: var(--color-accent, #13808a);
+  }
+  .svc-capabilities__footnote-link-icon {
+    display: flex;
+    width: 0.7rem;
+    height: 0.7rem;
+  }
+  .svc-capabilities__panel-pane h2 {
+    margin: 0;
+  }
+
+  @media (width <= 809px) {
+    .svc-capabilities__stage {
+      grid-template-columns: minmax(0, 1fr);
+      min-height: 0;
+    }
+    .svc-capabilities__card-stack {
+      height: auto;
+      min-height: 0;
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  .svc-capabilities__accordion {
+    display: flex;
+    flex-direction: column;
+    margin-block-start: var(--space-4, 1rem);
+  }
+  .svc-capabilities__item {
+    border-block-start: 1px dashed var(--color-border-strong);
+  }
+  .svc-capabilities__summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4, 1rem);
+    padding-block: var(--space-5, 1.25rem);
+    cursor: pointer;
+    list-style: none;
+  }
+  .svc-capabilities__summary::-webkit-details-marker {
+    display: none;
+  }
+  .svc-capabilities__item-index {
+    flex: none;
+    font-family: var(--font-mono, 'Martian Mono', monospace);
+    font-size: var(--text-caption, 14px);
+    color: var(--color-muted);
+  }
+  .svc-capabilities__item-icon {
+    flex: none;
+    display: flex;
+    width: 22px;
+    height: 22px;
+    color: var(--color-accent, #13808a);
+  }
+  .svc-capabilities__item-icon :global(svg) {
+    width: 100%;
+    height: 100%;
+    stroke-width: 1.25;
+  }
+  .svc-capabilities__item-label {
+    flex: 1;
+    font-size: var(--text-body-lg, 18px);
+    font-weight: var(--font-weight-medium, 500);
+    color: var(--color-heading);
+  }
+  .svc-capabilities__item-toggle {
+    flex: none;
+    display: flex;
+    width: 18px;
+    height: 18px;
+    color: var(--color-muted);
+    transition: transform var(--duration-base, 0.2s) var(--ease, ease);
+  }
+  .svc-capabilities__item[open] .svc-capabilities__item-toggle {
+    transform: rotate(45deg);
+    color: var(--color-accent, #13808a);
+  }
+  .svc-capabilities__panel {
+    padding-block-end: var(--space-5, 1.25rem);
+    padding-inline-start: calc(22px + 14px + var(--space-4, 1rem));
+  }
+  .svc-capabilities__panel-text {
+    margin: 0;
+    max-width: 48ch;
+    font-size: var(--text-body, 16px);
+    line-height: 1.6;
+    color: var(--color-secondary);
+  }
+
+  .svc-ecosystem__column {
+    /* Same gutter+24px fix as Hero.astro's .mb-hh.column — see global.css. */
+    padding-inline: calc(var(--gutter, 40px) + var(--space-6, 24px));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12, 3rem);
+  }
+  .svc-ecosystem__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-4, 1rem);
+  }
+
+  /* Wide intro tile + current-service tile share row 1 (adapted from the
+     reference's hero-tile + "you are here" pairing); the other four
+     services fill row 2 as equal cards. */
+  .svc-ecosystem__intro {
+    position: relative;
+    grid-column: span 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-3, 0.75rem);
+    padding: var(--space-8, 2rem);
+    background: var(--ember-900, #04262a);
+    overflow: hidden;
+  }
+  .svc-ecosystem__intro h2,
+  .svc-ecosystem__intro p {
+    margin: 0;
+  }
+  .svc-ecosystem__intro-icon {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-end: var(--space-8, 2rem);
+    transform: translateY(-50%);
+    width: 120px;
+    height: 120px;
+    color: var(--accent-400, #34a0a2);
+    opacity: 0.08;
+  }
+  .svc-ecosystem__intro-icon :global(svg) {
+    width: 100%;
+    height: 100%;
+    stroke-width: 1;
+  }
+
+  .svc-ecosystem__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2, 0.5rem);
+    padding: var(--space-6, 1.5rem);
+    background: var(--color-accent-surface, #e6f1ef);
+    text-decoration: none;
+    transition: background var(--duration-base, 0.2s) var(--ease, ease);
+  }
+  a.svc-ecosystem__card:hover {
+    background: var(--color-canvas, #0b4247);
+  }
+  .svc-ecosystem__card--current {
+    background: var(--color-canvas, #0b4247);
+  }
+  .svc-ecosystem__current-tag {
+    display: flex;
+    width: 18px;
+    height: 18px;
+    color: var(--accent-400, #34a0a2);
+  }
+  .svc-ecosystem__current-tag :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+  .svc-ecosystem__current-label {
+    font-family: var(--font-mono, 'Martian Mono', monospace);
+    font-size: var(--text-micro, 11px);
+    letter-spacing: var(--text-micro--tracking, 0.04em);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold, 600);
+    color: var(--accent-400, #34a0a2);
+  }
+  .svc-ecosystem__card-icon {
+    display: flex;
+    width: 28px;
+    height: 28px;
+    color: var(--color-border-strong, #0b42473d);
+    transition: color var(--duration-base, 0.2s) var(--ease, ease);
+  }
+  a.svc-ecosystem__card:hover .svc-ecosystem__card-icon {
+    color: var(--accent-400, #34a0a2);
+  }
+  .svc-ecosystem__card-icon :global(svg) {
+    width: 100%;
+    height: 100%;
+    stroke-width: 1.25;
+  }
+  .svc-ecosystem__card-title {
+    margin: 0;
+    font-size: var(--text-caption, 14px);
+    font-weight: var(--font-weight-semibold, 600);
+    color: var(--color-heading);
+    transition: color var(--duration-base, 0.2s) var(--ease, ease);
+  }
+  .svc-ecosystem__card--current .svc-ecosystem__card-title {
+    color: var(--white, #fff);
+  }
+  a.svc-ecosystem__card:hover .svc-ecosystem__card-title {
+    color: var(--white, #fff);
+  }
+  .svc-ecosystem__card-desc {
+    margin: 0;
+    font-size: var(--text-caption, 14px);
+    line-height: 1.5;
+    color: var(--color-secondary);
+    transition: color var(--duration-base, 0.2s) var(--ease, ease);
+  }
+  .svc-ecosystem__card--current .svc-ecosystem__card-desc {
+    color: var(--color-on-canvas-muted, #fff9);
+  }
+  a.svc-ecosystem__card:hover .svc-ecosystem__card-desc {
+    color: var(--color-on-canvas-muted, #fff9);
+  }
+  .svc-ecosystem__card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1, 0.25rem);
+    width: fit-content;
+    margin-block-start: auto;
+    padding-block-start: var(--space-2, 0.5rem);
+    font-size: var(--text-caption, 14px);
+    font-weight: var(--font-weight-semibold, 600);
+    color: var(--color-heading);
+    border-bottom: 1px dashed var(--color-border-strong);
+    padding-bottom: 2px;
+    transition:
+      color var(--duration-base, 0.2s) var(--ease, ease),
+      border-color var(--duration-base, 0.2s) var(--ease, ease);
+  }
+  a.svc-ecosystem__card:hover .svc-ecosystem__card-link {
+    color: var(--white, #fff);
+    border-color: var(--color-canvas-line-strong, #ffffff4d);
+  }
+  .svc-ecosystem__card-link-icon {
+    display: flex;
+    width: 0.65rem;
+    height: 0.65rem;
+  }
+
+  @media (width <= 980px) {
+    .svc-ecosystem__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .svc-ecosystem__intro {
+      grid-column: span 2;
+    }
+  }
+  @media (width <= 809px) {
+    .svc-ecosystem__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .svc-ecosystem__intro {
+      grid-column: span 1;
+    }
+  }
+
+  /* Same trap as ServicesListing.astro: .wwd__steps carries its own
+     top margin+padding meant for a different nesting context — zeroed
+     here since this section already provides its own rhythm. */
+  .svc-steps {
+    margin-block-start: 0;
+    padding-block-start: 0;
+  }
+
+  .svc-faq__column {
+    /* Same gutter+24px fix as Hero.astro's .mb-hh.column — see global.css. */
+    padding-inline: calc(var(--gutter, 40px) + var(--space-6, 24px));
+    display: grid;
+    grid-template-columns: minmax(220px, 300fr) 48px minmax(0, 820fr);
+    column-gap: var(--space-6, 1.5rem);
+  }
+  .svc-faq__heading {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4, 1rem);
+    align-self: start;
+  }
+  .svc-faq__heading h2 {
+    margin: 0;
+  }
+  .svc-faq__rail {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      var(--color-border) 0,
+      var(--color-border) 1px,
+      transparent 1px,
+      transparent 7px
+    );
+  }
+
+  .svc-faq__list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .svc-faq__item {
+    padding-block: var(--space-6, 1.5rem);
+    border-block-end: 1px solid var(--color-border);
+  }
+  .svc-faq__item:first-child {
+    border-block-start: 1px solid var(--color-border);
+  }
+  .svc-faq__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6, 1.5rem);
+    cursor: pointer;
+    list-style: none;
+    font-size: var(--text-body-lg, 18px);
+    font-weight: var(--font-weight-medium, 500);
+    color: var(--color-heading);
+  }
+  .svc-faq__question::-webkit-details-marker {
+    display: none;
+  }
+  .svc-faq__toggle {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--color-border);
+    color: var(--color-muted);
+  }
+  .svc-faq__icon {
+    display: flex;
+    width: 16px;
+    height: 16px;
+  }
+  .svc-faq__item:not([open]) .svc-faq__icon--up {
+    display: none;
+  }
+  .svc-faq__item[open] .svc-faq__icon--down {
+    display: none;
+  }
+  .svc-faq__answer {
+    margin: var(--space-4, 1rem) 0 0;
+    max-width: 60ch;
+    font-size: var(--text-body, 16px);
+    line-height: 1.6;
+    color: var(--color-secondary);
+  }
+
+  @media (width <= 809px) {
+    .svc-faq__column {
+      grid-template-columns: 1fr;
+      row-gap: var(--space-6, 1.5rem);
+    }
+    .svc-faq__rail {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .svc-capabilities__item-toggle,
+    .svc-capabilities__footnote-link,
+    .svc-ecosystem__card,
+    .svc-ecosystem__card-icon,
+    .svc-ecosystem__card-title,
+    .svc-ecosystem__card-desc,
+    .svc-ecosystem__card-link {
+      transition: none;
+    }
+  }
+</style>

@@ -21,8 +21,8 @@ interface Testimonial {
 
 const testimonials: Testimonial[] = [
   {
-    photo: '/images/testimonials/photo-redhat-1.jpg',
-    logo: '/images/testimonials/testimonials_redhat.png',
+    photo: '/images/testimonials/photo-redhat-1.webp',
+    logo: '/images/testimonials/testimonials_redhat.webp',
     logoAlt: 'Red Hat',
     quote:
       '"Thank you for your quick responses and turnaround. The entire AMER team are all very keen on having our creative support undertaken by MOBILISE, of course!"',
@@ -31,8 +31,8 @@ const testimonials: Testimonial[] = [
     ctaLabel: 'See full announcement',
   },
   {
-    photo: '/images/testimonials/photo-salesforce.jpg',
-    logo: '/images/testimonials/testimonials_salesforce.png',
+    photo: '/images/testimonials/photo-salesforce.webp',
+    logo: '/images/testimonials/testimonials_salesforce.webp',
     logoAlt: 'Salesforce',
     quote:
       '"You are our superstar APAC creative team, and I speak for the entire AMER creative leadership. Best partners any brand could ask for - you guys are absolute champions!"',
@@ -41,8 +41,8 @@ const testimonials: Testimonial[] = [
     ctaLabel: 'See full post',
   },
   {
-    photo: '/images/testimonials/photo-hp.jpg',
-    logo: '/images/testimonials/testimonials_hp.png',
+    photo: '/images/testimonials/photo-hp.webp',
+    logo: '/images/testimonials/testimonials_hp.webp',
     logoRound: true,
     logoAlt: 'HP',
     quote: '"Really appreciate your support on our campaigns. Awesome work at superfast TAT! Our global stakeholders are your fans."',
@@ -51,8 +51,8 @@ const testimonials: Testimonial[] = [
     ctaLabel: 'See full post',
   },
   {
-    photo: '/images/testimonials/photo-elastic.jpg',
-    logo: '/images/logo-elastic.png',
+    photo: '/images/testimonials/photo-elastic.webp',
+    logo: '/images/logo-elastic.webp',
     logoAlt: 'Elastic',
     quote:
       '"I have not seen an agency so bent on innovating and thinking out of the box. You are the human form of GenAI - input a prompt, give parameters, and poof, you deliver everything magically!"',
@@ -61,8 +61,8 @@ const testimonials: Testimonial[] = [
     ctaLabel: 'See full post',
   },
   {
-    photo: '/images/testimonials/photo-redhat-2.jpg',
-    logo: '/images/testimonials/testimonials_redhat.png',
+    photo: '/images/testimonials/photo-redhat-2.webp',
+    logo: '/images/testimonials/testimonials_redhat.webp',
     logoAlt: 'Red Hat',
     quote: '"We are the top region 5 years in a row! It has been a fantastic partnership - absolutely brilliant, creative at its best and delivered in record time."',
     caption: 'Head of Marketing, South Asia – Red Hat',
@@ -70,8 +70,8 @@ const testimonials: Testimonial[] = [
     ctaLabel: 'See full post',
   },
   {
-    photo: '/images/testimonials/photo-rockwell.jpg',
-    logo: '/images/testimonials/testimonials_rockwell.png',
+    photo: '/images/testimonials/photo-rockwell.webp',
+    logo: '/images/testimonials/testimonials_rockwell.webp',
     logoAlt: 'Rockwell Automation',
     quote: '"I wanted to express my sincere gratitude for the incredible work you\'ve done for us. The leadership team calls it the best marketing to date!"',
     caption: 'Marketing Lead, Australia – Rockwell Automation',
@@ -111,6 +111,11 @@ const testimonials: Testimonial[] = [
               <div class="tcar__media">
                 <img alt="" class="tcar__photo" decoding="async" height="1031" loading="lazy" src={t.photo} width="1600" />
                 <div aria-hidden="true" class="tcar__scrim" />
+                <span aria-hidden="true" class="tcar__play">
+                  <svg fill="currentColor" height="20" viewBox="0 0 256 256" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87A15.86,15.86,0,0,1,72.12,26.05a16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z" />
+                  </svg>
+                </span>
                 <img
                   alt={t.logoAlt}
                   class={`tcar__logo${t.logoRound ? ' tcar__logo--round' : ''}`}

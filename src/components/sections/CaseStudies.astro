@@ -20,7 +20,7 @@
     <div aria-hidden="true" class="rails rails--ground" data-astro-cid-75uivqud></div>
     <div class="column cases__column" data-astro-cid-5lyysmr3>
       <div class="cases__head">
-        <div class="head head--split head--ground" data-astro-cid-ysklgcyt data-motion-rise>
+        <div class="head head--split head--ground" data-astro-cid-ysklgcyt>
           <div class="head__title" data-astro-cid-ysklgcyt>
             <p class="eyebrow eyebrow--accent" data-astro-cid-zedojbgr>
               <span aria-hidden="true" class="eyebrow__mark" data-astro-cid-zedojbgr></span>Case studies
@@ -136,6 +136,8 @@
     gap: var(--space-1);
     justify-self: start;
     text-decoration: none;
+    border-block-end: 1px dashed var(--color-border-strong);
+    padding-block-end: var(--space-1);
     display: inline-flex;
   }
   .cases__all:hover {
@@ -234,7 +236,7 @@
   .case__creative {
     aspect-ratio: 2.9;
     background: var(--color-surface-sunken);
-    border-radius: var(--radius-sm);
+    border-radius: 0;
     margin: 0;
     position: relative;
     overflow: clip;
@@ -276,6 +278,7 @@
     align-content: start;
     row-gap: var(--space-2);
     max-inline-size: 18ch;
+    color: var(--white);
     display: grid;
   }
   .case :global(.case__stat-value) {

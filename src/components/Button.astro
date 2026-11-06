@@ -1,6 +1,11 @@
 ---
 // Markup/classes ported verbatim from index2.html's .button component
 // (data-astro-cid-j6ocf6pu is required by the compiled CSS selectors).
+// .button__arrow was already defined in the compiled CSS (nudges on
+// hover/focus, same mechanic as the .button__mark star icon elsewhere)
+// but had no icon markup anywhere using it — wired up here.
+import { getIcon } from '@utils/icon';
+
 interface Props {
   href: string;
   variant?: 'primary' | 'secondary' | 'tertiary';
@@ -9,6 +14,7 @@ interface Props {
 }
 
 const { href, variant = 'secondary', size = 'md', class: className } = Astro.props;
+const arrowIcon = getIcon('arrow-up-right');
 ---
 
 <a
@@ -17,4 +23,5 @@ const { href, variant = 'secondary', size = 'md', class: className } = Astro.pro
   data-astro-cid-j6ocf6pu
 >
   <slot />
+  <span class="button__arrow" set:html={arrowIcon} />
 </a>

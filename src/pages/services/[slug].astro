@@ -1,0 +1,28 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import ServiceDetail from '@components/sections/ServiceDetail.astro';
+import { services } from '@data/services';
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+const otherServices = services.filter((s) => s.slug !== service.slug);
+---
+
+<BaseLayout
+  title={`${service.title} | MOBILISE Services`}
+  description={service.description}
+>
+  <Header />
+  <main id="content">
+    <ServiceDetail service={service} otherServices={otherServices} />
+  </main>
+  <Footer />
+</BaseLayout>

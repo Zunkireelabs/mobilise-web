@@ -16,10 +16,22 @@
 // have no JS initializer anywhere in the project — confirmed inert
 // (empty figure, no canvas/chart drawn) on the live site today. Kept
 // as-is rather than wiring up new behavior.
+type DashKind = 'technology' | 'saas' | 'ecommerce' | 'healthcare' | 'manufacturing' | 'fashion';
+
 interface Industry {
   label: string;
   icon: string;
   description: string;
+  // .proof__screen mockup: a real sector photo per industry (not an
+  // abstract shape), with a slow continuous Ken Burns pan/zoom while
+  // active, plus a small animated motion-graphic "live widget" overlaid
+  // in the corner (kind decides which mini scene) — real photography and
+  // a real moving accent together, not one or the other. Also carries one
+  // illustrative KPI themed to the sector (not a client-specific claim).
+  photo: string;
+  kind: DashKind;
+  statLabel: string;
+  statValue: string;
 }
 
 const industries: Industry[] = [
@@ -27,31 +39,55 @@ const industries: Industry[] = [
     label: 'Technology',
     icon: '<rect height="10" rx="1" width="10" x="7" y="7"></rect><line x1="9" x2="9" y1="2" y2="7"></line><line x1="15" x2="15" y1="2" y2="7"></line><line x1="9" x2="9" y1="17" y2="22"></line><line x1="15" x2="15" y1="17" y2="22"></line><line x1="2" x2="7" y1="9" y2="9"></line><line x1="2" x2="7" y1="15" y2="15"></line><line x1="17" x2="22" y1="9" y2="9"></line><line x1="17" x2="22" y1="15" y2="15"></line>',
     description: 'Creative, audience targeting and allocation strategies for deep-tech and enterprise products.',
+    photo: '/images/industries-technology.webp',
+    kind: 'technology',
+    statLabel: 'Pipeline velocity',
+    statValue: '+42%',
   },
   {
     label: 'SaaS',
     icon: '<path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>',
     description: 'A proven playbook to grow B2B SaaS companies at any stage of marketing maturity.',
+    photo: '/images/industries-saas.webp',
+    kind: 'saas',
+    statLabel: 'Net revenue retention',
+    statValue: '128%',
   },
   {
     label: 'eCommerce',
     icon: '<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" x2="21" y1="6" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path>',
     description: 'Acquisition strategies built for the most effective dollar-in, dollar-out retail performance.',
+    photo: '/images/industries-ecommerce.webp',
+    kind: 'ecommerce',
+    statLabel: 'Return on ad spend',
+    statValue: '4.8x',
   },
   {
     label: 'Healthcare',
     icon: '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>',
     description: "Navigating the complex buyer's journey of healthcare decision-makers and professionals.",
+    photo: '/images/industries-healthcare.webp',
+    kind: 'healthcare',
+    statLabel: 'Qualified leads',
+    statValue: '+31%',
   },
   {
     label: 'Manufacturing',
     icon: '<path d="M3 21V11l4 2.5V11l4 2.5V11l4 2.5V8l4-3v16H3z"></path>',
     description: 'Social and digital campaigns custom designed for B2B and B2C industrial audiences.',
+    photo: '/images/industries-manufacturing.webp',
+    kind: 'manufacturing',
+    statLabel: 'Cost per lead',
+    statValue: '-26%',
   },
   {
     label: 'Fashion',
     icon: '<path d="M12 3.5a1.5 1.5 0 1 1 1.3 2.2c-.8.4-1.3 1-1.3 1.8v.4"></path><path d="M3 17L12 9l9 8Z"></path>',
     description: 'Marketing tools built for technical audiences, from decision makers to developers.',
+    photo: '/images/industries-fashion.webp',
+    kind: 'fashion',
+    statLabel: 'Engagement rate',
+    statValue: '+58%',
   },
 ];
 ---
@@ -65,8 +101,8 @@ const industries: Industry[] = [
 >
   <div class="proof">
     <picture>
-      <source height="1600" media="(max-width: 809px)" srcset="//images/platform-ground-phone.webp" width="1052" />
-      <img alt="" class="proof__ground" decoding="async" height="1673" loading="lazy" src="/images/assets_images_DE4AlmA56zfpRzqxEdidU000F0.webp" width="3162" />
+      <source height="1801" media="(max-width: 809px)" srcset="/images/industries-ground-grain.webp" width="3200" />
+      <img alt="" class="proof__ground" decoding="async" height="1801" loading="lazy" src="/images/industries-ground-grain.webp" width="3200" />
     </picture>
     <div aria-hidden="true" class="rails rails--canvas proof__rails" data-astro-cid-75uivqud></div>
     <div aria-hidden="true" class="proof__rules">
@@ -102,7 +138,7 @@ const industries: Industry[] = [
             <div class="proof__accordion">
               {
                 industries.map((ind, i) => (
-                  <details class="proof__row" name="industries-row" open={i === 0 ? true : undefined}>
+                  <details class="proof__row" data-industry={ind.label} name="industries-row" open={i === 0 ? true : undefined}>
                     <summary class="proof__row-trigger">
                       <span aria-hidden="true" class="proof__row-icon">
                         <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="20" set:html={ind.icon} />
@@ -140,7 +176,118 @@ const industries: Industry[] = [
               aria-label="MOBILISE's industry coverage, across technology, SaaS, eCommerce, healthcare, manufacturing and fashion."
               class="proof__screen"
               role="img"
-            />
+            >
+              <div aria-hidden="true" class="proof__dash" data-dash>
+                {
+                  industries.map((ind, i) => (
+                    <div class="proof__dash-panel" data-active={i === 0 ? '' : undefined} data-dash-panel={ind.label}>
+                      <img
+                        alt=""
+                        class="proof__dash-photo"
+                        decoding="async"
+                        height="900"
+                        loading={i === 0 ? 'eager' : 'lazy'}
+                        src={ind.photo}
+                        width="1200"
+                      />
+                      <div class="proof__dash-scrim" />
+                      <span class="proof__dash-live">
+                        <span class="proof__dash-live-dot" />Live snapshot
+                      </span>
+
+                      <div class="proof__dash-widget">
+                        {ind.kind === 'technology' && (
+                          <svg class="proof__widget-net" preserveAspectRatio="none" viewBox="0 0 120 64">
+                            <line class="proof__net-line" x1="10" x2="45" y1="50" y2="22" />
+                            <line class="proof__net-line" x1="45" x2="80" y1="22" y2="38" />
+                            <line class="proof__net-line" x1="80" x2="110" y1="38" y2="14" />
+                            <line class="proof__net-line" x1="45" x2="30" y1="22" y2="8" />
+                            <circle class="proof__net-node" cx="10" cy="50" r="2.5" />
+                            <circle class="proof__net-node" cx="45" cy="22" r="2.5" />
+                            <circle class="proof__net-node" cx="80" cy="38" r="2.5" />
+                            <circle class="proof__net-node" cx="110" cy="14" r="2.5" />
+                            <circle class="proof__net-node" cx="30" cy="8" r="2.5" />
+                            <circle class="proof__net-packet" r="2.5" />
+                          </svg>
+                        )}
+
+                        {ind.kind === 'saas' && (
+                          <svg class="proof__widget-chart" preserveAspectRatio="none" viewBox="0 0 120 48">
+                            <path class="proof__chart-line" d="M0,40 C20,38 26,22 44,26 C62,30 68,8 86,10 C98,11 108,4 120,2" fill="none" pathLength="1" />
+                            <circle class="proof__chart-dot" cx="120" cy="2" r="3" />
+                          </svg>
+                        )}
+
+                        {ind.kind === 'ecommerce' && (
+                          <div class="proof__widget-shelf">
+                            <div class="proof__shelf-track">
+                              {[...Array(2)].map(() => (
+                                <>
+                                  <span class="proof__shelf-chip">$128</span>
+                                  <span class="proof__shelf-chip">$94</span>
+                                  <span class="proof__shelf-chip">$212</span>
+                                </>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {ind.kind === 'healthcare' && (
+                          <div class="proof__widget-pulse">
+                            <span class="proof__pulse-beacon" />
+                            <svg class="proof__pulse-track" preserveAspectRatio="none" viewBox="0 0 240 48">
+                              <path
+                                class="proof__pulse-line"
+                                d="M0,24 L28,24 L35,8 L42,38 L49,24 L80,24 L87,14 L94,34 L101,24 L120,24 L127,8 L134,38 L141,24 L172,24 L179,14 L186,34 L193,24 L240,24"
+                                fill="none"
+                              />
+                            </svg>
+                          </div>
+                        )}
+
+                        {ind.kind === 'manufacturing' && (
+                          <div class="proof__widget-gear">
+                            <svg class="proof__gear" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M12 2a1 1 0 0 1 1 1v1.07a7.96 7.96 0 0 1 2.3.86l.76-.76a1 1 0 1 1 1.41 1.41l-.76.76c.4.68.7 1.44.86 2.3H19a1 1 0 1 1 0 2h-1.07a7.96 7.96 0 0 1-.86 2.3l.76.76a1 1 0 1 1-1.41 1.41l-.76-.76a7.96 7.96 0 0 1-2.3.86V19a1 1 0 1 1-2 0v-1.07a7.96 7.96 0 0 1-2.3-.86l-.76.76a1 1 0 1 1-1.41-1.41l.76-.76a7.96 7.96 0 0 1-.86-2.3H5a1 1 0 1 1 0-2h1.07c.16-.86.46-1.62.86-2.3l-.76-.76a1 1 0 1 1 1.41-1.41l.76.76a7.96 7.96 0 0 1 2.3-.86V3a1 1 0 0 1 1-1Zm0 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" />
+                            </svg>
+                            <span class="proof__widget-gear-track">
+                              <span class="proof__widget-gear-fill" />
+                            </span>
+                          </div>
+                        )}
+
+                        {ind.kind === 'fashion' && (
+                          <div class="proof__widget-runway">
+                            <div class="proof__runway-track">
+                              {[...Array(2)].map(() => (
+                                <>
+                                  <span class="proof__runway-chip"><i class="proof__runway-swatch proof__runway-swatch--a" />SS26</span>
+                                  <span class="proof__runway-chip"><i class="proof__runway-swatch proof__runway-swatch--b" />NOIR</span>
+                                </>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      <div class="proof__dash-content">
+                        <div class="proof__dash-head">
+                          <span class="proof__dash-icon">
+                            <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="18" set:html={ind.icon} />
+                          </span>
+                          <span class="proof__dash-label">{ind.label}</span>
+                        </div>
+                        <p class="proof__dash-blurb">{ind.description}</p>
+                        <div class="proof__dash-metric">
+                          <span class="proof__dash-metric-label">{ind.statLabel}</span>
+                          <span class="proof__dash-metric-value">{ind.statValue}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                }
+              </div>
+            </figure>
           </article>
         </div>
 
@@ -149,13 +296,13 @@ const industries: Industry[] = [
             <span class="proof__call-top">
               <span class="proof__team">
                 <span class="proof__avatar">
-                  <img alt="" height="64" loading="lazy" src="/images/assets_images_team-avatar-1.png" width="64" />
+                  <img alt="" height="64" loading="lazy" src="/images/assets_images_team-avatar-1.webp" width="64" />
                 </span>
                 <span class="proof__avatar">
-                  <img alt="" height="64" loading="lazy" src="/images/assets_images_team-avatar-2.png" width="64" />
+                  <img alt="" height="64" loading="lazy" src="/images/assets_images_team-avatar-2.webp" width="64" />
                 </span>
                 <span class="proof__avatar">
-                  <img alt="" height="64" loading="lazy" src="/images/assets_images_team-avatar-3.png" width="64" />
+                  <img alt="" height="64" loading="lazy" src="/images/assets_images_team-avatar-3.webp" width="64" />
                 </span>
               </span>
               <svg aria-hidden="true" class="icon proof__call-arrow" fill="currentColor" focusable="false" height="20" viewBox="0 0 256 256" width="20" xmlns="http://www.w3.org/2000/svg">
@@ -174,6 +321,32 @@ const industries: Industry[] = [
     </div>
   </div>
 </section>
+
+<script>
+  (function () {
+    var section = document.getElementById('industries');
+    if (!section) return;
+    var rows = Array.prototype.slice.call(section.querySelectorAll('[data-industry]')) as HTMLDetailsElement[];
+    var panels = Array.prototype.slice.call(section.querySelectorAll('[data-dash-panel]')) as HTMLElement[];
+    if (!rows.length || !panels.length) return;
+
+    function activate(label: string) {
+      panels.forEach(function (panel) {
+        if (panel.getAttribute('data-dash-panel') === label) {
+          panel.setAttribute('data-active', '');
+        } else {
+          panel.removeAttribute('data-active');
+        }
+      });
+    }
+
+    rows.forEach(function (row) {
+      row.addEventListener('toggle', function () {
+        if (row.open) activate(row.getAttribute('data-industry') || '');
+      });
+    });
+  })();
+</script>
 
 <style>
   .proof {
@@ -219,7 +392,11 @@ const industries: Industry[] = [
     display: grid;
   }
   .proof :global(.eyebrow.eyebrow--canvas .eyebrow__mark) {
-    background: var(--color-accent);
+    background-color: var(--color-cta);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 7h10v10'/%3E%3Cpath d='M7 17 17 7'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 65%;
   }
   .proof__title {
     align-content: start;
@@ -243,7 +420,7 @@ const industries: Industry[] = [
   .proof__bezel {
     backdrop-filter: blur(12px);
     background: var(--color-surface-glass);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-none);
     min-block-size: 0;
     padding: var(--space-1);
     display: flex;
@@ -262,7 +439,7 @@ const industries: Industry[] = [
   }
   .proof__card {
     background: var(--color-page-secondary);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-none);
     color: var(--color-heading);
     gap: var(--space-8);
     min-inline-size: 0;
@@ -285,12 +462,407 @@ const industries: Industry[] = [
   .proof__screen {
     background: var(--ground-100);
     box-shadow: inset 0 0 0 1px var(--line-hairline);
-    border-radius: 6px;
+    border-radius: var(--radius-none);
     flex: 1;
     min-block-size: 0;
     margin: 0;
     position: relative;
     overflow: clip;
+  }
+  /*
+    Dashboard mockup inside .proof__screen — six absolutely-stacked panels,
+    one per industry, crossfaded via [data-active] toggled by the scoped
+    script below in sync with the accordion's <details> toggle events. Each
+    panel is a real sector photo (not an abstract shape) with a slow
+    continuous Ken Burns pan/zoom while active, a bottom-to-top scrim for
+    text legibility regardless of the photo's own brightness, and real copy
+    (the accordion row's own description, not placeholder text). Animations
+    are scoped to [data-active] selectors only, so the five inactive panels
+    run no keyframes at all — nothing animates off-screen.
+  */
+  .proof__dash {
+    inline-size: 100%;
+    block-size: 100%;
+    position: relative;
+  }
+  .proof__dash-panel {
+    inset: 0;
+    position: absolute;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-base, 0.2s) var(--ease, ease);
+  }
+  .proof__dash-panel[data-active] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .proof__dash-photo {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    transform: scale(1);
+  }
+  .proof__dash-panel[data-active] .proof__dash-photo {
+    animation: proof-dash-kenburns 16s ease-in-out infinite alternate;
+  }
+  @keyframes proof-dash-kenburns {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.1);
+    }
+  }
+  .proof__dash-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--black, #171717) 86%, transparent) 0%,
+      color-mix(in srgb, var(--black, #171717) 55%, transparent) 38%,
+      color-mix(in srgb, var(--black, #171717) 10%, transparent) 68%,
+      color-mix(in srgb, var(--black, #171717) 35%, transparent) 100%
+    );
+  }
+  .proof__dash-live {
+    position: absolute;
+    inset-block-start: var(--space-4, 1rem);
+    inset-inline-end: var(--space-4, 1rem);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2, 0.5rem);
+    font-family: var(--font-mono, 'Martian Mono', 'MartianMono', Arial, sans-serif);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--white, #fff);
+    opacity: 0.85;
+  }
+  .proof__dash-live-dot {
+    inline-size: 6px;
+    block-size: 6px;
+    border-radius: 999px;
+    background: var(--accent-400, #34a0a2);
+  }
+  .proof__dash-panel[data-active] .proof__dash-live-dot {
+    animation: proof-dash-ping 1.8s var(--ease, ease) infinite;
+  }
+  @keyframes proof-dash-ping {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-400, #34a0a2) 55%, transparent);
+    }
+    70% {
+      box-shadow: 0 0 0 8px transparent;
+    }
+  }
+
+  /* Live widget — a small glass chip in the opposite corner from the live
+     badge, carrying a per-industry animated motion-graphic accent on top of
+     the real photo. Scoped to [data-active] so inactive panels run nothing. */
+  .proof__dash-widget {
+    position: absolute;
+    inset-block-start: var(--space-4, 1rem);
+    inset-inline-start: var(--space-4, 1rem);
+    inline-size: 128px;
+    block-size: 64px;
+    padding: var(--space-2, 0.5rem);
+    backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--black, #171717) 35%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--white, #fff) 18%, transparent);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    color: var(--white, #fff);
+  }
+
+  .proof__widget-net,
+  .proof__widget-chart {
+    inline-size: 100%;
+    block-size: 100%;
+    overflow: visible;
+  }
+  .proof__net-line {
+    stroke: currentColor;
+    stroke-width: 1;
+    opacity: 0.4;
+  }
+  .proof__net-node {
+    fill: currentColor;
+    opacity: 0.7;
+  }
+  .proof__net-packet {
+    fill: var(--accent-400, #34a0a2);
+    offset-path: path('M10,50 L45,22 L80,38 L110,14');
+  }
+  .proof__dash-panel[data-active] .proof__net-packet {
+    animation: proof-net-travel 3.5s linear infinite;
+  }
+  @keyframes proof-net-travel {
+    from {
+      offset-distance: 0%;
+    }
+    to {
+      offset-distance: 100%;
+    }
+  }
+
+  .proof__chart-line {
+    stroke: var(--accent-400, #34a0a2);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  .proof__chart-dot {
+    fill: var(--accent-400, #34a0a2);
+    opacity: 0;
+  }
+  .proof__dash-panel[data-active] .proof__chart-line {
+    animation: proof-chart-draw 2.8s var(--ease-rise, ease-in-out) infinite alternate;
+  }
+  .proof__dash-panel[data-active] .proof__chart-dot {
+    animation: proof-chart-dot 2.8s var(--ease-rise, ease-in-out) infinite alternate;
+  }
+  @keyframes proof-chart-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes proof-chart-dot {
+    0%,
+    15% {
+      opacity: 0;
+    }
+    85%,
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .proof__widget-shelf,
+  .proof__widget-runway {
+    inline-size: 100%;
+    overflow: hidden;
+  }
+  .proof__shelf-track,
+  .proof__runway-track {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2, 0.5rem);
+    inline-size: max-content;
+  }
+  .proof__dash-panel[data-active] .proof__shelf-track {
+    animation: proof-widget-scroll 10s linear infinite;
+  }
+  .proof__dash-panel[data-active] .proof__runway-track {
+    animation: proof-widget-scroll 12s linear infinite;
+  }
+  @keyframes proof-widget-scroll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .proof__shelf-chip {
+    flex: none;
+    border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+    padding: var(--space-1, 0.25rem) var(--space-2, 0.5rem);
+    font-family: var(--font-mono, 'Martian Mono', 'MartianMono', Arial, sans-serif);
+    font-size: 0.6875rem;
+    color: var(--accent-400, #34a0a2);
+  }
+  .proof__runway-chip {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono, 'Martian Mono', 'MartianMono', Arial, sans-serif);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .proof__runway-swatch {
+    inline-size: 10px;
+    block-size: 10px;
+    flex: none;
+    font-style: normal;
+  }
+  .proof__runway-swatch--a {
+    background: var(--accent-400, #34a0a2);
+  }
+  .proof__runway-swatch--b {
+    background: var(--white, #fff);
+  }
+
+  .proof__widget-pulse {
+    inline-size: 100%;
+    block-size: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  .proof__pulse-beacon {
+    inline-size: 6px;
+    block-size: 6px;
+    border-radius: 999px;
+    background: var(--accent-400, #34a0a2);
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 0;
+    translate: 0 -50%;
+    z-index: 1;
+  }
+  .proof__dash-panel[data-active] .proof__pulse-beacon {
+    animation: proof-pulse-ping 1.5s var(--ease, ease) infinite;
+  }
+  @keyframes proof-pulse-ping {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-400, #34a0a2) 55%, transparent);
+    }
+    70% {
+      box-shadow: 0 0 0 8px transparent;
+    }
+  }
+  .proof__pulse-track {
+    inline-size: 200%;
+    block-size: 100%;
+  }
+  .proof__pulse-line {
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.85;
+  }
+  .proof__dash-panel[data-active] .proof__pulse-track {
+    animation: proof-pulse-scroll 5s linear infinite;
+  }
+  @keyframes proof-pulse-scroll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .proof__widget-gear {
+    inline-size: 100%;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2, 0.5rem);
+  }
+  .proof__widget-gear .proof__gear {
+    inline-size: 34px;
+    block-size: 34px;
+    flex: none;
+    opacity: 0.9;
+  }
+  .proof__dash-panel[data-active] .proof__widget-gear .proof__gear {
+    animation: proof-gear-spin 7s linear infinite;
+  }
+  @keyframes proof-gear-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .proof__widget-gear-track {
+    flex: 1;
+    display: block;
+    block-size: 3px;
+    background: color-mix(in srgb, currentColor 25%, transparent);
+  }
+  .proof__widget-gear-fill {
+    display: block;
+    inline-size: 88%;
+    block-size: 100%;
+    background: var(--accent-400, #34a0a2);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  .proof__dash-panel[data-active] .proof__widget-gear-fill {
+    animation: proof-gear-fill 2.2s var(--ease-rise, ease-out) infinite alternate;
+  }
+  @keyframes proof-gear-fill {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  .proof__dash-content {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline: 0;
+    display: grid;
+    gap: var(--space-3, 0.75rem);
+    padding: var(--space-5, 1.25rem);
+    color: var(--white, #fff);
+  }
+  .proof__dash-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2, 0.5rem);
+    opacity: 0.85;
+  }
+  .proof__dash-icon {
+    display: flex;
+    flex: none;
+  }
+  .proof__dash-label {
+    font-family: var(--font-mono, 'Martian Mono', 'MartianMono', Arial, sans-serif);
+    font-weight: 500;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .proof__dash-blurb {
+    margin: 0;
+    max-inline-size: 42ch;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    opacity: 0.85;
+  }
+  .proof__dash-metric {
+    display: grid;
+    gap: var(--space-1, 0.25rem);
+  }
+  .proof__dash-metric-label {
+    font-family: var(--font-mono, 'Martian Mono', 'MartianMono', Arial, sans-serif);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    opacity: 0.7;
+  }
+  .proof__dash-metric-value {
+    font-family: var(--font-mono, 'Martian Mono', 'MartianMono', Arial, sans-serif);
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    line-height: 1;
+    color: var(--accent-400, #34a0a2);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .proof__dash-panel {
+      transition: none;
+    }
+    .proof__dash-photo,
+    .proof__dash-live-dot,
+    .proof__net-packet,
+    .proof__chart-line,
+    .proof__chart-dot,
+    .proof__shelf-track,
+    .proof__runway-track,
+    .proof__pulse-beacon,
+    .proof__pulse-track,
+    .proof__widget-gear .proof__gear,
+    .proof__widget-gear-fill {
+      animation: none !important;
+    }
+    .proof__chart-line {
+      stroke-dashoffset: 0;
+    }
+    .proof__chart-dot {
+      opacity: 1;
+    }
+    .proof__widget-gear-fill {
+      transform: scaleX(0.88);
+    }
   }
   .proof__card--call {
     transition: background-color var(--duration-base) var(--ease);
@@ -298,7 +870,7 @@ const industries: Industry[] = [
     text-decoration: none;
   }
   .proof__card--call:focus-visible {
-    outline: 2px solid var(--color-accent);
+    outline: 2px solid var(--color-cta);
     outline-offset: 4px;
   }
   .proof__card--call .proof__call-arrow {
@@ -312,7 +884,7 @@ const industries: Industry[] = [
       background: var(--color-surface);
     }
     .proof__card--call:is(:hover, :focus-visible) .proof__call-arrow {
-      color: var(--color-accent);
+      color: var(--color-cta);
       translate: 2px -2px;
     }
     .proof__card--call:is(:hover, :focus-visible) .proof__avatar:nth-child(2) {

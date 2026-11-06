@@ -6,15 +6,18 @@
 // match the global reference-*.css rules; this component's own
 // .close/.close__*  classes use Astro's real auto-scoping.
 //
-// The canvas (#dot-terrain-footer, class="dot-mountain") has no JS
-// initializer anywhere in the project (checked: nothing references
-// "dot-mountain"/"dot-terrain" in src/scripts or elsewhere) — it's inert
-// on the live site today. Kept as-is rather than wiring up new behavior,
-// since this migration preserves current behavior, not adds to it.
+// Redesigned as the homepage's single simple CTA (the previous inline
+// lead-gen form that used to sit right after this section moved to its
+// own /contact page — see src/pages/contact.astro). The old
+// #dot-terrain-footer canvas had no JS initializer anywhere in the
+// project and was confirmed inert; replaced with a tiled arrow-pattern
+// decoration (reusing the eyebrow mark's arrow glyph, the same one used
+// in Industries.astro's canvas-tone eyebrow) on the left/right edges
+// instead of wiring up the dead canvas.
 ---
 
 <section
-  aria-label="Ready to make B2B interesting?"
+  aria-label="Ready to mobilize?"
   class="section section--page-secondary section--rhythm-none"
   data-astro-cid-pi6vcj26
   data-section="close"
@@ -22,14 +25,16 @@
 >
   <div class="close">
     <div aria-hidden="true" class="rails rails--ground rails--rule" data-astro-cid-75uivqud></div>
-    <div aria-hidden="true" class="close__art">
-      <canvas aria-hidden="true" class="dot-mountain" id="dot-terrain-footer"></canvas>
-    </div>
+    <div aria-hidden="true" class="close__pattern close__pattern--start"></div>
+    <div aria-hidden="true" class="close__pattern close__pattern--end"></div>
     <div class="column close__inner" data-astro-cid-5lyysmr3>
       <div class="close__copy" data-motion-rise>
-        <h2 class="text text--display tone--heading weight--300 text--balance" data-astro-cid-io6xibmp>
-          Ready to make<br />B2B interesting?
+        <h2 class="text text--display tone--heading weight--300 text--balance close__title--nowrap" data-astro-cid-io6xibmp>
+          Ready to mobilize?
         </h2>
+        <p class="text text--body-lg tone--secondary close__lede" data-astro-cid-io6xibmp>
+          Strategy, creativity, and execution — connected around the goals that matter to your business.
+        </p>
         <a class="button button--secondary button--lg close__action" data-astro-cid-j6ocf6pu href="/contact">
           Let's Talk
           <svg
@@ -57,42 +62,76 @@
 <style>
   .close {
     position: relative;
+    overflow: clip;
   }
   .close > .close__inner {
     position: relative;
   }
-  .close__art {
-    --site-header-height: 0px;
+  .close__pattern {
     max-inline-size: var(--rail-measure);
     pointer-events: none;
     margin-inline: auto;
     position: absolute;
     inset: 0;
   }
-  .close__art :global(.dot-mountain) {
-    block-size: 100%;
-    inline-size: 100%;
-    display: block;
+  .close__pattern::before {
+    content: '';
+    /* Same arrow-up-right mark as the eyebrow glyph, rasterized into a dot
+       grid (bracket + diagonal) instead of stroked lines — pixel-map style,
+       matching the hero's dotted world map technique. Each dot is painted
+       twice: a deep-teal "shadow" dot offset down-right first, then the
+       lighter accent dot on top, for a slight embossed/3D pixel look. */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='8.1' cy='8.1' r='1' fill='%230B4247' opacity='0.3'/%3E%3Ccircle cx='11.1' cy='8.1' r='1' fill='%230B4247' opacity='0.3'/%3E%3Ccircle cx='14.1' cy='8.1' r='1' fill='%230B4247' opacity='0.3'/%3E%3Ccircle cx='17.1' cy='8.1' r='1' fill='%230B4247' opacity='0.3'/%3E%3Ccircle cx='20.1' cy='8.1' r='1' fill='%230B4247' opacity='0.3'/%3E%3Ccircle cx='17.1' cy='11.1' r='1' fill='%230B4247' opacity='0.3'/%3E%3Ccircle cx='20.1' cy='11.1' r='1' fill='%230B4247' opacity='0.3'/%3E%3Ccircle cx='14.1' cy='14.1' r='1' fill='%230B4247' opacity='0.3'/%3E%3Ccircle cx='20.1' cy='14.1' r='1' fill='%230B4247' opacity='0.3'/%3E%3Ccircle cx='11.1' cy='17.1' r='1' fill='%230B4247' opacity='0.3'/%3E%3Ccircle cx='20.1' cy='17.1' r='1' fill='%230B4247' opacity='0.3'/%3E%3Ccircle cx='8.1' cy='20.1' r='1' fill='%230B4247' opacity='0.3'/%3E%3Ccircle cx='20.1' cy='20.1' r='1' fill='%230B4247' opacity='0.3'/%3E%3Ccircle cx='7.5' cy='7.5' r='1' fill='%230A919B' opacity='0.45'/%3E%3Ccircle cx='10.5' cy='7.5' r='1' fill='%230A919B' opacity='0.45'/%3E%3Ccircle cx='13.5' cy='7.5' r='1' fill='%230A919B' opacity='0.45'/%3E%3Ccircle cx='16.5' cy='7.5' r='1' fill='%230A919B' opacity='0.45'/%3E%3Ccircle cx='19.5' cy='7.5' r='1' fill='%230A919B' opacity='0.45'/%3E%3Ccircle cx='16.5' cy='10.5' r='1' fill='%230A919B' opacity='0.45'/%3E%3Ccircle cx='19.5' cy='10.5' r='1' fill='%230A919B' opacity='0.45'/%3E%3Ccircle cx='13.5' cy='13.5' r='1' fill='%230A919B' opacity='0.45'/%3E%3Ccircle cx='19.5' cy='13.5' r='1' fill='%230A919B' opacity='0.45'/%3E%3Ccircle cx='10.5' cy='16.5' r='1' fill='%230A919B' opacity='0.45'/%3E%3Ccircle cx='19.5' cy='16.5' r='1' fill='%230A919B' opacity='0.45'/%3E%3Ccircle cx='7.5' cy='19.5' r='1' fill='%230A919B' opacity='0.45'/%3E%3Ccircle cx='19.5' cy='19.5' r='1' fill='%230A919B' opacity='0.45'/%3E%3C/svg%3E");
+    background-position: center;
+    background-repeat: repeat;
+    background-size: 40px 40px;
+    mask-image: linear-gradient(to bottom, transparent, #000 15%, #000 85%, transparent);
+    inline-size: 140px;
+    position: absolute;
+    inset-block: 0;
+  }
+  .close__pattern--start::before {
+    inset-inline-start: 0;
+    mask-image:
+      linear-gradient(to bottom, transparent, #000 15%, #000 85%, transparent),
+      linear-gradient(to right, #000, transparent);
+    mask-composite: intersect;
+  }
+  .close__pattern--end::before {
+    inset-inline-end: 0;
+    mask-image:
+      linear-gradient(to bottom, transparent, #000 15%, #000 85%, transparent),
+      linear-gradient(to left, #000, transparent);
+    mask-composite: intersect;
   }
   .close__copy {
-    padding-block: var(--space-section-lg);
-    justify-items: start;
+    padding-block: var(--space-section);
+    justify-items: center;
     row-gap: var(--space-5);
-    padding-inline-start: var(--space-6);
+    text-align: center;
+    max-inline-size: 640px;
+    margin-inline: auto;
     display: grid;
+  }
+  .close__copy :global(.close__title--nowrap) {
+    white-space: nowrap;
+  }
+  .close__lede {
+    max-inline-size: 44ch;
   }
   .close__copy .close__action {
     margin-block-start: var(--space-4);
   }
   @media (width <= 809px) {
-    .close__art {
-      block-size: 240px;
-      position: relative;
-      mask-image: linear-gradient(#000 55%, transparent);
+    .close__pattern {
+      display: none;
     }
     .close__copy {
-      padding-block: var(--space-6) var(--space-16);
+      padding-block: var(--space-12) var(--space-16);
       padding-inline: var(--space-5);
+    }
+    .close__copy :global(.close__title--nowrap) {
+      white-space: normal;
     }
   }
 </style>

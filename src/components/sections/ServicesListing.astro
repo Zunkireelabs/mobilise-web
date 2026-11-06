@@ -1,0 +1,1220 @@
+---
+// Services page: a dark canvas hero (structure adapted from
+// buildops.com/platform's own hero — eyebrow, display heading, lead copy,
+// two CTAs, visual panel, stat-proof row) followed by "One agency, every
+// function" — the stacking-card section adapted from that same page's "A
+// single operating backbone" (sticky nav rail, split content/visual cards,
+// feature-chip grid). Per DESIGN_ORCHESTRATOR.md's reference principle:
+// MOBILISE's own tokens/type/motion/copy throughout, not BuildOps'
+// branding or wording. The hero's CTA panel is still an icon/numeral
+// mock (no product screenshots to show, unlike BuildOps); the service
+// card visuals below use real stock photography (src/data/services.ts
+// `image`/`imageAlt`), tinted per-card to match the section's palette.
+// Hero heading/CTA copy and the stat row are MOBILISE's own real
+// published lines (see mobilise-website-content.md), not invented.
+import { getIcon } from '@utils/icon';
+import { services } from '@data/services';
+import Button from '@components/Button.astro';
+import Close from '@components/sections/Close.astro';
+
+const arrowIcon = getIcon('arrow-up-right');
+
+const industries = [
+  {
+    icon: 'cpu',
+    label: 'Technology',
+    desc: 'Unique processes for creative, audience targeting, and allocation across deep-tech products.',
+  },
+  {
+    icon: 'cloud',
+    label: 'SaaS',
+    desc: 'A proven playbook, tailored to grow B2B SaaS companies through any stage of maturity.',
+  },
+  {
+    icon: 'factory',
+    label: 'Manufacturing',
+    desc: 'Nuanced campaign plans designed for B2B and B2C customers across industrial segments.',
+  },
+];
+
+const process = [
+  {
+    index: '1',
+    title: 'Research',
+    desc: 'Uncovers the market, audience and competitive signals that matter.',
+  },
+  {
+    index: '2',
+    title: 'Strategy',
+    desc: 'Shapes one system of messaging and creative for every channel.',
+  },
+  {
+    index: '3',
+    title: 'Production',
+    desc: 'Produces campaigns and content at the pace the market moves.',
+  },
+  {
+    index: '4',
+    title: 'Measurement',
+    desc: "Measures what's working and moves budget to it.",
+  },
+];
+
+const stats = [
+  {
+    value: '4',
+    label: 'Global studios',
+    desc: 'Teams across Bangalore, Singapore, Dubai and Seattle.',
+  },
+  {
+    value: '+10',
+    label: 'Years of word-of-mouth relationships',
+    desc: 'Clients who stay — and send us the next one.',
+  },
+  {
+    value: '10',
+    label: 'Global client brands',
+    desc: 'Red Hat, Salesforce, HP and more, across every region.',
+  },
+];
+---
+
+<section
+  class="section section--canvas section--rhythm-base services-hero"
+  aria-label="Services overview"
+  data-astro-cid-pi6vcj26
+  data-section="services-hero"
+>
+  <div aria-hidden="true" class="rails rails--canvas" data-astro-cid-75uivqud></div>
+  <div class="column services-hero__column" data-astro-cid-5lyysmr3>
+    <div class="services-hero__layout" data-motion-rise>
+      <div class="services-hero__copy">
+        <p class="eyebrow eyebrow--canvas" data-astro-cid-zedojbgr>
+          <span aria-hidden="true" class="eyebrow__mark" data-astro-cid-zedojbgr></span>
+          Full-Funnel Capability
+        </p>
+        <h1 class="text text--display tone--on-canvas weight--300" data-astro-cid-io6xibmp>
+          Comprehensive solutions.<br />Strategies. Connected. Execution.
+        </h1>
+        <p class="text text--lead tone--on-canvas-muted" data-astro-cid-io6xibmp>
+          Fast, accurate, compelling and guidelines-aligned creative &amp; content creation,
+          adaptations, and translations — strategy through delivery, under one roof.
+        </p>
+        <div class="services-hero__ctas">
+          <Button href="/contact" variant="primary" size="md">Connect with our team</Button>
+          <Button href="#full-service-marketing" variant="tertiary" size="md">View Capabilities</Button>
+        </div>
+      </div>
+
+      <div class="services-hero__visual" aria-hidden="true">
+        <div class="services-hero__mock services-hero__mock--browser">
+          <div class="services-hero__mock-frame">
+            <div class="services-hero__mock-bar">
+              <span class="services-hero__mock-dot" />
+              <span class="services-hero__mock-dot" />
+              <span class="services-hero__mock-dot" />
+              <span class="services-hero__mock-url" />
+            </div>
+            <div class="services-hero__mock-body">
+              <div class="services-hero__mock-copy">
+                <span class="services-hero__mock-line services-hero__mock-line--title" style="--d: 0.05s">
+                  Campaign Performance
+                </span>
+                <span
+                  class="services-hero__mock-line services-hero__mock-line--title services-hero__mock-line--short"
+                  style="--d: 0.12s"
+                >
+                  Q3 growth program
+                </span>
+                <span class="services-hero__mock-line" style="--d: 0.2s">Pipeline influenced <b>$2.4M</b></span>
+                <span class="services-hero__mock-line services-hero__mock-line--short" style="--d: 0.26s">
+                  Conversion lift <b>+18%</b>
+                </span>
+                <span class="services-hero__mock-pill" style="--d: 0.36s">● Live</span>
+              </div>
+              <span class="services-hero__mock-arc" style="--d: 0.1s">
+                <b>72%</b>
+                <small>on target</small>
+              </span>
+            </div>
+            <div class="services-hero__mock-stats">
+              <span class="services-hero__mock-stat" style="--d: 0.42s"><b>248</b><small>Leads</small></span>
+              <span class="services-hero__mock-stat" style="--d: 0.48s"><b>3.2x</b><small>ROAS</small></span>
+              <span class="services-hero__mock-stat" style="--d: 0.54s"><b>18</b><small>Markets</small></span>
+            </div>
+          </div>
+        </div>
+        <div class="services-hero__mock services-hero__mock--phone">
+          <span class="services-hero__mock-avatar" style="--d: 0.2s" />
+          <span class="services-hero__mock-line services-hero__mock-line--title" style="--d: 0.26s">
+            Campaign brief approved
+          </span>
+          <span class="services-hero__mock-media" style="--d: 0.32s" />
+          <span class="services-hero__mock-pill" style="--d: 0.4s">Posted</span>
+        </div>
+      </div>
+    </div>
+
+    <ol class="services-hero__stats" data-motion-rise>
+      {
+        stats.map((stat) => (
+          <li class="services-hero__stat">
+            <div class="services-hero__stat-top">
+              <svg class="services-hero__stat-trend" aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 10L8 5L13 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M3 6L8 1L13 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.5" />
+              </svg>
+              <span class="text text--h2 tone--on-canvas weight--300 services-hero__stat-value" data-astro-cid-io6xibmp>
+                {stat.value}
+              </span>
+              <p class="services-hero__stat-label">{stat.label}</p>
+            </div>
+            <div class="services-hero__stat-divider" aria-hidden="true" />
+            <p class="services-hero__stat-desc">{stat.desc}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<section
+  class="section section--page section--rhythm-base services"
+  aria-label="Services"
+  data-astro-cid-pi6vcj26
+  data-section="services-listing"
+>
+  <div aria-hidden="true" class="rails rails--ground" data-astro-cid-75uivqud></div>
+  <div class="column services__column" data-astro-cid-5lyysmr3>
+    <div class="services__heading" data-motion-rise>
+      <p class="eyebrow eyebrow--accent" data-astro-cid-zedojbgr>
+        <span aria-hidden="true" class="eyebrow__mark" data-astro-cid-zedojbgr></span>
+        One System, Every Deliverable
+      </p>
+      <h2 class="text text--h2 tone--heading weight--300" data-astro-cid-io6xibmp>
+        One agency, every function
+      </h2>
+    </div>
+
+    <div class="services__layout">
+      <nav class="services__rail" aria-label="Jump to service">
+        <ul>
+          {
+            services.map((service) => (
+              <li>
+                <a href={`#${service.slug}`} data-rail-link data-rail-target={service.slug}>
+                  <span class="services__rail-bullet" aria-hidden="true" />
+                  {service.title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="services__cards">
+        {
+          services.map((service, i) => (
+            <article
+              class="services__card"
+              id={service.slug}
+              data-service-card={service.slug}
+              data-motion-rise
+              style={`z-index: ${i + 1}`}
+            >
+              <div class="services__card-content">
+                <h2 class="text text--card-title weight--400 tone--heading" data-astro-cid-io6xibmp>
+                  {service.title}
+                </h2>
+                <p class="text text--body-lg tone--secondary" data-astro-cid-io6xibmp>
+                  {service.description}
+                </p>
+                <a class="services__explore" href={`/services/${service.slug}`}>
+                  Explore {service.title}
+                  <span class="services__explore-icon" set:html={arrowIcon} />
+                </a>
+
+                <div class="services__divider" aria-hidden="true" />
+
+                <ul class="services__chips">
+                  {service.offerings.map((offering) => (
+                    <li>
+                      <a class="services__chip" href={offering.href}>
+                        <span class="services__chip-icon" set:html={getIcon(offering.icon)} />
+                        <span class="services__chip-label">{offering.label}</span>
+                        <span class="services__chip-arrow" set:html={arrowIcon} />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="services__visual" data-tint={service.index}>
+                <img
+                  class="services__visual-image"
+                  src={service.image}
+                  alt={service.imageAlt}
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  width="960"
+                  height="720"
+                />
+                <span class="services__visual-badge" aria-hidden="true">
+                  <span class="services__visual-icon" set:html={getIcon(service.icon)} />
+                  <span class="services__visual-index">{service.index}</span>
+                </span>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<section
+  class="section section--page section--rhythm-base industries-extend"
+  aria-label="Industries we serve"
+  data-astro-cid-pi6vcj26
+  data-section="industries-extend"
+>
+  <div aria-hidden="true" class="rails rails--ground" data-astro-cid-75uivqud></div>
+  <div class="column industries-extend__column" data-astro-cid-5lyysmr3>
+    <div class="industries-extend__heading" data-motion-rise>
+      <p class="eyebrow eyebrow--accent" data-astro-cid-zedojbgr>
+        <span aria-hidden="true" class="eyebrow__mark" data-astro-cid-zedojbgr></span>
+        Who We Serve
+      </p>
+      <h2 class="text text--h2 tone--heading weight--300" data-astro-cid-io6xibmp>
+        Specialized expertise, every industry
+      </h2>
+      <p class="text text--body-lg tone--secondary" data-astro-cid-io6xibmp>
+        These aren't generic playbooks. Our teams tailor strategy, creative and execution to how
+        each industry's buyers actually decide.
+      </p>
+    </div>
+
+    <div class="industries-extend__grid" data-motion-rise>
+      {
+        industries.map((industry) => (
+          <div class="industries-extend__card">
+            <span class="industries-extend__icon" set:html={getIcon(industry.icon)} />
+            <p class="industries-extend__label">{industry.label}</p>
+            <p class="industries-extend__desc">{industry.desc}</p>
+            <a class="industries-extend__link" href="/industries">
+              Explore
+              <span class="industries-extend__link-icon" set:html={arrowIcon} />
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section
+  class="section section--page section--rhythm-base"
+  aria-label="How we work"
+  data-astro-cid-pi6vcj26
+  data-section="services-process"
+>
+  <div aria-hidden="true" class="rails rails--ground" data-astro-cid-75uivqud></div>
+  <div class="column" data-astro-cid-5lyysmr3>
+    <div class="wwd__steps" data-astro-cid-7xbdjwkz data-motion-rise>
+      <div class="wwd__steps-split">
+        <div class="wwd__steps-intro">
+          <p class="eyebrow eyebrow--accent" data-astro-cid-zedojbgr>
+            <span aria-hidden="true" class="eyebrow__mark" data-astro-cid-zedojbgr></span>
+            How we work
+          </p>
+          <h2 class="text text--h2 tone--heading weight--300 wwd__steps-heading" data-astro-cid-io6xibmp>
+            One process,<br />four markets in step.
+          </h2>
+          <p class="text text--body-lg tone--secondary wwd__steps-lede" data-astro-cid-io6xibmp>
+            Each phase feeds the next, so nothing stalls between strategy and delivery.
+          </p>
+          <Button href="/contact" variant="secondary" size="md" class="wwd__steps-cta">
+            Let's Talk
+          </Button>
+        </div>
+        <ol class="wwd__steps-rows">
+          {
+            process.map((step) => (
+              <li class="wwd__step" data-astro-cid-7xbdjwkz>
+                <span class="wwd__badge" data-astro-cid-7xbdjwkz>
+                  {step.index}
+                </span>
+                <div class="wwd__step-copy">
+                  <h3 class="text text--h3 tone--on-canvas" data-astro-cid-io6xibmp>
+                    {step.title}
+                  </h3>
+                  <p class="text text--caption tone--on-canvas-muted" data-astro-cid-io6xibmp>
+                    {step.desc}
+                  </p>
+                </div>
+                <span class="wwd__step-arrow" aria-hidden="true">
+                  {Array.from({ length: Number(step.index) }).map(() => (
+                    <span class="wwd__step-arrow-chevron" set:html={getIcon('chevron-down')} />
+                  ))}
+                </span>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<Close />
+
+<script>
+  (function () {
+    const rail = document.querySelector<HTMLElement>('.services__rail');
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-service-card]'));
+    if (!rail || !cards.length) return;
+
+    const links = Array.from(rail.querySelectorAll<HTMLAnchorElement>('[data-rail-link]'));
+    const linkByTarget = new Map(links.map((link) => [link.dataset.railTarget, link]));
+
+    function setActive(slug: string | undefined) {
+      if (!slug) return;
+      links.forEach((link) => link.removeAttribute('data-active'));
+      linkByTarget.get(slug)?.setAttribute('data-active', '');
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive((visible.target as HTMLElement).dataset.serviceCard);
+      },
+      { rootMargin: '-20% 0px -55% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+    cards.forEach((card) => observer.observe(card));
+    setActive(cards[0]?.dataset.serviceCard);
+  })();
+</script>
+
+<style>
+  .services__column {
+    /* Matches the sitewide gutter+24px content inset (see global.css's
+       .mb-hh.column comment / Industries.astro's .proof__column) — the bare
+       .column gutter alone reads as flush/under-padded next to every other
+       section. */
+    padding-inline: calc(var(--gutter, 40px) + var(--space-6, 24px));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-20, 5rem);
+  }
+
+  .services__heading {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4, 1rem);
+    text-align: center;
+    max-width: 40rem;
+    margin-inline: auto;
+  }
+  .services__heading .eyebrow {
+    justify-content: center;
+  }
+  .services__heading h2 {
+    margin: 0;
+  }
+
+  .services-hero__column {
+    /* Same gutter+24px fix as Hero.astro's .mb-hh.column — see global.css. */
+    padding-inline: calc(var(--gutter, 40px) + var(--space-6, 24px));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16, 4rem);
+  }
+
+  .services-hero__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: var(--space-10, 2.5rem);
+    align-items: center;
+  }
+
+  .services-hero__copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5, 1.25rem);
+  }
+  .services-hero__copy h1,
+  .services-hero__copy p {
+    margin: 0;
+  }
+  .services-hero__copy .text--lead {
+    max-width: 42ch;
+  }
+
+  .services-hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3, 0.75rem);
+    margin-block-start: var(--space-2, 0.5rem);
+  }
+
+  .services-hero__visual {
+    position: relative;
+    aspect-ratio: 5 / 6;
+    background: var(--color-accent-surface, #e6f1ef);
+    border: 1px solid var(--color-canvas-line, #ffffff1f);
+  }
+
+  .services-hero__mock {
+    position: absolute;
+    background: #fff;
+    box-shadow: 0 20px 40px rgba(4, 38, 42, 0.18);
+  }
+  .services-hero__mock--browser {
+    top: 8%;
+    right: 7%;
+    width: 78%;
+    aspect-ratio: 16 / 12;
+    clip-path: polygon(22px 0, 100% 0, 100% 100%, 0 100%, 0 22px);
+    overflow: hidden;
+  }
+  .services-hero__mock-frame {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .services-hero__mock--phone {
+    left: 6%;
+    bottom: 6%;
+    width: 32%;
+    aspect-ratio: 9 / 17;
+    clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px);
+    display: flex;
+    flex-direction: column;
+    padding: 10% 9%;
+    gap: 10%;
+    z-index: 1;
+  }
+
+  .services-hero__mock-bar {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5% 6%;
+    border-block-end: 1px solid var(--color-border, #0b42471f);
+  }
+  .services-hero__mock-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-border-strong, #0b42473d);
+  }
+  .services-hero__mock-url {
+    margin-inline-start: 8%;
+    flex: 1;
+    max-width: 55%;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--color-accent-surface, #e6f1ef);
+  }
+
+  .services-hero__mock-body {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 7% 7%;
+    overflow: hidden;
+  }
+  .services-hero__mock-copy {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12%;
+    width: 60%;
+  }
+  .services-hero__mock-line {
+    display: block;
+    overflow: hidden;
+    color: var(--color-secondary, #1f5257);
+    font-size: 10px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .services-hero__mock-line b {
+    color: var(--color-heading, #0b4247);
+    font-weight: 600;
+  }
+  .services-hero__mock-line--title {
+    color: var(--color-heading, #0b4247);
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0.85;
+  }
+  .services-hero__mock-line--short {
+    width: 70%;
+  }
+  .services-hero__mock-pill {
+    width: fit-content;
+    border-radius: 999px;
+    background: var(--accent-400, #34a0a2);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 4px 10px;
+    margin-block-start: 6%;
+    align-items: center;
+    display: flex;
+  }
+  .services-hero__mock-arc {
+    position: absolute;
+    right: -10%;
+    bottom: -20%;
+    width: 65%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--color-accent-surface, #e6f1ef);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+  .services-hero__mock-arc::after {
+    content: '';
+    position: absolute;
+    inset: 18%;
+    border-radius: 50%;
+    background: #fff;
+    z-index: 0;
+  }
+  .services-hero__mock-arc b,
+  .services-hero__mock-arc small {
+    position: relative;
+    z-index: 1;
+  }
+  .services-hero__mock-arc b {
+    color: var(--color-heading, #0b4247);
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .services-hero__mock-arc small {
+    color: var(--color-secondary, #1f5257);
+    font-size: 8px;
+  }
+
+  .services-hero__mock-stats {
+    display: flex;
+    gap: 6%;
+    padding: 0 7% 8%;
+  }
+  .services-hero__mock-stat {
+    flex: 1;
+    border-radius: 6px;
+    background: var(--color-accent-surface, #e6f1ef);
+    padding: 5px 4px;
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+  }
+  .services-hero__mock-stat b {
+    color: var(--color-heading, #0b4247);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .services-hero__mock-stat small {
+    color: var(--color-secondary, #1f5257);
+    font-size: 7px;
+    line-height: 1.2;
+  }
+
+  .services-hero__mock-avatar {
+    width: 22%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--accent-400, #34a0a2);
+  }
+  .services-hero__mock--phone .services-hero__mock-line--title {
+    width: 80%;
+    font-size: 11px;
+    white-space: normal;
+  }
+  .services-hero__mock-media {
+    flex: 1;
+    border-radius: 6px;
+    background: var(--color-accent-surface, #e6f1ef);
+  }
+  .services-hero__mock--phone .services-hero__mock-pill {
+    width: fit-content;
+    margin-block-start: 0;
+  }
+
+  /* Reveal the mockup's content piece by piece once the hero's existing
+     data-motion-rise/[data-motion-in] toggle (src/scripts/motion.ts) fires
+     on .services-hero__layout — same ancestor-driven pattern as
+     .wwa__visual[data-motion-in] .wwa__arrow in global.css, not a new
+     observer. Each element's --d (set inline in the markup) staggers it
+     within that single reveal instead of adding more data-motion-rise
+     targets, which would also push back .services-hero__stats' delay. */
+  .services-hero__mock-line,
+  .services-hero__mock-pill,
+  .services-hero__mock-arc,
+  .services-hero__mock-stat,
+  .services-hero__mock-avatar,
+  .services-hero__mock-media {
+    opacity: 0;
+    translate: 0 8px;
+    transition:
+      opacity 0.5s var(--ease-rise, cubic-bezier(0.22, 1, 0.36, 1)),
+      translate 0.5s var(--ease-rise, cubic-bezier(0.22, 1, 0.36, 1));
+    transition-delay: var(--d, 0s);
+  }
+  .services-hero__mock-arc {
+    translate: 0 14px;
+  }
+  .services-hero__layout[data-motion-in] .services-hero__mock-line,
+  .services-hero__layout[data-motion-in] .services-hero__mock-pill,
+  .services-hero__layout[data-motion-in] .services-hero__mock-arc,
+  .services-hero__layout[data-motion-in] .services-hero__mock-stat,
+  .services-hero__layout[data-motion-in] .services-hero__mock-avatar,
+  .services-hero__layout[data-motion-in] .services-hero__mock-media {
+    opacity: 1;
+    translate: 0 0;
+  }
+  .services-hero__layout[data-motion-in] .services-hero__mock-line--title {
+    opacity: 0.85;
+  }
+
+  /* Quiet "live" ping on the phone mock's avatar dot — a restrained nod to
+     the homepage hero's .mb-ring radar-pulse (reference-hero.css), not a
+     literal reuse since this is a flat UI dot rather than a map marker. */
+  .services-hero__mock-avatar {
+    position: relative;
+  }
+  .services-hero__mock-avatar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid var(--accent-400, #34a0a2);
+    animation: services-hero-ping 2.6s ease-out infinite;
+    animation-delay: 0.8s;
+  }
+  @keyframes services-hero-ping {
+    from {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    to {
+      transform: scale(2.2);
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .services-hero__mock-line,
+    .services-hero__mock-pill,
+    .services-hero__mock-arc,
+    .services-hero__mock-stat,
+    .services-hero__mock-avatar,
+    .services-hero__mock-media {
+      opacity: 1;
+      translate: 0 0;
+      transition: none;
+    }
+    .services-hero__mock-avatar::after {
+      animation: none;
+      display: none;
+    }
+  }
+
+  .services-hero__stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-5, 1.25rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .services-hero__stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4, 1rem);
+    padding: var(--space-6, 1.5rem);
+    background: var(--color-canvas-raised, #0f5f66);
+    clip-path: polygon(22px 0, 100% 0, 100% 100%, 0 100%, 0 22px);
+  }
+  .services-hero__stat-top {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
+  }
+  .services-hero__stat-trend {
+    flex: none;
+    align-self: center;
+    color: var(--accent-400, #34a0a2);
+  }
+  .services-hero__stat-value {
+    margin: 0;
+  }
+  .services-hero__stat-label {
+    flex: 1;
+    min-width: 8ch;
+    margin: 0;
+    margin-inline-start: auto;
+    font-family: var(--font-mono, 'Martian Mono', monospace);
+    font-size: var(--text-micro, 11px);
+    letter-spacing: var(--text-micro--tracking, 0.04em);
+    text-transform: uppercase;
+    text-align: right;
+    color: var(--color-on-canvas-muted, #fff9);
+  }
+  .services-hero__stat-divider {
+    border-block-start: 1px dashed var(--color-canvas-line-strong, #ffffff4d);
+  }
+  .services-hero__stat-desc {
+    margin: 0;
+    font-size: var(--text-caption, 14px);
+    line-height: 1.45;
+    color: var(--color-on-canvas-muted, #fff9);
+  }
+
+  @media (width <= 809px) {
+    .services-hero__layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .services-hero__visual {
+      order: -1;
+      aspect-ratio: 16 / 9;
+    }
+    .services-hero__stats {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .services__layout {
+    display: grid;
+    grid-template-columns: minmax(180px, 220px) 1fr;
+    gap: var(--space-10, 2.5rem);
+    align-items: start;
+  }
+
+  .services__rail {
+    position: sticky;
+    top: calc(var(--site-header-height, 64px) + var(--space-8, 2rem));
+  }
+  .services__rail ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4, 1rem);
+  }
+  .services__rail a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3, 0.75rem);
+    font-family: var(--font-mono, 'Martian Mono', monospace);
+    font-size: var(--text-index, 13px);
+    letter-spacing: var(--text-eyebrow--tracking, 0.04em);
+    text-transform: uppercase;
+    color: var(--color-muted);
+    text-decoration: none;
+    transition: color var(--duration-base, 0.2s) var(--ease, ease);
+  }
+  .services__rail a:hover {
+    color: var(--color-heading);
+  }
+  .services__rail-bullet {
+    flex: none;
+    width: 6px;
+    height: 6px;
+    background: var(--color-border-strong);
+    transition: background var(--duration-base, 0.2s) var(--ease, ease);
+  }
+  .services__rail a[data-active] {
+    color: var(--color-heading);
+    font-weight: var(--font-weight-medium, 500);
+  }
+  .services__rail a[data-active] .services__rail-bullet {
+    background: var(--color-accent, #13808a);
+  }
+
+  .services__cards {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .services__card {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+    height: calc(100vh - var(--site-header-height, 64px) - var(--space-10, 2.5rem));
+    min-height: 560px;
+    max-height: 820px;
+    background: var(--color-accent-surface, #e6f1ef);
+    position: sticky;
+    top: var(--site-header-height, 64px);
+    box-shadow: 0 -1px 0 var(--color-border, #0b42471f);
+  }
+
+  .services__card-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4, 1rem);
+    padding: var(--space-10, 2.5rem) var(--space-8, 2rem);
+    overflow-y: auto;
+  }
+  .services__card-content h2 {
+    margin: 0;
+  }
+  .services__card-content p {
+    margin: 0;
+    max-width: 38ch;
+  }
+
+  .services__explore {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2, 0.5rem);
+    width: fit-content;
+    font-weight: var(--font-weight-semibold, 600);
+    color: var(--color-heading);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--color-border-strong);
+    padding-bottom: 2px;
+    transition:
+      color var(--duration-base, 0.2s) var(--ease, ease),
+      border-color var(--duration-base, 0.2s) var(--ease, ease);
+  }
+  .services__explore:hover {
+    color: var(--color-accent, #13808a);
+    border-color: var(--color-accent, #13808a);
+  }
+  .services__explore-icon {
+    display: flex;
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  .services__divider {
+    border-block-start: 1px dashed var(--color-border-strong);
+    margin-block-start: auto;
+    padding-block-start: var(--space-6, 1.5rem);
+  }
+
+  .services__chips {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .services__chips li + li {
+    border-block-start: 1px dashed var(--color-border-strong);
+  }
+  .services__chip {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3, 0.75rem);
+    padding-block: var(--space-3, 0.75rem);
+    text-decoration: none;
+    color: var(--color-heading);
+    transition: color var(--duration-base, 0.2s) var(--ease, ease);
+  }
+  .services__chip:hover {
+    color: var(--color-accent, #13808a);
+  }
+  .services__chip-icon {
+    flex: none;
+    display: flex;
+    width: 18px;
+    height: 18px;
+    color: var(--color-accent, #13808a);
+  }
+  .services__chip-label {
+    flex: 1;
+    min-width: 0;
+    font-size: var(--text-body, 16px);
+    font-weight: var(--font-weight-medium, 500);
+    line-height: 1.3;
+    border-bottom: 1px dashed transparent;
+  }
+  .services__chip:hover .services__chip-label {
+    border-color: currentColor;
+  }
+  .services__chip-arrow {
+    flex: none;
+    display: flex;
+    width: 12px;
+    height: 12px;
+    color: var(--color-muted);
+    transition:
+      color var(--duration-base, 0.2s) var(--ease, ease),
+      transform var(--duration-base, 0.2s) var(--ease, ease);
+  }
+  .services__chip:hover .services__chip-arrow {
+    color: var(--color-accent, #13808a);
+    transform: translate(1px, -1px);
+  }
+
+  .services__visual {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+  .services__visual[data-tint='01'] {
+    background: var(--ember-800, #0b4247);
+  }
+  .services__visual[data-tint='02'] {
+    background: var(--ember-700, #0f5f66);
+  }
+  .services__visual[data-tint='03'] {
+    background: var(--accent-600, #0f6a73);
+  }
+  .services__visual[data-tint='04'] {
+    background: var(--ember-900, #04262a);
+  }
+  .services__visual[data-tint='05'] {
+    background: var(--accent-800, #0b4247);
+  }
+  .services__visual-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .services__visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(190deg, rgba(4, 38, 42, 0.15) 0%, rgba(4, 38, 42, 0.75) 100%);
+    mix-blend-mode: multiply;
+  }
+  .services__visual[data-tint='01']::after {
+    background: linear-gradient(190deg, rgba(11, 66, 71, 0.2) 0%, rgba(11, 66, 71, 0.82) 100%);
+  }
+  .services__visual[data-tint='02']::after {
+    background: linear-gradient(190deg, rgba(15, 95, 102, 0.2) 0%, rgba(15, 95, 102, 0.82) 100%);
+  }
+  .services__visual[data-tint='03']::after {
+    background: linear-gradient(190deg, rgba(15, 106, 115, 0.2) 0%, rgba(15, 106, 115, 0.82) 100%);
+  }
+  .services__visual[data-tint='04']::after {
+    background: linear-gradient(190deg, rgba(4, 38, 42, 0.25) 0%, rgba(4, 38, 42, 0.85) 100%);
+  }
+  .services__visual[data-tint='05']::after {
+    background: linear-gradient(190deg, rgba(11, 66, 71, 0.2) 0%, rgba(11, 66, 71, 0.82) 100%);
+  }
+  .services__visual-badge {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3, 0.75rem);
+    padding: var(--space-6, 1.5rem) var(--space-8, 2rem);
+  }
+  .services__visual-index {
+    font-family: var(--font-mono, 'Martian Mono', monospace);
+    font-size: var(--text-index, 13px);
+    letter-spacing: var(--text-eyebrow--tracking, 0.04em);
+    color: rgba(255, 255, 255, 0.65);
+  }
+  .services__visual-icon {
+    display: flex;
+    width: 28px;
+    height: 28px;
+    color: var(--accent-400, #34a0a2);
+  }
+  .services__visual-icon :global(svg) {
+    width: 100%;
+    height: 100%;
+    stroke-width: 1.25;
+  }
+
+  @media (width <= 980px) {
+    .services__card {
+      grid-template-columns: minmax(0, 1fr);
+      position: static;
+      height: auto;
+      min-height: 0;
+      max-height: none;
+      box-shadow: none;
+      border-block-end: 1px solid var(--color-border);
+    }
+    .services__cards {
+      gap: 0;
+    }
+    .services__card-content {
+      overflow-y: visible;
+    }
+    .services__visual {
+      min-height: 220px;
+    }
+  }
+
+  @media (width <= 809px) {
+    .services__layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .services__rail {
+      position: static;
+      border-block-end: 1px solid var(--color-border);
+      padding-block-end: var(--space-4, 1rem);
+    }
+    .services__rail ul {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: var(--space-3, 0.75rem) var(--space-5, 1.25rem);
+    }
+    .services__card-content {
+      padding: var(--space-8, 2rem) var(--space-5, 1.25rem);
+    }
+  }
+
+  /* This section already carries its own section--rhythm-base block
+     padding, so the shared .wwd__steps class's own top margin+padding
+     (meant for when it's nested directly after other content in one
+     section, as on the homepage — set via the [data-astro-cid-7xbdjwkz]
+     rule in reference-index.css, which outranks global.css's own
+     padding-block-start:0 by specificity) would double up the gap above
+     it here. Zeroed for this instance only — Astro scopes this selector
+     to this component. */
+  .wwd__steps {
+    margin-block-start: 0;
+    padding-block-start: 0;
+  }
+
+  .industries-extend__column {
+    /* Same gutter+24px fix as Hero.astro's .mb-hh.column — see global.css. */
+    padding-inline: calc(var(--gutter, 40px) + var(--space-6, 24px));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12, 3rem);
+  }
+
+  .industries-extend__heading {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4, 1rem);
+    text-align: center;
+    max-width: 38rem;
+    margin-inline: auto;
+  }
+  .industries-extend__heading .eyebrow {
+    justify-content: center;
+  }
+  .industries-extend__heading h2,
+  .industries-extend__heading p {
+    margin: 0;
+  }
+
+  .industries-extend__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-5, 1.25rem);
+  }
+  .industries-extend__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3, 0.75rem);
+    padding: var(--space-8, 2rem);
+    background: var(--color-accent-surface, #e6f1ef);
+    transition: background var(--duration-base, 0.2s) var(--ease, ease);
+  }
+  .industries-extend__card:hover {
+    background: var(--color-canvas, #0b4247);
+  }
+  .industries-extend__icon {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    color: var(--color-border-strong, #0b42473d);
+    margin-block-end: var(--space-2, 0.5rem);
+    transition: color var(--duration-base, 0.2s) var(--ease, ease);
+  }
+  .industries-extend__card:hover .industries-extend__icon {
+    color: var(--accent-400, #34a0a2);
+  }
+  .industries-extend__icon :global(svg) {
+    width: 100%;
+    height: 100%;
+    stroke-width: 1.25;
+  }
+  .industries-extend__label {
+    margin: 0;
+    font-family: var(--font-mono, 'Martian Mono', monospace);
+    font-size: var(--text-micro, 11px);
+    letter-spacing: var(--text-micro--tracking, 0.04em);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold, 600);
+    color: var(--color-heading);
+    transition: color var(--duration-base, 0.2s) var(--ease, ease);
+  }
+  .industries-extend__card:hover .industries-extend__label {
+    color: var(--white, #fff);
+  }
+  .industries-extend__desc {
+    margin: 0;
+    font-size: var(--text-caption, 14px);
+    line-height: 1.5;
+    color: var(--color-secondary);
+    max-width: 32ch;
+    transition: color var(--duration-base, 0.2s) var(--ease, ease);
+  }
+  .industries-extend__card:hover .industries-extend__desc {
+    color: var(--color-on-canvas-muted, #fff9);
+  }
+  .industries-extend__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2, 0.5rem);
+    width: fit-content;
+    margin-block-start: var(--space-2, 0.5rem);
+    font-weight: var(--font-weight-semibold, 600);
+    font-size: var(--text-caption, 14px);
+    color: var(--color-heading);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--color-border-strong);
+    padding-bottom: 2px;
+    transition:
+      color var(--duration-base, 0.2s) var(--ease, ease),
+      border-color var(--duration-base, 0.2s) var(--ease, ease);
+  }
+  .industries-extend__link:hover {
+    color: var(--accent-400, #34a0a2);
+    border-color: var(--accent-400, #34a0a2);
+  }
+  .industries-extend__card:hover .industries-extend__link {
+    color: var(--white, #fff);
+    border-color: var(--color-canvas-line-strong, #ffffff4d);
+  }
+  .industries-extend__link-icon {
+    display: flex;
+    width: 0.7rem;
+    height: 0.7rem;
+  }
+
+  @media (width <= 809px) {
+    .industries-extend__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .services__rail-bullet,
+    .services__explore,
+    .services__chip,
+    .services__chip-arrow {
+      transition: none;
+    }
+  }
+</style>

@@ -4,30 +4,26 @@
  * (bitmap-encoded landmass + highlighted studio-location dots) in the
  * hero SVG. Pure decoration, no content logic.
  */
-const CLIENT_NAMES = [
-  'Adidas',
-  'AirAsia',
-  'Bira',
-  'Canon',
-  'Caterpillar',
-  'Elastic',
-  'Finastra',
-  'GE',
-  'Rockwell Automation',
-  'Red Hat',
+const CLIENT_LOGOS = [
+  { name: 'Adidas', src: '/images/clients/clients_addidas.webp' },
+  { name: 'AirAsia', src: '/images/clients/clients_airasia.webp' },
+  { name: 'Bira', src: '/images/clients/clients_bira.webp' },
+  { name: 'Canon', src: '/images/clients/clients_canon.webp' },
+  { name: 'Caterpillar', src: '/images/clients/clients_cat.webp' },
+  { name: 'Elastic', src: '/images/clients/clients_elastic.webp' },
+  { name: 'Finastra', src: '/images/clients/clients_finastra.webp' },
+  { name: 'GE', src: '/images/clients/clients_ge.webp' },
+  { name: 'Rockwell Automation', src: '/images/clients/clients_RA.webp' },
+  { name: 'Red Hat', src: '/images/clients/clients_redhat.webp' },
 ];
-
-const WEIGHTS = [600, 500, 700, 400, 600];
-const TRACKING = [0.02, 0.12, -0.02, 0.08, 0.04];
 
 export function initHeroLogos(): void {
   const mount = document.getElementById('mb-logos');
   if (!mount) return;
 
-  const items = CLIENT_NAMES.map((name, i) => {
-    const style = `font-weight:${WEIGHTS[i % 5]};letter-spacing:${TRACKING[i % 5]}em;font-style:${i % 4 === 2 ? 'italic' : 'normal'}`;
-    return `<span style="${style}">${name}</span>`;
-  }).join('');
+  const items = CLIENT_LOGOS.map(
+    ({ name, src }) => `<img src="${src}" alt="${name}" loading="lazy" decoding="async" />`
+  ).join('');
 
   mount.innerHTML = `<div class="mb-logos-label">TRUSTED BY<br>ENTERPRISE BRANDS<br>AROUND THE WORLD</div><div class="mb-logos-marquee"><div class="mb-logos-track"><span class="mb-logos-group">${items}</span><span class="mb-logos-group" aria-hidden="true">${items}</span></div></div>`;
 }

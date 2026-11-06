@@ -11,6 +11,8 @@
 // .button, .link, .wordmark, .measure--narrow) keep their original
 // data-astro-cid-* attribute; this component's own .footer/.footer-cta/
 // .footer-sitemap/.footer-contact classes use Astro's real auto-scoping.
+import { getIcon } from '@utils/icon';
+
 interface LinkItem {
   label: string;
   href: string;
@@ -20,6 +22,8 @@ interface SitemapGroup {
   links: LinkItem[];
   wide?: boolean;
 }
+
+const arrowIcon = getIcon('arrow-up-right');
 
 const sitemapGroups: SitemapGroup[] = [
   {
@@ -100,7 +104,10 @@ const sitemapGroups: SitemapGroup[] = [
           <p class="text text--lead tone--on-canvas-muted measure--narrow" data-astro-cid-io6xibmp>Ready to MOBILISE?</p>
           <div class="footer-cta__actions">
             <a class="button button--outline button--sm" data-astro-cid-j6ocf6pu href="/case-studies">See our work</a>
-            <a class="button button--secondary button--sm" data-astro-cid-j6ocf6pu href="/contact">Let's Talk</a>
+            <a class="button button--secondary button--sm" data-astro-cid-j6ocf6pu href="/contact">
+              Let's Talk
+              <span class="button__arrow" set:html={arrowIcon} />
+            </a>
           </div>
         </div>
       </div>
@@ -172,7 +179,7 @@ const sitemapGroups: SitemapGroup[] = [
             alt="MOBILISE"
             class="wordmark footer__brand-wordmark"
             data-astro-cid-hkf3h753
-            src="/images/mobilise_new_logo.png"
+            src="/images/mobilise_new_logo.webp"
             style={{ height: '32px', width: 'auto', display: 'block' }}
           />
           <p class="text text--caption tone--on-canvas-muted" data-astro-cid-io6xibmp>Copyright MOBILISE 2026</p>
@@ -198,9 +205,8 @@ const sitemapGroups: SitemapGroup[] = [
   .footer {
     background-color: transparent;
     color: var(--color-body);
-    border-block-start: 1px solid var(--color-border);
     isolation: isolate;
-    padding-block: var(--space-section);
+    padding-block: var(--space-10) var(--space-section);
     position: relative;
     --color-canvas: var(--color-page-secondary);
     --color-canvas-raised: var(--color-surface);
@@ -209,6 +215,15 @@ const sitemapGroups: SitemapGroup[] = [
     --color-accent-on-canvas: var(--color-accent);
     --color-canvas-line: var(--color-border);
     --color-canvas-line-strong: var(--color-border-strong);
+  }
+  .footer::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+    background-image: repeating-linear-gradient(to right, var(--color-border, var(--line-hairline)) 0 14px, transparent 14px 22px);
+    pointer-events: none;
   }
   .footer::before {
     content: '';
@@ -258,9 +273,22 @@ const sitemapGroups: SitemapGroup[] = [
     display: grid;
   }
   .footer-cta {
+    position: relative;
     gap: var(--space-16);
     grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    padding-block: var(--space-4) var(--space-10);
     display: grid;
+  }
+  .footer-cta::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 100vw;
+    height: 1px;
+    transform: translateX(-50%);
+    background-image: repeating-linear-gradient(to right, var(--color-border, var(--line-hairline)) 0 14px, transparent 14px 22px);
+    pointer-events: none;
   }
   .footer-cta__promo {
     align-content: start;
@@ -324,6 +352,7 @@ const sitemapGroups: SitemapGroup[] = [
     .footer-cta {
       gap: var(--space-12);
       grid-template-columns: minmax(0, 1fr);
+      padding-block: var(--space-4) var(--space-8);
     }
     .footer-sitemap {
       grid-template-columns: repeat(2, minmax(0, 1fr));

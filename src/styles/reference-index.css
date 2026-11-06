@@ -14,7 +14,7 @@
 .svc__list li{font-size:12px;line-height:1.3;padding:8px 12px;background:#ffffff14;border:0;border-radius:0;flex:0 1 auto;width:auto;white-space:nowrap}
 @media (width<=1023px){.svc__list li{white-space:normal}}
 .svc__cta{color:#fff;font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:4px;width:fit-content;margin-block-start:auto}
-.svc__visual{background-image:url(/images/assets_images_run-ads-canyon-teal2.png);background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;padding:clamp(14px,2.6%,24px);position:relative;min-width:0}
+.svc__visual{background-image:url(/images/assets_images_run-ads-canyon-teal2.webp);background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;padding:clamp(14px,2.6%,24px);position:relative;min-width:0}
 .svc__mock{background:#0b4247e6;backdrop-filter:blur(10px);border:1px solid #ffffff26;border-radius:10px;color:#fff;inline-size:100%;max-inline-size:340px;padding:clamp(12px,2vw,18px);display:flex;flex-direction:column;gap:clamp(10px,1.6vw,14px);box-shadow:var(--shadow-float)}
 .svc__mock-bar{display:flex;flex-wrap:wrap;gap:6px}
 .svc__mock-chip{font-size:11px;letter-spacing:.02em;color:#dbe9e7;border:1px solid #ffffff33;border-radius:999px;padding:5px 10px}

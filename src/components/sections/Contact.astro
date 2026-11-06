@@ -10,6 +10,9 @@
 // utility classes keep their original data-astro-cid-* attribute to
 // match the global reference-*.css rules. .contact-form* styles already
 // lived as plain (unscoped) CSS below — untouched.
+import { getIcon } from '@utils/icon';
+
+const arrowIcon = getIcon('arrow-up-right');
 ---
 
 <section
@@ -52,7 +55,8 @@
       </label>
       <input autocomplete="off" class="contact-form__honeypot" name="company_website" tabindex="-1" type="text" />
       <button class="button button--secondary button--lg" data-astro-cid-j6ocf6pu type="submit">
-        Send enquiry ↗
+        Send enquiry
+        <span class="button__arrow" set:html={arrowIcon} />
       </button>
     </form>
   </div>

@@ -1,6 +1,9 @@
 ---
 // Markup ported verbatim from index2.html's #hero section (already
 // Mobiise-specific content/copy there — only CSS/classes are reused).
+import { getIcon } from '@utils/icon';
+
+const arrowIcon = getIcon('arrow-up-right');
 ---
 
 <section class="mb-hero" id="hero">
@@ -20,7 +23,10 @@
         fluency — at speed.
       </p>
       <div class="mb-bt">
-        <a class="mb-b2" href="#contact">Connect with us <b>+</b></a>
+        <a class="mb-b2" href="/contact">
+          Connect with us <b>+</b>
+          <span class="button__arrow" set:html={arrowIcon} />
+        </a>
         <a class="mb-b2 mb-s" href="#about">Who we are <b>+</b></a>
       </div>
     </div>
