@@ -1,0 +1,335 @@
+---
+// Migrated from src/data/section-case-studies.html (raw HTML via
+// RawSection) to a real Astro component. Same pattern as previous
+// migrations: shared utility classes (.section, .rails, .column,
+// .text/.tone/.weight, .eyebrow, .head) keep their original
+// data-astro-cid-* attribute; this component's own .cases/.case* classes
+// use Astro's real auto-scoping. Only one case study (Adidas) exists
+// today — kept as plain markup rather than a data array/loop, since a
+// loop of one adds indirection without a second item to justify it.
+---
+
+<section
+  aria-label="Leading enterprise brands we've grown worldwide"
+  class="section section--page-secondary section--rhythm-none"
+  data-astro-cid-pi6vcj26
+  data-section="case-studies"
+  id="case-studies"
+>
+  <div class="cases">
+    <div aria-hidden="true" class="rails rails--ground" data-astro-cid-75uivqud></div>
+    <div class="column cases__column" data-astro-cid-5lyysmr3>
+      <div class="cases__head">
+        <div class="head head--split head--ground" data-astro-cid-ysklgcyt data-motion-rise>
+          <div class="head__title" data-astro-cid-ysklgcyt>
+            <p class="eyebrow eyebrow--accent" data-astro-cid-zedojbgr>
+              <span aria-hidden="true" class="eyebrow__mark" data-astro-cid-zedojbgr></span>Case studies
+            </p>
+            <h2 class="text text--h2 tone--heading" data-astro-cid-io6xibmp data-astro-cid-ysklgcyt>
+              Leading enterprise brands we've grown worldwide
+            </h2>
+          </div>
+          <div class="head__lede" data-astro-cid-ysklgcyt>
+            <p class="text text--body-lg tone--secondary" data-astro-cid-io6xibmp data-astro-cid-ysklgcyt>
+              MOBILISE carried one Adidas brand system into five regional marketing teams, launching coordinated
+              campaigns across APAC, EMEA and the Americas without a single off-brand asset.
+            </p>
+          </div>
+        </div>
+        <a class="cases__all" data-motion-rise href="/case-studies">
+          <span class="text text--body tone--heading" data-astro-cid-io6xibmp>All case studies</span>
+          <svg aria-hidden="true" class="icon" fill="currentColor" focusable="false" height="16" viewBox="0 0 256 256" width="16" xmlns="http://www.w3.org/2000/svg">
+            <path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="cases__list" data-case-list data-motion-rise>
+        <details class="case" data-state="open" open style={{ '--control-open': '162px' }}>
+          <summary class="case__row">
+            <img alt="Adidas" class="case__logo" decoding="async" height="99" loading="lazy" src="/images/logo-adidas.svg" width="434" />
+            <span class="text text--h3 tone--heading case__line" data-astro-cid-io6xibmp>
+              Adidas cut regional campaign turnaround from twelve weeks to four without losing brand consistency.
+            </span>
+            <a class="case__control" data-control href="/case-studies/adidas">
+              <span class="case__control-label" data-label>
+                Read the story
+                <svg aria-hidden="true" class="icon" fill="currentColor" focusable="false" height="12" viewBox="0 0 256 256" width="12" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z" />
+                </svg>
+              </span>
+              <span class="case__control-plus">
+                <svg aria-hidden="true" class="icon" fill="currentColor" focusable="false" height="16" viewBox="0 0 256 256" width="16" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z" />
+                </svg>
+              </span>
+            </a>
+          </summary>
+          <div class="case__fold" data-fold>
+            <div class="case__panel">
+              <figure class="case__creative" data-tone="light">
+                <img
+                  alt="Adidas regional campaign creative across APAC, EMEA and the Americas"
+                  class="case__photo"
+                  decoding="async"
+                  height="559"
+                  loading="lazy"
+                  src="/images/case-studies/adidas.avif"
+                  width="1620"
+                />
+                <figcaption class="case__overlay">
+                  <span class="case__stat">
+                    <span class="text text--stat tone--inherit case__stat-value" data-astro-cid-io6xibmp>3x</span>
+                    <span class="text text--caption tone--inherit case__stat-label" data-astro-cid-io6xibmp>
+                      Faster time-to-market across new regions
+                    </span>
+                  </span>
+                  <img alt="Adidas" class="case__mark" decoding="async" height="99" loading="lazy" src="/images/logo-adidas.svg" width="434" />
+                </figcaption>
+              </figure>
+              <dl class="case__meta">
+                <div class="case__fact">
+                  <dt class="text text--body tone--heading" data-astro-cid-io6xibmp>5</dt>
+                  <dd class="text text--body tone--muted" data-astro-cid-io6xibmp>
+                    Regional markets launched from one brand system
+                  </dd>
+                </div>
+                <div class="case__fact">
+                  <dt class="text text--body tone--heading" data-astro-cid-io6xibmp>3x</dt>
+                  <dd class="text text--body tone--muted" data-astro-cid-io6xibmp>
+                    Faster campaign turnaround, brief to launch
+                  </dd>
+                </div>
+                <div class="case__fact">
+                  <dt class="text text--body tone--heading" data-astro-cid-io6xibmp>0</dt>
+                  <dd class="text text--body tone--muted" data-astro-cid-io6xibmp>
+                    Off-brand assets shipped across five markets
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cases {
+    padding-block: var(--space-24);
+    position: relative;
+  }
+  .cases > :global(.cases__column) {
+    row-gap: var(--space-12);
+    display: grid;
+    position: relative;
+  }
+  .cases__head {
+    padding-inline: var(--space-6);
+    row-gap: var(--space-8);
+    display: grid;
+  }
+  .cases__all {
+    color: var(--color-heading);
+    align-items: center;
+    gap: var(--space-1);
+    justify-self: start;
+    text-decoration: none;
+    display: inline-flex;
+  }
+  .cases__all:hover {
+    color: var(--color-accent);
+  }
+  .cases__list {
+    padding-inline: var(--space-6);
+    display: grid;
+  }
+  .case {
+    border-block-start: 1px dashed var(--color-border-strong);
+    position: relative;
+  }
+  .case:last-child {
+    border-block-end: 1px dashed var(--color-border-strong);
+  }
+  .case__row {
+    align-items: center;
+    column-gap: var(--space-4);
+    cursor: pointer;
+    padding-block: var(--space-4);
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    list-style: none;
+    display: grid;
+  }
+  .case__row::-webkit-details-marker {
+    display: none;
+  }
+  .case__logo {
+    block-size: var(--space-4);
+    inline-size: auto;
+    display: block;
+  }
+  .case :global(.case__line) {
+    text-wrap: pretty;
+  }
+  .case__control {
+    --control-open: 160px;
+    block-size: var(--space-10);
+    border: 1px solid var(--color-border);
+    color: var(--color-heading);
+    inline-size: var(--space-10);
+    transition:
+      inline-size var(--duration-rise) var(--ease-rise),
+      border-color var(--duration-base) var(--ease);
+    justify-self: end;
+    align-items: center;
+    text-decoration: none;
+    display: grid;
+    overflow: clip;
+  }
+  .case__row:hover .case__control {
+    border-color: var(--color-border-strong);
+  }
+  .case[data-state='open'] .case__control {
+    inline-size: var(--control-open);
+  }
+  .case__control-label,
+  .case__control-plus {
+    transition: opacity var(--duration-fast) var(--ease);
+    grid-area: 1 / 1;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
+  }
+  .case__control-label {
+    font-size: var(--text-caption);
+    gap: var(--space-2);
+    letter-spacing: var(--text-caption--tracking);
+    line-height: var(--text-caption--line-height);
+    opacity: 0;
+    padding-inline: var(--space-3);
+    white-space: nowrap;
+  }
+  .case__control-plus {
+    inline-size: var(--space-10);
+    transition-delay: var(--duration-fast);
+    justify-self: start;
+  }
+  .case[data-state='open'] .case__control-label {
+    opacity: 1;
+    transition-delay: var(--duration-fast);
+  }
+  .case[data-state='open'] .case__control-plus {
+    opacity: 0;
+    transition-delay: 0s;
+  }
+  .case__fold {
+    display: block;
+  }
+  .case__panel {
+    padding-block: 0 var(--space-4);
+    row-gap: var(--space-6);
+    display: grid;
+  }
+  .case__creative {
+    aspect-ratio: 2.9;
+    background: var(--color-surface-sunken);
+    border-radius: var(--radius-sm);
+    margin: 0;
+    position: relative;
+    overflow: clip;
+    container-type: inline-size;
+  }
+  .case__photo {
+    object-fit: cover;
+    object-position: 50% 38%;
+    block-size: 100%;
+    inline-size: 100%;
+    display: block;
+  }
+  .case__overlay {
+    background: linear-gradient(135deg, var(--color-scrim) 0%, transparent 45%);
+    color: var(--white);
+    padding: var(--space-8);
+    grid-template-rows: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto;
+    display: grid;
+    position: absolute;
+    inset: 0;
+  }
+  .case__mark {
+    filter: brightness(0) invert();
+    grid-area: 1 / 2;
+    justify-self: end;
+    block-size: auto;
+    inline-size: 24cqw;
+    display: block;
+  }
+  .case__creative[data-tone='light'] .case__overlay {
+    color: var(--color-heading);
+    background: none;
+  }
+  .case__creative[data-tone='light'] .case__mark {
+    filter: none;
+  }
+  .case__stat {
+    align-content: start;
+    row-gap: var(--space-2);
+    max-inline-size: 18ch;
+    display: grid;
+  }
+  .case :global(.case__stat-value) {
+    line-height: 0.9;
+  }
+  .case__meta {
+    column-gap: var(--space-8);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 0;
+    display: grid;
+  }
+  .case__fact {
+    display: block;
+  }
+  .case__fact dt,
+  .case__fact dd {
+    display: inline;
+  }
+  .case__fact dt::after {
+    content: ' ';
+  }
+  .case__fact dd {
+    margin: 0;
+  }
+  @media (width <= 809px) {
+    .cases {
+      padding-block: var(--space-16);
+    }
+    .cases > :global(.cases__column) {
+      row-gap: var(--space-10);
+    }
+    .cases__head :global(.head__lede),
+    .cases__all {
+      display: none;
+    }
+    .case__row {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .case__control {
+      grid-column: 1 / -1;
+      justify-self: start;
+    }
+    .case__creative {
+      aspect-ratio: 16 / 9;
+    }
+    .case__overlay {
+      padding: var(--space-5);
+    }
+    .case__creative[data-tone='light'] .case__photo {
+      object-position: 0 50%;
+    }
+    .case__meta {
+      row-gap: var(--space-3);
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>
