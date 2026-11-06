@@ -1,0 +1,48 @@
+---
+// Migrated from src/data/section-about.html (raw HTML via RawSection) to
+// a real Astro component. Matching CSS moved here (scoped) from the
+// reference-*.css files. Same pattern as RunAds.astro/Film.astro: shared
+// utility classes (.section, .rails, .column, .text/.tone/.weight,
+// .eyebrow, .wwd__heading/.wwd__title) keep their original
+// data-astro-cid-* attribute to match the global reference-*.css rules.
+// The .wwa class itself is NOT attribute-gated — its rules live in
+// global.css as plain (unscoped) CSS, added separately from the scrape.
+//
+// Note: the reference .wwd__lede rule is `.wwd[data-astro-cid-7xbdjwkz]
+// .wwd__lede{flex:0 0 46%}` — it requires an ancestor with a literal
+// class="wwd", which doesn't exist anywhere in this section's markup (only
+// "wwd__*"-prefixed classes do). That rule has never actually applied on
+// the live site; kept that way here rather than "fixing" it, since this
+// migration preserves current behavior rather than redesigning it.
+---
+
+<section
+  aria-label="About MOBILISE"
+  class="section section--page section--rhythm-none wwa"
+  data-astro-cid-pi6vcj26
+  data-section="about"
+  id="about"
+>
+  <div aria-hidden="true" class="rails rails--ground" data-astro-cid-75uivqud></div>
+  <div class="column" data-astro-cid-5lyysmr3>
+    <div class="wwd__heading" data-astro-cid-7xbdjwkz data-motion-rise>
+      <div class="wwd__title" data-astro-cid-7xbdjwkz>
+        <p class="eyebrow eyebrow--accent" data-astro-cid-zedojbgr>
+          <span aria-hidden="true" class="eyebrow__mark" data-astro-cid-zedojbgr></span>Who we are
+        </p>
+        <h2
+          class="text text--h2 tone--heading weight--300 wwd__title-text"
+          data-astro-cid-io6xibmp
+          data-astro-cid-7xbdjwkz
+        >
+          MOBILISE moves global brands,<br class="wwd__break" />moves conversations.
+        </h2>
+      </div>
+      <p class="text text--body-lg tone--secondary wwd__lede" data-astro-cid-io6xibmp data-astro-cid-7xbdjwkz>
+        Headquartered in Bangalore, with teams across Singapore, the Middle East, and North America, MOBILISE
+        delivers full-funnel B2B marketing programs that combine global standards with regional insight — clarity
+        where there's complexity, precision where it matters.
+      </p>
+    </div>
+  </div>
+</section>
