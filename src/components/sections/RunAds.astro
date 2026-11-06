@@ -1,0 +1,746 @@
+---
+// Migrated from src/data/section-run-ads.html (raw HTML via RawSection) to
+// a real Astro component: typed data + a loop instead of 5 hand-copied
+// blocks, and the matching CSS moved here (scoped) from
+// src/styles/reference-index.css. Content/behavior kept 1:1 with the
+// original — same markup shape, same CSS rules, same toggle behavior
+// (pure CSS :has(), no JS). See DESIGN_ORCHESTRATOR.md.
+interface Service {
+  tag: string;
+  title: string;
+  desc: string;
+  bullets: string[];
+  ctaLabel: string;
+  surface: string;
+  toggleLabel: string;
+  image: string;
+  mock: {
+    chips: string[];
+    activeChip: string;
+    fields: { k: string; v: string }[];
+    stat: { value: string; label: string };
+    timeline: { title: string; sub: string }[];
+  };
+}
+
+const services: Service[] = [
+  {
+    tag: 'N°05',
+    title: 'Marketing & Sales Strategy',
+    desc: 'A discovery and assessment process, combined with decades of experience, ensures your marketing and sales strategy delivers results.',
+    bullets: [
+      'Go-to-market, audience and market-entry planning',
+      'Sales and marketing alignment workshops',
+      'Measurement frameworks and channel prioritisation',
+    ],
+    ctaLabel: 'Explore Strategy',
+    surface: 'assistant',
+    toggleLabel: 'Strategy',
+    image: '/images/svc-photos/svc-strategy.jpg',
+    mock: {
+      chips: ['Discovery', 'Positioning', 'Roadmap'],
+      activeChip: 'Roadmap',
+      fields: [
+        { k: 'Client', v: 'Enterprise SaaS' },
+        { k: 'Scope', v: '3 new markets' },
+      ],
+      stat: { value: '+10', label: 'Years of word-of-mouth relationships' },
+      timeline: [
+        { title: 'Workshop complete', sub: 'Stakeholder alignment, week 1' },
+        { title: 'Roadmap delivered', sub: 'Go-to-market plan live, week 3' },
+      ],
+    },
+  },
+  {
+    tag: 'N°04',
+    title: 'Sales Enablement',
+    desc: 'Kits, collateral, plans, tools and content that empower sales teams to lead from the front.',
+    bullets: [
+      'Sales presentations, playbooks and conversation guides',
+      'Partner enablement portals and campaign toolkits',
+      'Product messaging and buyer-stage content',
+    ],
+    ctaLabel: 'Explore Sales Enablement',
+    surface: 'imessage',
+    toggleLabel: 'Sales Enablement',
+    image: '/images/svc-photos/svc-sales-enablement.jpg',
+    mock: {
+      chips: ['Brief', 'Build', 'Rollout'],
+      activeChip: 'Rollout',
+      fields: [
+        { k: 'Client', v: 'Industrial Manufacturer' },
+        { k: 'Scope', v: 'Global sales team' },
+      ],
+      stat: { value: '10', label: 'Global client brands' },
+      timeline: [
+        { title: 'Playbook shipped', sub: 'Conversation guide live' },
+        { title: 'Team trained', sub: 'Adopted company-wide' },
+      ],
+    },
+  },
+  {
+    tag: 'N°03',
+    title: 'Design & Development',
+    desc: 'UI/UX and SEO-optimized websites that tell your story and showcase your value proposition.',
+    bullets: [
+      'UX strategy, information architecture and interface design',
+      'Responsive front-end development and technical SEO',
+      'Analytics-ready landing pages and digital experiences',
+    ],
+    ctaLabel: 'Explore Design & Development',
+    surface: 'coding',
+    toggleLabel: 'Design & Development',
+    image: '/images/svc-photos/svc-design-dev.jpg',
+    mock: {
+      chips: ['Wireframe', 'Design', 'Ship'],
+      activeChip: 'Ship',
+      fields: [
+        { k: 'Client', v: 'B2B Platform' },
+        { k: 'Scope', v: 'Marketing site + SEO' },
+      ],
+      stat: { value: '4', label: 'Global studios' },
+      timeline: [
+        { title: 'Design approved', sub: 'Interface and IA signed off' },
+        { title: 'Site launched', sub: 'Analytics-ready and indexed' },
+      ],
+    },
+  },
+  {
+    tag: 'N°01',
+    title: 'Full Service Marketing',
+    desc: 'Implement data-driven marketing and sales programs that increase customers, revenue and profitability.',
+    bullets: [
+      'Demand generation and account-based marketing',
+      'Content, email and integrated campaign programs',
+      'Performance reporting and continuous optimisation',
+    ],
+    ctaLabel: 'Explore Full Service Marketing',
+    surface: 'marketing',
+    toggleLabel: 'Full Service Marketing',
+    image: '/images/svc-photos/svc-full-marketing.jpg',
+    mock: {
+      chips: ['Plan', 'Launch', 'Optimize'],
+      activeChip: 'Optimize',
+      fields: [
+        { k: 'Client', v: 'Enterprise Tech' },
+        { k: 'Scope', v: 'Paid, content and lifecycle' },
+      ],
+      stat: { value: '6', label: 'Industry specializations' },
+      timeline: [
+        { title: 'Campaign live', sub: 'Demand-gen engine stood up' },
+        { title: 'Pipeline up', sub: 'One quarter after launch' },
+      ],
+    },
+  },
+  {
+    tag: 'N°02',
+    title: 'Creative Production',
+    desc: 'From content that compels action to videos that tell your story — unparalleled design, delivered fast and at scale.',
+    bullets: [
+      'Campaign concepts and multi-format asset production',
+      'Video, motion graphics and presentation design',
+      'Regional adaptation, localisation and brand governance',
+    ],
+    ctaLabel: 'Explore Creative Production',
+    surface: 'creative',
+    toggleLabel: 'Creative Production',
+    image: '/images/svc-photos/svc-creative-production.jpg',
+    mock: {
+      chips: ['Concept', 'Produce', 'Localize'],
+      activeChip: 'Localize',
+      fields: [
+        { k: 'Client', v: 'Global Brand' },
+        { k: 'Scope', v: '40+ assets, 5 markets' },
+      ],
+      stat: { value: '3', label: 'Regions served' },
+      timeline: [
+        { title: 'Templates locked', sub: 'On-brand system approved' },
+        { title: 'Assets delivered', sub: 'Across every region, on time' },
+      ],
+    },
+  },
+];
+
+const starPositions = ['start-top', 'start-bottom', 'end-top', 'end-bottom'];
+---
+
+<section
+  aria-label="Full-funnel marketing for enterprise brands"
+  class="section section--page section--rhythm-none ads"
+  data-section="run-ads"
+  id="run-ads"
+>
+  <div aria-hidden="true" class="rails rails--ground"></div>
+  <div class="column">
+    <h2 class="text text--display tone--heading weight--300 ads__heading" data-motion-rise>
+      Full-funnel marketing <br class="ads__break" />for enterprise brands
+    </h2>
+
+    <div class="ads__stage" data-motion-rise>
+      <div aria-hidden="true" class="ads__canyon">
+        <img
+          alt=""
+          decoding="async"
+          height="941"
+          loading="lazy"
+          src="/images/assets_images_run-ads-canyon-teal2.png"
+          width="1672"
+        />
+        {
+          starPositions.map((pos) => (
+            <svg
+              class={`ads__star ads__star--${pos}`}
+              height="24"
+              viewBox="1047.99 347.652 20.47 20.474"
+              width="24"
+            >
+              <path
+                d="M1059.62 361.403C1059.66 360.248 1060.58 359.322 1061.74 359.283L1068.46 359.059L1068.46 356.719L1061.74 356.495C1060.58 356.457 1059.66 355.53 1059.62 354.376L1059.39 347.652L1057.05 347.652L1056.83 354.376C1056.79 355.53 1055.86 356.457 1054.71 356.495L1047.99 356.719L1047.99 359.059L1054.71 359.283C1055.86 359.322 1056.79 360.248 1056.83 361.403L1057.05 368.126L1059.39 368.126L1059.62 361.403Z"
+                fill="currentColor"
+              />
+            </svg>
+          ))
+        }
+      </div>
+
+      <div class="ads__device">
+        <div class="ads__screen">
+          {
+            services.map((svc) => (
+              <div class="svc" data-surface={svc.surface}>
+                <div class="svc__copy">
+                  <div class="svc__copy-main">
+                    <span class="svc__tag">{svc.tag}</span>
+                    <h3 class="svc__title">{svc.title}</h3>
+                    <p class="svc__desc">{svc.desc}</p>
+                    <ul class="svc__list">
+                      {svc.bullets.map((b) => (
+                        <li>{b}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <a class="svc__cta" href="services.html">
+                    Explore {svc.toggleLabel} →
+                  </a>
+                </div>
+                <div class="svc__visual" style={{ backgroundImage: `url(${svc.image})` }}>
+                  <div class="svc__mock">
+                    <div class="svc__mock-bar">
+                      {svc.mock.chips.map((chip) => (
+                        <span class={`svc__mock-chip${chip === svc.mock.activeChip ? ' svc__mock-chip--on' : ''}`}>
+                          {chip}
+                        </span>
+                      ))}
+                    </div>
+                    <div class="svc__mock-body">
+                      {svc.mock.fields.map((f) => (
+                        <div class="svc__mock-field">
+                          <span class="svc__mock-k">{f.k}</span>
+                          <span class="svc__mock-v">{f.v}</span>
+                        </div>
+                      ))}
+                      <div class="svc__mock-stat">
+                        <span class="svc__mock-stat-value">{svc.mock.stat.value}</span>
+                        <span class="svc__mock-stat-label">{svc.mock.stat.label}</span>
+                      </div>
+                    </div>
+                    <div class="svc__mock-timeline">
+                      {svc.mock.timeline.map((ev) => (
+                        <div class="svc__mock-event">
+                          <span class="svc__mock-dot" />
+                          <div class="svc__mock-event-text">
+                            <b>{ev.title}</b>
+                            <small>{ev.sub}</small>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+        <img
+          alt=""
+          aria-hidden="true"
+          class="ads__phone"
+          decoding="async"
+          height="1855"
+          loading="lazy"
+          src="/images/assets_images_run-ads-iphone.webp"
+          width="900"
+        />
+      </div>
+
+      <div class="ads__toggle">
+        <fieldset class="segmented" style={{ '--count': services.length }}>
+          <legend class="sr-only">See MOBILISE in action</legend>
+          {
+            services.map((svc, i) => (
+              <label class="segmented__option">
+                <input
+                  autocomplete="off"
+                  checked={i === 0}
+                  class="segmented__input sr-only"
+                  name="ad-surface"
+                  type="radio"
+                  value={svc.surface}
+                />
+                {svc.toggleLabel}
+              </label>
+            ))
+          }
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ads {
+    padding-block-start: var(--space-section-lg);
+    position: relative;
+  }
+  .ads .ads__heading {
+    text-align: center;
+    padding-block-end: var(--space-16);
+  }
+  .ads__break {
+    display: none;
+  }
+  .ads__stage {
+    aspect-ratio: 1200 / 776;
+    border-block-start: 1px solid var(--color-border);
+    position: relative;
+  }
+  .ads__canyon {
+    background: var(--color-ember);
+    block-size: 79.897%;
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+  }
+  .ads__canyon img {
+    object-fit: cover;
+    block-size: 100%;
+    inline-size: 100%;
+    display: block;
+  }
+  .ads__canyon::after {
+    content: '';
+    mix-blend-mode: multiply;
+    background: radial-gradient(130% 130%, transparent 58%, #0b424757 100%);
+    position: absolute;
+    inset: 0;
+  }
+  .ads__star {
+    color: var(--color-border);
+    position: absolute;
+  }
+  .ads__star--start-top,
+  .ads__star--start-bottom {
+    inset-inline-start: -12px;
+  }
+  .ads__star--end-top,
+  .ads__star--end-bottom {
+    inset-inline-end: -12px;
+  }
+  .ads__star--start-top,
+  .ads__star--end-top {
+    inset-block-start: -12px;
+  }
+  .ads__star--start-bottom,
+  .ads__star--end-bottom {
+    inset-block-end: -12px;
+  }
+  .ads__device {
+    display: contents;
+  }
+  .ads__screen {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0;
+    box-shadow: var(--shadow-float);
+    block-size: 75%;
+    inline-size: 90%;
+    position: absolute;
+    inset-block-start: 11.679%;
+    inset-inline-start: 5%;
+    overflow: hidden;
+  }
+
+  .svc {
+    display: none;
+    grid-template-columns: 3fr 2fr;
+    block-size: 100%;
+    inline-size: 100%;
+  }
+  .ads__stage:has(.segmented__input[value='assistant']:checked) .svc[data-surface='assistant'],
+  .ads__stage:has(.segmented__input[value='imessage']:checked) .svc[data-surface='imessage'],
+  .ads__stage:has(.segmented__input[value='coding']:checked) .svc[data-surface='coding'],
+  .ads__stage:has(.segmented__input[value='marketing']:checked) .svc[data-surface='marketing'],
+  .ads__stage:has(.segmented__input[value='creative']:checked) .svc[data-surface='creative'] {
+    display: grid;
+  }
+  .svc__copy {
+    background: var(--ink-900, #0b4247);
+    color: #fff;
+    padding: clamp(20px, 4%, 40px) clamp(20px, 4.5%, 40px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(8px, 1.6%, 16px);
+    min-width: 0;
+  }
+  .svc__copy-main {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(8px, 1.6%, 16px);
+    margin-block-start: auto;
+  }
+  .svc__tag {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: #ffffffb3;
+  }
+  .svc__title {
+    font-size: clamp(20px, 2.4vw, 28px);
+    font-weight: 300;
+    line-height: 1.15;
+    margin: 0;
+  }
+  .svc__desc {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #dbe9e7;
+    margin: 0;
+    max-width: 38ch;
+  }
+  .svc__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px 10px;
+  }
+  .svc__list li {
+    font-size: 12px;
+    line-height: 1.3;
+    padding: 8px 12px;
+    background: #ffffff14;
+    border: 0;
+    border-radius: 0;
+    flex: 0 1 auto;
+    width: auto;
+    white-space: nowrap;
+  }
+  @media (width <= 1023px) {
+    .svc__list li {
+      white-space: normal;
+    }
+  }
+  .svc__cta {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    width: fit-content;
+    margin-block-start: auto;
+  }
+
+  /*
+    .svc__visual / .svc__mock — white card with a coral accent, scoped to
+    this component only (brand teal stays the site-wide accent elsewhere).
+    Each service carries its own photo (svc.image) instead of the shared
+    teal canyon background. See DESIGN_ORCHESTRATOR.md.
+  */
+  .svc__visual {
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(14px, 2.6%, 24px);
+    position: relative;
+    min-width: 0;
+  }
+  .svc__visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, rgba(255, 255, 255, 0.05) 0%, rgba(10, 10, 10, 0.12) 55%, rgba(10, 10, 10, 0.3) 100%);
+  }
+  .svc__mock {
+    position: relative;
+    background: #fff;
+    border: 1px solid #f3f2ef;
+    border-radius: 10px;
+    color: #171717;
+    inline-size: 100%;
+    max-inline-size: 340px;
+    padding: clamp(12px, 2vw, 18px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 1.6vw, 14px);
+    box-shadow: var(--shadow-float);
+  }
+  .svc__mock-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .svc__mock-chip {
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: #c7c5c0;
+    border: none;
+    border-radius: 0;
+    padding: 0 0 8px;
+    position: relative;
+  }
+  .svc__mock-chip--on {
+    background: none;
+    color: #e8573a;
+    font-weight: 600;
+  }
+  .svc__mock-chip--on::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: #e8573a;
+    border-radius: 2px;
+  }
+  .svc__mock-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 12px;
+    padding-block: 10px;
+    border-block: 1px solid #f3f2ef;
+  }
+  .svc__mock-field {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .svc__mock-k {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #b9b7b2;
+  }
+  .svc__mock-v {
+    font-size: 12px;
+    color: #171717;
+    line-height: 1.3;
+  }
+  .svc__mock-stat {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding-block-start: 4px;
+  }
+  .svc__mock-stat-value {
+    font-size: 26px;
+    font-weight: 600;
+    color: #e8573a;
+  }
+  .svc__mock-stat-label {
+    font-size: 11px;
+    color: #7b7e84;
+  }
+  .svc__mock-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .svc__mock-event {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .svc__mock-dot {
+    block-size: auto;
+    inline-size: auto;
+    border-radius: 0;
+    background: none;
+    margin-block-start: 0;
+    flex-shrink: 0;
+    color: #e8573a;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .svc__mock-dot::before {
+    content: '→';
+  }
+  .svc__mock-event-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+  }
+  .svc__mock-event-text b {
+    font-size: 12px;
+    font-weight: 600;
+    color: #171717;
+  }
+  .svc__mock-event-text small {
+    font-size: 11px;
+    color: #7b7e84;
+  }
+  @media (width <= 1023px) {
+    .svc__mock-body {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (width <= 809px) {
+    .svc {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+    }
+  }
+  @media (width <= 809px) {
+    .svc__visual {
+      display: none;
+    }
+  }
+
+  .ads__phone {
+    display: none;
+  }
+  .ads__toggle {
+    inline-size: max-content;
+    position: absolute;
+    inset-block-start: 4.124%;
+    inset-inline-start: 50%;
+    translate: -50% -50%;
+  }
+  @media (width <= 809px) {
+    .ads__break {
+      display: inline;
+    }
+    .ads__stage {
+      aspect-ratio: auto;
+      padding-block: var(--space-10);
+      justify-items: center;
+      display: grid;
+    }
+    .ads__canyon {
+      block-size: auto;
+      inset: 0;
+    }
+    .ads__device {
+      inline-size: min(78%, 300px);
+      display: block;
+      position: relative;
+    }
+    .ads__screen {
+      border-radius: 0;
+      block-size: 460px;
+      inline-size: 100%;
+      position: relative;
+      inset-block-start: 0;
+      inset-inline-start: 0;
+      overflow: hidden;
+    }
+    .ads__toggle {
+      inset-block-start: calc(-1 * var(--space-3));
+      translate: -50% -100%;
+    }
+  }
+
+  /* segmented toggle — same rules as reference-index.css's .segmented */
+  .segmented {
+    background: linear-gradient(var(--color-segment-track) 0 0), var(--color-page);
+    block-size: var(--space-10);
+    border-radius: var(--radius-sm);
+    border: 0;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    min-inline-size: 0;
+    margin: 0;
+    padding: 2px;
+    display: inline-grid;
+    position: relative;
+  }
+  .segmented::before {
+    background: var(--color-segment-thumb);
+    border-radius: calc(var(--radius-sm) - 2px);
+    box-shadow: var(--shadow-raised);
+    content: '';
+    inline-size: calc((100% - 4px) / var(--count));
+    transition: translate var(--duration-base) var(--ease-rise);
+    translate: calc(var(--index, 0) * 100%) 0;
+    position: absolute;
+    inset-block: 2px;
+    inset-inline-start: 2px;
+  }
+  .segmented:has(.segmented__option:nth-of-type(2) :checked) {
+    --index: 1;
+  }
+  .segmented:has(.segmented__option:nth-of-type(3) :checked) {
+    --index: 2;
+  }
+  .segmented:has(.segmented__option:nth-of-type(4) :checked) {
+    --index: 3;
+  }
+  .segmented:has(.segmented__option:nth-of-type(5) :checked) {
+    --index: 4;
+  }
+  .segmented__option {
+    border-radius: calc(var(--radius-sm) - 2px);
+    color: var(--color-segment-label);
+    cursor: pointer;
+    font-size: var(--text-micro);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--text-micro--tracking);
+    line-height: var(--text-micro--line-height);
+    padding-inline: var(--space-3);
+    text-transform: uppercase;
+    transition: color var(--duration-fast) var(--ease);
+    white-space: nowrap;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
+    position: relative;
+  }
+  .segmented__option:hover,
+  .segmented__option:has(:checked) {
+    color: var(--color-segment-label-active);
+  }
+  .segmented__option:has(:focus-visible) {
+    box-shadow: 0 0 0 2px var(--color-segment-label);
+  }
+  @media (width <= 479px) {
+    .segmented {
+      grid-auto-columns: auto;
+    }
+    .segmented::before {
+      display: none;
+    }
+    .segmented__option {
+      padding-inline: var(--space-2);
+      transition:
+        background-color var(--duration-fast) var(--ease),
+        color var(--duration-fast) var(--ease);
+    }
+    .segmented__option:has(:checked) {
+      background: var(--color-segment-thumb);
+      box-shadow: var(--shadow-raised);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .segmented::before {
+      transition: none;
+    }
+  }
+</style>
