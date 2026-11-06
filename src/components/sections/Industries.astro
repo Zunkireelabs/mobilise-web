@@ -1,0 +1,398 @@
+---
+// Migrated from src/data/section-industries.html (raw HTML via
+// RawSection) to a real Astro component: the 6 industry rows collapsed
+// into a typed data array + a loop instead of 6 hand-copied <details>
+// blocks. Matching layout CSS moved here (scoped) from reference-index.css
+// — same pattern as previous migrations: shared utility classes keep
+// their original data-astro-cid-* attribute; this component's own
+// .proof/.proof__bento/.proof__bezel/.proof__card/.proof__screen/
+// .proof__call* classes use Astro's real auto-scoping.
+//
+// .proof__accordion/.proof__row* are NOT ported here — they already live
+// as plain (unscoped) CSS in global.css, added separately by the
+// Industries-accordion polish pass; left untouched.
+//
+// .proof__screen (the "dashboard" bezel) and data-stage/data-stage-root
+// have no JS initializer anywhere in the project — confirmed inert
+// (empty figure, no canvas/chart drawn) on the live site today. Kept
+// as-is rather than wiring up new behavior.
+interface Industry {
+  label: string;
+  icon: string;
+  description: string;
+}
+
+const industries: Industry[] = [
+  {
+    label: 'Technology',
+    icon: '<rect height="10" rx="1" width="10" x="7" y="7"></rect><line x1="9" x2="9" y1="2" y2="7"></line><line x1="15" x2="15" y1="2" y2="7"></line><line x1="9" x2="9" y1="17" y2="22"></line><line x1="15" x2="15" y1="17" y2="22"></line><line x1="2" x2="7" y1="9" y2="9"></line><line x1="2" x2="7" y1="15" y2="15"></line><line x1="17" x2="22" y1="9" y2="9"></line><line x1="17" x2="22" y1="15" y2="15"></line>',
+    description: 'Creative, audience targeting and allocation strategies for deep-tech and enterprise products.',
+  },
+  {
+    label: 'SaaS',
+    icon: '<path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>',
+    description: 'A proven playbook to grow B2B SaaS companies at any stage of marketing maturity.',
+  },
+  {
+    label: 'eCommerce',
+    icon: '<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" x2="21" y1="6" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path>',
+    description: 'Acquisition strategies built for the most effective dollar-in, dollar-out retail performance.',
+  },
+  {
+    label: 'Healthcare',
+    icon: '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>',
+    description: "Navigating the complex buyer's journey of healthcare decision-makers and professionals.",
+  },
+  {
+    label: 'Manufacturing',
+    icon: '<path d="M3 21V11l4 2.5V11l4 2.5V11l4 2.5V8l4-3v16H3z"></path>',
+    description: 'Social and digital campaigns custom designed for B2B and B2C industrial audiences.',
+  },
+  {
+    label: 'Fashion',
+    icon: '<path d="M12 3.5a1.5 1.5 0 1 1 1.3 2.2c-.8.4-1.3 1-1.3 1.8v.4"></path><path d="M3 17L12 9l9 8Z"></path>',
+    description: 'Marketing tools built for technical audiences, from decision makers to developers.',
+  },
+];
+---
+
+<section
+  aria-label="One buy across every AI conversation"
+  class="section section--page-secondary section--rhythm-none"
+  data-astro-cid-pi6vcj26
+  data-section="future-proof"
+  id="industries"
+>
+  <div class="proof">
+    <picture>
+      <source height="1600" media="(max-width: 809px)" srcset="//images/platform-ground-phone.webp" width="1052" />
+      <img alt="" class="proof__ground" decoding="async" height="1673" loading="lazy" src="/images/assets_images_DE4AlmA56zfpRzqxEdidU000F0.webp" width="3162" />
+    </picture>
+    <div aria-hidden="true" class="rails rails--canvas proof__rails" data-astro-cid-75uivqud></div>
+    <div aria-hidden="true" class="proof__rules">
+      <span /><span /><span />
+    </div>
+    <div class="column proof__column" data-astro-cid-5lyysmr3>
+      <div class="proof__heading" data-motion-rise>
+        <div class="proof__title">
+          <p class="eyebrow eyebrow--canvas" data-astro-cid-zedojbgr>
+            <span aria-hidden="true" class="eyebrow__mark" data-astro-cid-zedojbgr></span>Industries
+          </p>
+          <h2 class="text text--h2 tone--on-canvas weight--300" data-astro-cid-io6xibmp>
+            Tailored expertise<br />for global leaders
+          </h2>
+        </div>
+        <div class="proof__body">
+          <p class="text text--body-lg tone--on-canvas" data-astro-cid-io6xibmp>
+            Deep experience across the sectors that matter most to enterprise growth.
+          </p>
+          <p class="text text--body-lg tone--on-canvas" data-astro-cid-io6xibmp>
+            From technology to fashion, MOBILISE tailors creative, strategy and execution to how each industry
+            actually buys.
+          </p>
+        </div>
+      </div>
+
+      <div class="proof__bento" data-motion-rise data-offscreen data-stage="1" data-stage-root>
+        <div class="proof__bezel proof__bezel--launch">
+          <article class="proof__card">
+            <h3 class="text text--card-title tone--heading weight--300 proof__card-title" data-astro-cid-io6xibmp>
+              Tailored expertise for global leaders
+            </h3>
+            <div class="proof__accordion">
+              {
+                industries.map((ind, i) => (
+                  <details class="proof__row" name="industries-row" open={i === 0 ? true : undefined}>
+                    <summary class="proof__row-trigger">
+                      <span aria-hidden="true" class="proof__row-icon">
+                        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="20" set:html={ind.icon} />
+                      </span>
+                      <span class="proof__row-label">{ind.label}</span>
+                      <span aria-hidden="true" class="proof__row-glyph">
+                        <svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-width="1.6" viewBox="0 0 16 16" width="14">
+                          <line x1="8" x2="8" y1="2" y2="14" />
+                          <line x1="2" x2="14" y1="8" y2="8" />
+                        </svg>
+                      </span>
+                    </summary>
+                    <div class="proof__row-fold">
+                      <p class="proof__row-body">{ind.description}</p>
+                      <a class="proof__row-cta" href="/contact">
+                        <span>Learn more</span>
+                        <svg aria-hidden="true" class="icon" fill="currentColor" height="12" viewBox="0 0 256 256" width="12" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z" />
+                        </svg>
+                      </a>
+                    </div>
+                  </details>
+                ))
+              }
+            </div>
+          </article>
+        </div>
+
+        <div class="proof__bezel proof__bezel--dashboard">
+          <article class="proof__card proof__card--dashboard">
+            <h3 class="text text--card-title tone--heading weight--300 proof__card-title" data-astro-cid-io6xibmp>
+              Built for every sector
+            </h3>
+            <figure
+              aria-label="MOBILISE's industry coverage, across technology, SaaS, eCommerce, healthcare, manufacturing and fashion."
+              class="proof__screen"
+              role="img"
+            />
+          </article>
+        </div>
+
+        <div class="proof__bezel proof__bezel--call">
+          <a class="proof__card proof__card--call" href="/contact">
+            <span class="proof__call-top">
+              <span class="proof__team">
+                <span class="proof__avatar">
+                  <img alt="" height="64" loading="lazy" src="/images/assets_images_team-avatar-1.png" width="64" />
+                </span>
+                <span class="proof__avatar">
+                  <img alt="" height="64" loading="lazy" src="/images/assets_images_team-avatar-2.png" width="64" />
+                </span>
+                <span class="proof__avatar">
+                  <img alt="" height="64" loading="lazy" src="/images/assets_images_team-avatar-3.png" width="64" />
+                </span>
+              </span>
+              <svg aria-hidden="true" class="icon proof__call-arrow" fill="currentColor" focusable="false" height="20" viewBox="0 0 256 256" width="20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z" />
+              </svg>
+            </span>
+            <span class="proof__call-copy">
+              <span class="text text--card-title tone--heading weight--300" data-astro-cid-io6xibmp>Let's Talk</span>
+              <span class="text text--caption tone--muted" data-astro-cid-io6xibmp>
+                We'll walk you through what working together looks like.
+              </span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .proof {
+    color: var(--color-on-canvas);
+    isolation: isolate;
+    padding-block: var(--space-20);
+    position: relative;
+    overflow: clip;
+  }
+  .proof__ground {
+    object-fit: cover;
+    z-index: -2;
+    block-size: 100%;
+    inline-size: 100%;
+    position: absolute;
+    inset: 0;
+  }
+  .proof :global(.proof__rails) {
+    z-index: -1;
+  }
+  .proof__rules {
+    pointer-events: none;
+    z-index: -1;
+    justify-content: space-between;
+    padding-inline: 24.75%;
+    display: flex;
+    position: absolute;
+    inset: 0;
+  }
+  .proof__rules span {
+    background-image: linear-gradient(var(--color-canvas-line-strong) 50%, transparent 50%);
+    background-size: 1px 8px;
+    inline-size: 1px;
+  }
+  .proof > :global(.proof__column) {
+    padding-inline: calc(var(--gutter) + var(--space-6));
+    row-gap: var(--space-16);
+    display: grid;
+  }
+  .proof__heading {
+    column-gap: var(--space-16);
+    grid-template-columns: 460fr 632fr;
+    display: grid;
+  }
+  .proof :global(.eyebrow.eyebrow--canvas .eyebrow__mark) {
+    background: var(--color-accent);
+  }
+  .proof__title {
+    align-content: start;
+    gap: var(--space-3);
+    max-inline-size: 460px;
+    display: grid;
+  }
+  .proof__body {
+    max-inline-size: 632px;
+    row-gap: var(--space-5);
+    padding-block-start: var(--space-8);
+    display: grid;
+  }
+  .proof__bento {
+    aspect-ratio: 1152 / 668;
+    gap: var(--space-1);
+    grid-template-rows: 456fr 208fr;
+    grid-template-columns: 364fr 784fr;
+    display: grid;
+  }
+  .proof__bezel {
+    backdrop-filter: blur(12px);
+    background: var(--color-surface-glass);
+    border-radius: var(--radius-md);
+    min-block-size: 0;
+    padding: var(--space-1);
+    display: flex;
+  }
+  .proof__bezel--launch {
+    grid-area: 1 / 1;
+  }
+  .proof__bezel--launch .proof__card {
+    padding-inline-end: var(--space-3);
+  }
+  .proof__bezel--dashboard {
+    grid-area: 1 / 2 / span 2;
+  }
+  .proof__bezel--call {
+    grid-area: 2 / 1;
+  }
+  .proof__card {
+    background: var(--color-page-secondary);
+    border-radius: var(--radius-sm);
+    color: var(--color-heading);
+    gap: var(--space-8);
+    min-inline-size: 0;
+    padding: var(--space-5);
+    flex-direction: column;
+    flex: 1;
+    display: flex;
+    overflow: clip;
+  }
+  .proof :global(.proof__card-title) {
+    max-inline-size: 316px;
+  }
+  .proof__card--dashboard {
+    gap: var(--space-6);
+    padding: calc(var(--space-6) + var(--space-1));
+  }
+  .proof__card--dashboard :global(.proof__card-title) {
+    max-inline-size: none;
+  }
+  .proof__screen {
+    background: var(--ground-100);
+    box-shadow: inset 0 0 0 1px var(--line-hairline);
+    border-radius: 6px;
+    flex: 1;
+    min-block-size: 0;
+    margin: 0;
+    position: relative;
+    overflow: clip;
+  }
+  .proof__card--call {
+    transition: background-color var(--duration-base) var(--ease);
+    justify-content: space-between;
+    text-decoration: none;
+  }
+  .proof__card--call:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+  .proof__card--call .proof__call-arrow {
+    transition:
+      color var(--duration-base) var(--ease),
+      translate var(--duration-slow) var(--ease-rise);
+  }
+  @media (hover: hover) {
+    .proof__card--call:is(:hover, :focus-visible),
+    .proof__card--call:is(:hover, :focus-visible) .proof__avatar {
+      background: var(--color-surface);
+    }
+    .proof__card--call:is(:hover, :focus-visible) .proof__call-arrow {
+      color: var(--color-accent);
+      translate: 2px -2px;
+    }
+    .proof__card--call:is(:hover, :focus-visible) .proof__avatar:nth-child(2) {
+      translate: var(--space-1) 0;
+    }
+    .proof__card--call:is(:hover, :focus-visible) .proof__avatar:nth-child(3) {
+      translate: var(--space-2) 0;
+    }
+  }
+  .proof__call-top {
+    justify-content: space-between;
+    align-items: flex-start;
+    display: flex;
+  }
+  .proof__team {
+    display: flex;
+  }
+  .proof__avatar {
+    background: var(--color-page-secondary);
+    block-size: 36px;
+    inline-size: 36px;
+    transition:
+      background-color var(--duration-base) var(--ease),
+      translate var(--duration-slow) var(--ease-rise);
+    border-radius: 999px;
+    padding: 2px;
+    display: inline-flex;
+  }
+  .proof__avatar + .proof__avatar {
+    margin-inline-start: -12px;
+  }
+  .proof__avatar img {
+    object-fit: cover;
+    border-radius: 999px;
+    block-size: 100%;
+    inline-size: 100%;
+  }
+  .proof__call-copy {
+    row-gap: 6px;
+    display: grid;
+  }
+  @media (width <= 1199px) {
+    .proof {
+      padding-block: var(--space-16);
+    }
+    .proof__card--dashboard {
+      gap: var(--space-5);
+      padding: var(--space-5);
+    }
+  }
+  @media (width <= 809px) {
+    .proof {
+      padding-block: var(--space-12);
+    }
+    .proof__heading {
+      grid-template-columns: 1fr;
+    }
+    .proof__bento {
+      aspect-ratio: auto;
+      grid-template-rows: none;
+      grid-template-columns: 1fr;
+    }
+    .proof__bezel--launch,
+    .proof__bezel--dashboard,
+    .proof__bezel--call {
+      grid-area: auto / 1;
+    }
+    .proof__card {
+      padding: var(--space-4);
+    }
+    .proof__card--dashboard {
+      gap: var(--space-4);
+      padding: var(--space-3);
+    }
+    .proof__card--dashboard :global(.proof__card-title) {
+      padding-inline: var(--space-1);
+    }
+    .proof__screen {
+      aspect-ratio: 1280 / 981;
+      flex: none;
+    }
+  }
+</style>
