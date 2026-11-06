@@ -4,10 +4,59 @@
 // with product-context.md's real form fields, styled with the same real
 // primitive classes (.column/.wwd__heading/.eyebrow/.text/.button) used
 // everywhere else, so it doesn't look bolted on.
-import html from '@data/section-contact.html?raw';
+//
+// Migrated from raw HTML (set:html of src/data/section-contact.html) to
+// real markup, same pattern as the other section migrations: shared
+// utility classes keep their original data-astro-cid-* attribute to
+// match the global reference-*.css rules. .contact-form* styles already
+// lived as plain (unscoped) CSS below — untouched.
 ---
 
-<Fragment set:html={html} />
+<section
+  aria-label="Contact MOBILISE"
+  class="section section--page-secondary section--rhythm-none"
+  data-astro-cid-pi6vcj26
+  id="contact"
+>
+  <div class="column" data-astro-cid-5lyysmr3 data-astro-cid-7xbdjwkz>
+    <div class="wwd__heading" data-astro-cid-7xbdjwkz data-motion-rise>
+      <div class="wwd__title" data-astro-cid-7xbdjwkz>
+        <p class="eyebrow eyebrow--accent" data-astro-cid-zedojbgr>
+          <span aria-hidden="true" class="eyebrow__mark" data-astro-cid-zedojbgr></span>Start a conversation
+        </p>
+        <h2
+          class="text text--h2 tone--heading weight--300 wwd__title-text"
+          data-astro-cid-io6xibmp
+          data-astro-cid-7xbdjwkz
+        >
+          Let's kickstart your growth marketing.
+        </h2>
+      </div>
+      <p class="text text--body-lg tone--secondary wwd__lede" data-astro-cid-io6xibmp data-astro-cid-7xbdjwkz>
+        Strategy, creativity, and execution — connected around the goals that matter to your business. We usually
+        respond within 1–2 business days.
+      </p>
+    </div>
+    <form class="contact-form" data-contact-form novalidate>
+      <label class="text text--caption tone--secondary" data-astro-cid-io6xibmp>
+        Name
+        <input name="name" required type="text" />
+      </label>
+      <label class="text text--caption tone--secondary" data-astro-cid-io6xibmp>
+        Work email address
+        <input name="email" required type="email" />
+      </label>
+      <label class="text text--caption tone--secondary" data-astro-cid-io6xibmp>
+        How can we help?
+        <textarea name="message" required rows="4" />
+      </label>
+      <input autocomplete="off" class="contact-form__honeypot" name="company_website" tabindex="-1" type="text" />
+      <button class="button button--secondary button--lg" data-astro-cid-j6ocf6pu type="submit">
+        Send enquiry ↗
+      </button>
+    </form>
+  </div>
+</section>
 
 <style is:global>
   .contact-form {
