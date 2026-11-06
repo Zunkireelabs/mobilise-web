@@ -373,8 +373,14 @@
   margin: 0;
   padding: 0;
   list-style: none;
+  /* Reserves one row's worth of blank space at the end so the last row
+     (Fashion) has somewhere to overlay into when it opens — see
+     .proof__row-fold below. Keeps the accordion's total height constant
+     in every state instead of growing the card when a row expands. */
+  padding-block-end: 100px;
 }
 .proof__row {
+  position: relative;
   margin-inline: calc(-1 * var(--space-5, 1.25rem));
   border-block-end: 1px solid var(--color-border);
 }
@@ -383,17 +389,22 @@
 }
 .proof__row[open] {
   border-block-end: 0;
-  background: var(--ember-800, #0b4247);
+  z-index: 1;
 }
 .proof__row-trigger {
   display: flex;
   align-items: center;
-  gap: var(--space-4, 1rem);
-  padding: 1.5rem var(--space-5, 1.25rem);
+  gap: var(--space-3, 0.75rem);
+  padding: var(--space-3, 0.75rem) var(--space-5, 1.25rem);
   cursor: pointer;
   list-style: none;
   color: var(--color-heading);
-  transition: color var(--duration-base, 0.2s) var(--ease, ease);
+  transition:
+    color var(--duration-base, 0.2s) var(--ease, ease),
+    background-color var(--duration-base, 0.2s) var(--ease, ease);
+}
+.proof__row[open] .proof__row-trigger {
+  background: var(--ember-800, #0b4247);
 }
 .proof__row-trigger::-webkit-details-marker,
 .proof__row-trigger::marker {
@@ -408,6 +419,10 @@
   color: var(--color-muted);
   transition: color var(--duration-base, 0.2s) var(--ease, ease);
 }
+.proof__row-icon svg {
+  width: 16px;
+  height: 16px;
+}
 .proof__row[open] .proof__row-icon {
   color: var(--accent-400, #34a0a2);
 }
@@ -416,7 +431,7 @@
   min-width: 0;
   font-family: var(--font-mono, 'Martian Mono', 'MartianMono', Arial, sans-serif);
   font-weight: 500;
-  font-size: var(--text-body, 1rem);
+  font-size: 0.8125rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -432,20 +447,40 @@
   transform: rotate(45deg);
 }
 .proof__row-fold {
-  padding: 0 var(--space-5, 1.25rem) var(--space-6, 1.5rem);
+  /* Overlays the row(s) below instead of pushing them down — see the
+     padding-block-end reserve on .proof__accordion above. Carries its own
+     background (the parent <details> has none) so it reads as one
+     contiguous dark panel with the trigger above it. */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  height: 100px;
+  box-sizing: border-box;
+  padding: var(--space-3, 0.75rem) var(--space-5, 1.25rem) var(--space-4, 1rem);
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: flex-start;
-  gap: var(--space-4, 1rem);
+  gap: var(--space-2, 0.5rem);
+  background: var(--ember-800, #0b4247);
   color: var(--white, #fff);
   animation: proof-row-reveal var(--duration-slow, 0.3s) var(--ease, ease);
 }
 .proof__row-body {
   margin: 0;
-  font-size: var(--text-body, 1rem);
-  line-height: 1.5;
+  font-size: 0.875rem;
+  line-height: 1.45;
   opacity: 0.85;
   max-width: 48ch;
+  /* Hard cap, not just a content-length convention: guarantees every row's
+     expanded height is identical regardless of copy length, so the fixed
+     accordion height below never clips or leaves slack. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 .proof__row-cta {
   display: inline-flex;
@@ -755,9 +790,8 @@
   padding-inline: var(--space-6, 1.5rem);
 }
 .wwd__steps-split {
-  --notch: 28px;
   grid-template-columns: minmax(260px, 38%) 1fr;
-  clip-path: polygon(var(--notch) 0, 100% 0, 100% 100%, 0 100%, 0 var(--notch));
+  border-radius: 0;
   display: grid;
 }
 .wwd__steps-intro {
@@ -767,6 +801,7 @@
   align-items: flex-start;
   justify-content: center;
   gap: var(--space-4, 1rem);
+  border-radius: 0;
   display: flex;
 }
 .wwd__steps-intro .eyebrow {
@@ -780,8 +815,10 @@
   max-width: 32ch;
   margin: 0;
 }
-.wwd__steps-cta {
+.wwd__steps-cta,
+.wwd__steps-cta.button {
   margin-block-start: var(--space-2, 0.5rem);
+  border-radius: 0;
 }
 .wwd__steps-rows {
   background: var(--color-canvas, #0b4247);
@@ -789,6 +826,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
+  border-radius: 0;
   display: flex;
 }
 .wwd__steps-rows .wwd__step {
@@ -796,6 +834,7 @@
   padding: var(--space-6, 1.5rem) var(--space-8, 2rem);
   gap: var(--space-5, 1.25rem);
   align-items: flex-start;
+  border-radius: 0;
   display: flex;
 }
 .wwd__steps-rows .wwd__step:first-child {
@@ -807,6 +846,7 @@
   color: var(--color-accent-on-canvas, #34a0a2);
   inline-size: 28px;
   block-size: 28px;
+  border-radius: 0;
   flex: none;
 }
 .wwd__step-copy {
@@ -826,7 +866,6 @@
     padding-inline: var(--space-5, 1.25rem);
   }
   .wwd__steps-split {
-    --notch: 20px;
     grid-template-columns: minmax(0, 1fr);
   }
   .wwd__steps-intro {
@@ -834,5 +873,20 @@
   }
   .wwd__steps-rows .wwd__step {
     padding: var(--space-5, 1.25rem);
+  }
+}
+
+/*
+  The film/video section uses section--rhythm-none (0 block padding) so
+  the video frame can run edge-to-edge against its own siblings, but
+  that left it sitting flush against the "Industries" section right
+  below it with no breathing room between them.
+*/
+#film {
+  padding-block-end: var(--space-16, 4rem);
+}
+@media (width<=809px) {
+  #film {
+    padding-block-end: var(--space-10, 2.5rem);
   }
 }
