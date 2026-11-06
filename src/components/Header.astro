@@ -1,0 +1,297 @@
+---
+// Markup/classes ported verbatim from index2.html's <header class="site-header">
+// (data-astro-cid-jae56hh5 / -pqpqguhi are required by the compiled CSS).
+// The desktop nav + its 5 mega-dropdown panels (Services/Industries/
+// Case Studies/Resources/Company) are index2.html's real content for
+// MOBILISE, ported verbatim via src/data/header-nav.html — same pattern
+// as RawSection. Mobile sheet below mirrors the reference's own flat
+// 6-link mobile menu (index2.html's .mnav has no mega content).
+import Button from '@components/Button.astro';
+import headerNavHtml from '@data/header-nav.html?raw';
+
+const mobileNavItems = [
+  { label: 'Services', href: '/services' },
+  { label: 'Industries', href: '/industries' },
+  { label: 'Case Studies', href: '/case-studies' },
+  { label: 'Resources', href: '/resources' },
+  { label: 'Company', href: '/about' },
+  { label: 'Insights', href: '/blog' },
+];
+---
+
+<header class="site-header" data-site-header data-astro-cid-jae56hh5 style="--mega-lead-width: 300px">
+  <div class="column site-header__bar" data-astro-cid-5lyysmr3 data-astro-cid-jae56hh5>
+    <a class="site-header__brand" aria-label="MOBILISE home" href="/" data-astro-cid-jae56hh5>
+      <img
+        class="brand-logo brand-wordmark"
+        src="/images/mobilise_new_logo.png"
+        alt="MOBILISE"
+        style="height:24px;width:auto;display:block"
+        data-astro-cid-jae56hh5
+      />
+    </a>
+
+    <nav class="nav" aria-label="Primary" data-nav data-astro-cid-jae56hh5>
+      <Fragment set:html={headerNavHtml} />
+    </nav>
+
+    <div class="site-header__actions" data-astro-cid-jae56hh5>
+      <div class="site-header__desktop" data-astro-cid-jae56hh5>
+        <Button href="#contact" variant="secondary" size="md">Let's Talk</Button>
+      </div>
+      <button
+        aria-controls="site-mobile-nav"
+        aria-expanded="false"
+        aria-label="Menu"
+        class="site-header__burger"
+        id="site-nav-toggle"
+        type="button"
+        data-astro-cid-jae56hh5
+      >
+        <svg
+          aria-hidden="true"
+          class="icon site-header__burger-open"
+          fill="currentColor"
+          height="24"
+          viewBox="0 0 256 256"
+          width="24"
+        >
+          <path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z" />
+        </svg>
+        <svg
+          aria-hidden="true"
+          class="icon site-header__burger-close"
+          fill="currentColor"
+          height="24"
+          viewBox="0 0 256 256"
+          width="24"
+        >
+          <path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="mega-stage" aria-hidden="true" data-astro-cid-jae56hh5 data-mega-stage></div>
+  <div class="site-header__scrim" aria-hidden="true" data-astro-cid-jae56hh5></div>
+
+  <div class="mnav" id="site-mobile-nav" data-astro-cid-pqpqguhi inert>
+    <div class="mnav__backdrop" data-astro-cid-pqpqguhi data-mnav-backdrop></div>
+    <div class="mnav__sheet" aria-label="Site menu" role="dialog" data-astro-cid-pqpqguhi>
+      <div class="mnav__scroll" data-astro-cid-pqpqguhi>
+        <nav aria-label="Site menu" data-astro-cid-pqpqguhi>
+          <ul class="mnav__items" role="list" data-astro-cid-pqpqguhi>
+            {
+              mobileNavItems.map((item) => (
+                <li data-astro-cid-pqpqguhi>
+                  <a class="mnav__link" href={item.href} data-astro-cid-pqpqguhi>
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+        <div class="mnav__actions" data-astro-cid-pqpqguhi>
+          <Button href="#contact" variant="secondary" size="sm" class="mnav__cta">Let's Talk</Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  (function () {
+    const panelId = 'site-mobile-nav';
+    const toggleId = 'site-nav-toggle';
+
+    const panel = document.getElementById(panelId);
+    const toggle = document.getElementById(toggleId);
+    if (!panel || !toggle) return;
+
+    const root = document.documentElement;
+    const backdrop = panel.querySelector<HTMLElement>('[data-mnav-backdrop]');
+    const desktop = window.matchMedia('(min-width: 1200px)');
+    const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+    const isOpen = () => panel.getAttribute('data-open') === 'true';
+
+    function ring(): HTMLElement[] {
+      const items: HTMLElement[] = [toggle!];
+      panel!.querySelectorAll<HTMLElement>(FOCUSABLE).forEach((el) => {
+        if (el !== toggle && el.getClientRects().length) items.push(el);
+      });
+      return items;
+    }
+
+    function lockScroll() {
+      root.style.setProperty('--mnav-scrollbar', window.innerWidth - root.clientWidth + 'px');
+      root.setAttribute('data-mnav-lock', '');
+    }
+    function unlockScroll() {
+      root.removeAttribute('data-mnav-lock');
+      root.style.removeProperty('--mnav-scrollbar');
+    }
+
+    function open() {
+      if (isOpen()) return;
+      panel!.removeAttribute('inert');
+      panel!.setAttribute('data-open', 'true');
+      toggle!.setAttribute('aria-expanded', 'true');
+      lockScroll();
+      ring()[1]?.focus();
+    }
+
+    function close(force = false) {
+      if (!isOpen()) return;
+      if (force || panel!.contains(document.activeElement)) toggle!.focus();
+      panel!.setAttribute('data-open', 'false');
+      panel!.setAttribute('inert', '');
+      toggle!.setAttribute('aria-expanded', 'false');
+      unlockScroll();
+    }
+
+    toggle.addEventListener('click', () => (isOpen() ? close(true) : open()));
+    backdrop?.addEventListener('click', () => close());
+    panel.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+      if (target.closest('a[href]')) close();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (!isOpen()) return;
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        close(true);
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      const items = ring();
+      if (!items.length) return;
+      event.preventDefault();
+      const index = items.indexOf(document.activeElement as HTMLElement);
+      const next =
+        index === -1
+          ? event.shiftKey
+            ? items.length - 1
+            : 0
+          : (index + (event.shiftKey ? -1 : 1) + items.length) % items.length;
+      items[next]?.focus();
+    });
+
+    desktop.addEventListener('change', (event) => {
+      if (!event.matches || !isOpen()) return;
+      const hadFocus = panel!.contains(document.activeElement);
+      close();
+      if (!hadFocus || document.activeElement === toggle) return;
+      document.querySelector<HTMLElement>('.site-header__brand')?.focus();
+    });
+  })();
+</script>
+
+<script>
+  // Desktop mega-menu interaction. The markup/CSS already has a no-JS
+  // fallback (:hover / :focus-within via :has() in reference-base.css),
+  // active while .nav has no [data-enhanced]. This script upgrades it to
+  // click-to-toggle + hover-intent + single-open-at-a-time + Escape/
+  // outside-click close, matching the reference's own data-open=true /
+  // data-mega-leaving attributes that the CSS already keys off of.
+  (function () {
+    const header = document.querySelector<HTMLElement>('[data-site-header]');
+    const nav = header?.querySelector<HTMLElement>('.nav[data-nav]');
+    if (!header || !nav) return;
+
+    const LEAVE_MS = 200; // matches --duration-base: .2s
+    const HOVER_OPEN_MS = 100;
+    const HOVER_CLOSE_MS = 220;
+
+    const items = Array.from(nav.querySelectorAll<HTMLElement>('.nav__item[data-nav-item]'));
+    let openItem: HTMLElement | null = null;
+    let hoverTimer: ReturnType<typeof setTimeout> | undefined;
+    let leaveTimer: ReturnType<typeof setTimeout> | undefined;
+
+    function triggerOf(item: HTMLElement) {
+      return item.querySelector<HTMLElement>('[data-nav-trigger]');
+    }
+    function panelOf(item: HTMLElement) {
+      return item.querySelector<HTMLElement>('.mega');
+    }
+
+    function setHeight(item: HTMLElement) {
+      const inner = panelOf(item)?.querySelector<HTMLElement>('.mega__inner');
+      if (inner) header!.style.setProperty('--mega-h', inner.scrollHeight + 'px');
+    }
+
+    function openPanel(item: HTMLElement) {
+      clearTimeout(hoverTimer);
+      clearTimeout(leaveTimer);
+      if (openItem && openItem !== item) closePanel(openItem, true);
+      if (item.dataset.open === 'true') return;
+      setHeight(item);
+      item.removeAttribute('data-mega-leaving');
+      item.dataset.open = 'true';
+      triggerOf(item)?.setAttribute('aria-expanded', 'true');
+      openItem = item;
+    }
+
+    function closePanel(item: HTMLElement, immediate = false) {
+      if (item.dataset.open !== 'true') return;
+      triggerOf(item)?.setAttribute('aria-expanded', 'false');
+      if (immediate) {
+        delete item.dataset.open;
+        item.removeAttribute('data-mega-leaving');
+      } else {
+        item.dataset.megaLeaving = '';
+        setTimeout(() => {
+          delete item.dataset.open;
+          item.removeAttribute('data-mega-leaving');
+        }, LEAVE_MS);
+      }
+      if (openItem === item) openItem = null;
+    }
+
+    function closeAll(immediate = false) {
+      items.forEach((item) => closePanel(item, immediate));
+    }
+
+    items.forEach((item) => {
+      const trigger = triggerOf(item);
+      if (!trigger || !panelOf(item)) return;
+
+      trigger.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (item.dataset.open === 'true') closePanel(item);
+        else openPanel(item);
+      });
+
+      item.addEventListener('mouseenter', () => {
+        clearTimeout(leaveTimer);
+        clearTimeout(hoverTimer);
+        hoverTimer = setTimeout(() => openPanel(item), HOVER_OPEN_MS);
+      });
+      item.addEventListener('mouseleave', () => {
+        clearTimeout(hoverTimer);
+        clearTimeout(leaveTimer);
+        leaveTimer = setTimeout(() => closePanel(item), HOVER_CLOSE_MS);
+      });
+      item.addEventListener('focusin', () => openPanel(item));
+      item.addEventListener('focusout', (event) => {
+        const next = (event as FocusEvent).relatedTarget as Node | null;
+        if (!next || !item.contains(next)) closePanel(item);
+      });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape' || !openItem) return;
+      const item = openItem;
+      closePanel(item);
+      triggerOf(item)?.focus();
+    });
+
+    document.addEventListener('pointerdown', (event) => {
+      if (openItem && !openItem.contains(event.target as Node)) closeAll();
+    });
+
+    nav.setAttribute('data-enhanced', '');
+  })();
+</script>

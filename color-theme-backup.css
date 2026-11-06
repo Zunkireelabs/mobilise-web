@@ -1,0 +1,118 @@
+/*
+  COLOR THEME BACKUP — mobiise_web (index2.html)
+  Captured: 2026-11-05
+  Source: assets2/css/_astro_BaseLayout.D6Vdq3Zg.css (:root block)
+
+  Purpose: snapshot of the current color theme before any color change,
+  so it can be restored if needed. This file is NOT linked by index2.html —
+  it is a reference copy only.
+*/
+
+:root {
+  /* Base palette (raw scales) */
+  --accent-50: #fdf0ea;
+  --accent-200: #f8c4ac;
+  --accent-400: #f0865a;
+  --accent-500: #ec521b;
+  --accent-600: #c43f12;
+  --accent-800: #8e2c0b;
+
+  --ink-900: #111112;
+  --ink-700: #3a3a3c;
+  --ink-500: #6e6e73;
+  --ink-300: #a1a1a6;
+
+  --white: #fff;
+
+  --ground-50: #f9f8f7;
+  --ground-100: #f2ede9;
+  --ground-200: #e8e2dc;
+
+  --neutral-200: #eaeaea;
+
+  --line-hairline: #0a0a0a1f;
+  --line-strong: #0a0a0a3d;
+  --line-emphasis: #0a0a0a73;
+
+  --ember-900: #1f0a04;
+  --ember-800: #2a0e07;
+  --ember-700: #3b170c;
+
+  /* Semantic tokens (what the site actually uses) */
+  --color-heading: var(--ink-900);
+  --color-body: var(--ink-900);
+  --color-secondary: var(--ink-700);
+  --color-muted: var(--ink-500);
+  --color-placeholder: var(--ink-300);
+  --color-on-accent: var(--white);
+  --color-on-ink: var(--ground-50);
+
+  --color-accent: var(--accent-500);
+  --color-accent-hover: var(--accent-600);
+  --color-accent-pressed: var(--accent-800);
+  --color-accent-surface: var(--accent-50);
+
+  --color-page: var(--ground-100);
+  --color-page-secondary: var(--ground-50);
+  --color-surface: var(--white);
+  --color-surface-sunken: var(--ground-200);
+  --color-control-hover: var(--neutral-200);
+
+  --color-segment-track: #0a0a0a0f;
+  --color-segment-thumb: #f7f7f7;
+  --color-segment-label: #0a0a0aa6;
+  --color-segment-label-active: #1e1e20;
+
+  --color-border: var(--line-hairline);
+  --color-border-strong: var(--line-strong);
+  --color-border-emphasis: var(--line-emphasis);
+  --color-border-anchor: var(--ink-900);
+  --color-border-accent: var(--color-accent);
+
+  --color-key-surface: #1a18160f;
+  --color-key-border: #1a18162e;
+  --color-key-surface-faint: #1a181608;
+  --color-key-surface-strong: #1a18161f;
+
+  --color-success: #2d5b3f;
+  --color-success-surface: #d5e5dd;
+
+  --color-surface-glass: #f9f8f76b;
+
+  --color-terrain-deep: #866b5b;
+  --color-terrain-shadow: #ab9383;
+  --color-terrain-mid: #c3a898;
+  --color-terrain-warm: #d8c3b5;
+  --color-terrain-highlight: var(--ground-200);
+
+  --color-scrim: #0006;
+  --color-scrim-strong: #000000a8;
+
+  --color-ember: var(--ember-800);
+  --color-canvas: var(--ember-800);
+  --color-canvas-raised: var(--ember-700);
+  --color-canvas-line: #ffffff1f;
+  --color-canvas-line-strong: #ffffff4d;
+  --color-on-canvas: var(--ground-50);
+  --color-on-canvas-muted: #fff9;
+  --color-accent-on-canvas: var(--accent-400);
+
+  --shadow-float: 0 1px 3px -1px #1111120f, 0 8px 24px -8px #1111121a;
+  --shadow-raised: 0 1px 2px #0a0a0a14, 0 1px 3px #0a0a0a0a;
+}
+
+/*
+  NOTE: assets2/css/_astro_index.sw_xYcea.css has no separate :root color
+  block — it consumes the tokens above, plus a number of ONE-OFF hardcoded
+  hex colors used inside decorative mockups/illustrations (not theme tokens),
+  kept here for reference only in case they also need to change:
+
+    macOS-style window dots:   #ff5f57 (red), #febc2e (yellow), #28c840 (green)
+    chat/message mockup:       #0b84fe (blue bubble), #5fbf6a (green/status),
+                                #e5534b (red/status), #e2a764 (amber/status)
+    dark mockup surfaces:      #1c1c1e, #232325, #262628, #2c2c2e, #1e1e20
+    mockup text/muted:         #3c3c43, #8b8b90, #8e8e93, #a1a1a6, #aeaeb2,
+                                #a5abb8, #858a96, #d1d1d6, #e5e5e7, #e9e9eb, #f5f5f7, #f7f7f7
+    canvas/scrim overlays:     #2a0e0757, #14060273, #000000b3, #000000a6,
+                                #00000073, #ffffff61, #00000080, #000000c7
+*/

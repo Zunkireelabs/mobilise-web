@@ -1,0 +1,48 @@
+---
+// index2.html has no real contact form (just links out to /contact and a
+// Thrad Cal.com booking dialog we're not using) — this fills that gap
+// with product-context.md's real form fields, styled with the same real
+// primitive classes (.column/.wwd__heading/.eyebrow/.text/.button) used
+// everywhere else, so it doesn't look bolted on.
+import html from '@data/section-contact.html?raw';
+---
+
+<Fragment set:html={html} />
+
+<style is:global>
+  .contact-form {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 480px;
+    margin-block-start: var(--space-10);
+  }
+  .contact-form label {
+    display: grid;
+    gap: var(--space-2);
+  }
+  .contact-form input,
+  .contact-form textarea {
+    font: inherit;
+    color: var(--color-heading);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3);
+  }
+  .contact-form__honeypot {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+    pointer-events: none;
+  }
+  .contact-form button {
+    justify-self: start;
+  }
+</style>
+
+<script>
+  document
+    .querySelector<HTMLFormElement>('[data-contact-form]')
+    ?.addEventListener('submit', (e) => e.preventDefault());
+</script>

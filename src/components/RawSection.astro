@@ -1,0 +1,23 @@
+---
+// Renders a section's markup ported verbatim from index2.html (see
+// src/data/*.html) — real classes/data-astro-cid attributes, so the
+// compiled CSS in src/styles/reference-*.css applies as-is.
+// `?raw` + import.meta.glob so Vite inlines the file at build time
+// instead of reading it from disk at request time (which doesn't exist
+// once bundled into dist/).
+const modules = import.meta.glob<string>('../data/*.html', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+});
+
+interface Props {
+  file: string;
+}
+
+const { file } = Astro.props;
+const html = modules[`../data/${file}`];
+if (!html) throw new Error(`RawSection: no such file src/data/${file}`);
+---
+
+<Fragment set:html={html} />

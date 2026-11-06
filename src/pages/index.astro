@@ -1,0 +1,32 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import RawSection from '@components/RawSection.astro';
+import Hero from '@components/sections/Hero.astro';
+import Services from '@components/sections/Services.astro';
+import Contact from '@components/sections/Contact.astro';
+---
+
+<BaseLayout
+  title="B2B Growth Marketing & Sales Enablement | MOBILISE"
+  description="MOBILISE is a global B2B marketing agency helping enterprise brands grow across APAC, EMEA and the Americas through strategy, creative and sales enablement."
+>
+  <Header />
+  <main id="content">
+    <Hero />
+    <RawSection file="section-about.html" />
+    <RawSection file="section-run-ads.html" />
+    <Services />
+    <RawSection file="section-film.html" />
+    <RawSection file="section-industries.html" />
+    <RawSection file="section-case-studies.html" />
+    <RawSection file="section-testimonials.html" />
+    <RawSection file="section-summit-banner.html" />
+    <RawSection file="section-insights.html" />
+    <RawSection file="section-close.html" />
+    <Contact />
+    <RawSection file="section-locations.html" />
+  </main>
+  <Footer />
+</BaseLayout>

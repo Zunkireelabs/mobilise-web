@@ -1,0 +1,1 @@
+For any substantial design/UI/interaction/motion work, follow `DESIGN_ORCHESTRATOR.md` — it defines which design skill (design-dna, genjutsu, motion-design, gsap-skills) to use and when. Simple changes (copy edits, minor spacing) don't need it.

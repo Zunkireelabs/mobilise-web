@@ -1,0 +1,20 @@
+---
+// Markup/classes ported verbatim from index2.html's .button component
+// (data-astro-cid-j6ocf6pu is required by the compiled CSS selectors).
+interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary' | 'tertiary';
+  size?: 'sm' | 'md';
+  class?: string;
+}
+
+const { href, variant = 'secondary', size = 'md', class: className } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={['button', `button--${variant}`, `button--${size}`, className]}
+  data-astro-cid-j6ocf6pu
+>
+  <slot />
+</a>

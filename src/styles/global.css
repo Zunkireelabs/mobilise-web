@@ -1,0 +1,609 @@
+@import 'tailwindcss';
+
+/*
+  Real compiled CSS from the reference build (assets2/css/_astro_*.css),
+  copied verbatim — not reconstructed. This is what index2.html's own
+  markup/classes actually render with: design tokens, resets, and every
+  component's scoped rules (.site-header, .nav, .mega, .hero, .ads,
+  .steps, .cases, .said/.testimonials, .latest, .book, .footer, etc).
+  Only font/image url()s were rewritten to point at /fonts and /images.
+*/
+@import './reference-base.css';
+@import './reference-index.css';
+/*
+  reference-critical.css = index2.html's inline <head><style> block
+  (.rails/.section/.film__frame/.eyebrow/.head/.panel) — the scoped
+  critical CSS almost every ported section depends on. Was missing
+  entirely before.
+*/
+@import './reference-critical.css';
+/* reference-hero.css = mb-style.css — MOBILISE's own hero (.mb-hero/
+   .mb-hh/.mb-map/...), not part of the reference build's component CSS. */
+@import './reference-hero.css';
+
+/* scroll-reveal utility — paired with src/scripts/motion.ts */
+[data-motion-rise] {
+  opacity: 0;
+  translate: 0 var(--rise-offset, 24px);
+  transition:
+    opacity var(--duration-rise, 0.6s) var(--ease-rise, cubic-bezier(0.22, 1, 0.36, 1)),
+    translate var(--duration-rise, 0.6s) var(--ease-rise, cubic-bezier(0.22, 1, 0.36, 1));
+  transition-delay: var(--motion-delay, 0ms);
+}
+[data-motion-rise][data-motion-in] {
+  opacity: 1;
+  translate: 0 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-motion-rise] {
+    opacity: 1;
+    translate: 0 0;
+    transition: none;
+  }
+}
+
+/*
+  Testimonials proof-carousel (.tcar) — replaces the old accordion-style
+  .said section. Pattern adapted from buildops.com's "From the field"
+  carousel (drag/snap, scrimmed media + logo, pull-quote below), rebuilt
+  with MOBILISE's own teal/black palette and no new dependency (CSS
+  scroll-snap instead of a carousel library) — see DESIGN_ORCHESTRATOR.md.
+*/
+.tcar {
+  background: var(--black, #171717);
+  color: #fff;
+  padding-block: clamp(4rem, 8vw, 6.5rem);
+}
+.tcar__column {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+}
+.tcar__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+.tcar__head .eyebrow {
+  color: #0a919b;
+}
+.tcar__head .eyebrow__mark {
+  background: #0a919b;
+}
+.tcar__head .text--h2 {
+  color: #fff;
+  margin: 0;
+  max-width: 32rem;
+}
+.tcar__all {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 2px;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+.tcar__all:hover {
+  color: #0a919b;
+  border-color: #0a919b;
+}
+.tcar__all .icon {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.tcar__rail-frame {
+  position: relative;
+}
+.tcar__fade {
+  position: absolute;
+  inset-block: 0;
+  width: clamp(2rem, 8vw, 6rem);
+  z-index: 4;
+  pointer-events: none;
+}
+.tcar__fade--left {
+  inset-inline-start: 0;
+  background: linear-gradient(90deg, var(--black, #171717), transparent);
+}
+.tcar__fade--right {
+  inset-inline-end: 0;
+  background: linear-gradient(270deg, var(--black, #171717), transparent);
+}
+
+.tcar__rail {
+  display: flex;
+  gap: 1.75rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 0.25rem clamp(1.25rem, calc(50% - 360px), 50%) 0.5rem;
+  scrollbar-width: none;
+}
+.tcar__rail::-webkit-scrollbar {
+  display: none;
+}
+
+.tcar__card {
+  position: relative;
+  flex: 0 0 auto;
+  width: 720px;
+  max-width: 88vw;
+  scroll-snap-align: center;
+  background: #12474c;
+  opacity: 0.35;
+  transition: opacity 0.35s ease;
+}
+.tcar__card.is-active {
+  opacity: 1;
+}
+.tcar__card[aria-hidden='true'] {
+  pointer-events: none;
+}
+
+.tcar__corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  z-index: 5;
+  color: #0a919b;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  border-style: solid;
+  border-width: 0;
+}
+.tcar__card.is-active .tcar__corner {
+  opacity: 1;
+}
+.tcar__corner--tl {
+  top: 8px;
+  left: 8px;
+  border-top-width: 1.6px;
+  border-left-width: 1.6px;
+}
+.tcar__corner--tr {
+  top: 8px;
+  right: 8px;
+  border-top-width: 1.6px;
+  border-right-width: 1.6px;
+}
+.tcar__corner--bl {
+  bottom: 8px;
+  left: 8px;
+  border-bottom-width: 1.6px;
+  border-left-width: 1.6px;
+}
+.tcar__corner--br {
+  bottom: 8px;
+  right: 8px;
+  border-bottom-width: 1.6px;
+  border-right-width: 1.6px;
+}
+
+.tcar__media {
+  position: relative;
+  aspect-ratio: 16 / 9.2;
+  overflow: hidden;
+  background: #0d2b2e;
+}
+.tcar__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.tcar__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.12) 45%, rgba(0, 0, 0, 0.4) 100%);
+}
+.tcar__logo {
+  position: absolute;
+  top: 22px;
+  left: 22px;
+  z-index: 2;
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  object-position: left center;
+}
+.tcar__logo--round {
+  height: 36px;
+}
+
+.tcar__info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem 1.625rem;
+}
+.tcar__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.tcar__quote {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: #eef5f4;
+  margin: 0;
+  max-width: 48ch;
+}
+.tcar__caption {
+  font-size: 0.8125rem;
+  color: #9fb3b0;
+  margin: 0;
+}
+.tcar__cta {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.125rem;
+  background: #0a919b;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+}
+.tcar__cta:hover {
+  background: #0c7980;
+}
+.tcar__cta .icon {
+  width: 0.7rem;
+  height: 0.7rem;
+}
+
+.tcar__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.375rem;
+  margin-top: 1.25rem;
+}
+.tcar__arrow {
+  width: 20px;
+  height: 20px;
+  border: 0;
+  background: transparent;
+  color: #0a919b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+.tcar__arrow svg {
+  width: 100%;
+  height: 100%;
+}
+.tcar__arrow:hover,
+.tcar__arrow:focus-visible {
+  color: #5fd9c4;
+}
+.tcar__arrow--prev:hover {
+  transform: translateX(-2px);
+}
+.tcar__arrow--next:hover {
+  transform: translateX(2px);
+}
+.tcar__dots {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tcar__dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  background: #12474c;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+.tcar__dot.is-active {
+  background: #0a919b;
+}
+
+@media (max-width: 720px) {
+  .tcar__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+  .tcar__rail {
+    padding-inline: 1.25rem;
+  }
+  .tcar__card {
+    width: 340px;
+  }
+  .tcar__info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .tcar__cta {
+    align-self: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tcar__card,
+  .tcar__corner,
+  .tcar__arrow,
+  .tcar__dot {
+    transition: none;
+  }
+}
+
+/*
+  "Who we are" intro (.wwa) — a small 3D brand-arrow mark sits next to the
+  eyebrow/heading row, the lede spans the full column width below. Arrow
+  technique (true 3-face isometric extrusion) adapted from the project's own
+  preview-isometric-arrow.html exploration — MOBILISE's teal, not the
+  exploration's coral. See DESIGN_ORCHESTRATOR.md.
+*/
+.wwa.section--rhythm-none {
+  padding-block: var(--space-section, 6rem);
+}
+.wwa .wwd__heading {
+  align-items: flex-start;
+}
+.wwa .wwd__lede {
+  flex: 0 0 46%;
+  max-width: none;
+  /* Drops the lede to the H2's own starting line (eyebrow height + its gap
+     to the title), matching the "What we do" heading's alignment — using
+     align-items:end there relies on the lede wrapping to roughly the same
+     line count as the title, which this section's longer copy doesn't. */
+  margin-top: 2rem;
+}
+
+.wwa__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.wwa__visual {
+  flex: none;
+  width: 72px;
+  aspect-ratio: 1 / 1;
+}
+.wwa__map {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.wwa__arrow-back {
+  fill: #12474c;
+  opacity: 0.92;
+}
+.wwa__arrow-side-base {
+  fill: #cfeae8;
+}
+.wwa__arrow-side {
+  fill: url(#wwaStipple);
+  stroke: #12474c;
+  stroke-width: 1.1;
+}
+.wwa__arrow-front {
+  fill: #0a919b;
+  stroke: #12474c;
+  stroke-width: 2;
+}
+
+.wwa__arrow {
+  opacity: 0;
+  transform: translateY(14px) scale(0.94);
+  transform-origin: 120px 120px;
+  transition:
+    opacity 0.7s var(--ease-rise, cubic-bezier(0.22, 1, 0.36, 1)) 0.1s,
+    transform 0.7s var(--ease-rise, cubic-bezier(0.22, 1, 0.36, 1)) 0.1s;
+}
+.wwa__visual[data-motion-in] .wwa__arrow {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@media (width<=480px) {
+  .wwa__visual {
+    width: 56px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wwa__arrow {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/*
+  Service-showcase mock card (.svc__mock, inside .ads__device) — white card
+  with a coral accent, scoped to this component only (brand teal stays the
+  site-wide accent everywhere else). Each .svc__visual now carries a real
+  photo per service (set inline in section-run-ads.html) instead of the
+  shared teal canyon background. See DESIGN_ORCHESTRATOR.md.
+*/
+.svc__visual {
+  background-image: none;
+}
+.svc__visual::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.05) 0%, rgba(10, 10, 10, 0.12) 55%, rgba(10, 10, 10, 0.3) 100%);
+}
+.svc__mock {
+  position: relative;
+  background: #fff;
+  backdrop-filter: none;
+  border: 1px solid #f3f2ef;
+  color: #171717;
+}
+.svc__mock-chip {
+  border: none;
+  border-radius: 0;
+  padding: 0 0 8px;
+  color: #c7c5c0;
+  position: relative;
+}
+.svc__mock-chip--on {
+  background: none;
+  border-color: transparent;
+  color: #e8573a;
+}
+.svc__mock-chip--on::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: #e8573a;
+  border-radius: 2px;
+}
+.svc__mock-body {
+  border-block-color: #f3f2ef;
+}
+.svc__mock-k {
+  color: #b9b7b2;
+}
+.svc__mock-v {
+  color: #171717;
+}
+.svc__mock-stat-value {
+  color: #e8573a;
+  font-weight: 600;
+}
+.svc__mock-stat-label {
+  color: #7b7e84;
+}
+.svc__mock-dot {
+  background: none;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  margin-block-start: 0;
+  color: #e8573a;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.svc__mock-dot::before {
+  content: '→';
+}
+
+/*
+  Align the "trusted by" logo strip's left inset with every other section
+  heading's text start (.column's gutter + the heading's own padding-inline,
+  e.g. "Who we are" / "What we do") — it was sitting flush on the gutter
+  alone, reading as unaligned against the rest of the page.
+*/
+.mb-logos-label {
+  padding-inline-start: var(--space-6, 1.5rem);
+}
+
+/*
+  reference-hero.css's own .mb-hh rule already asks for the gutter + 24px
+  inset (matching other section headings), but the generic
+  .column[data-astro-cid-5lyysmr3] rule (class + attribute) outranks a
+  plain .mb-hh class selector and was silently overriding it back down to
+  the bare 40px gutter — the hero heading sat flush against the edge
+  compared to every other section. Matching specificity here restores it.
+*/
+.mb-hh.column {
+  padding-inline: calc(var(--gutter, 40px) + 24px);
+}
+
+/*
+  The stats row (4 / +10 / 3 / 5 / 6 / 10) in "What we do" never got a
+  margin-block-start in the ported CSS — its siblings .wwd__board and
+  .wwd__steps both carry the section's own space-20 rhythm, this one was
+  just missing it, so it sat flush against the three-card row above. It also
+  needs its own left/right inset now that the cards are tinted blocks: the
+  old contiguous panel's 40px .column gutter was invisible (no background to
+  show it), but once .wwd__stat got its own background, that same 40px read
+  as flush against the rail line next to "What we do"'s 64px heading inset.
+*/
+.wwd__stats-eyebrow {
+  margin-block-start: var(--space-20, 5rem);
+  margin-block-end: var(--space-3, 0.75rem);
+  padding-inline: var(--space-6, 1.5rem);
+}
+.wwd__stats-head {
+  font-weight: 700;
+  margin: 0 0 var(--space-10, 2.5rem);
+  padding-inline: var(--space-6, 1.5rem);
+  max-width: 26ch;
+}
+.wwd__stats {
+  margin-block-start: 0;
+  padding-inline: var(--space-6, 1.5rem);
+}
+
+/*
+  Stat cards (.wwd__stat) — tinted, individually gapped card + trend icon +
+  bold mono label, technique adapted from buildops.com's "Built to perform"
+  stat row (pale tint background, stacked-chevron trend glyph, uppercase
+  mono micro-label) — MOBILISE's teal tint, not their green, and no
+  invented second line of copy per stat since the source content is a
+  single short label already.
+*/
+.wwd__stats .panel {
+  border: 0;
+}
+.wwd__stats .panel__guides {
+  display: none;
+}
+.wwd__stats .panel__grid {
+  gap: var(--space-5, 1.25rem);
+}
+.wwd__stat {
+  position: relative;
+  background: #e3f1f0;
+  border-radius: 0;
+}
+.wwd__stat-trend {
+  position: absolute;
+  top: var(--space-6, 1.5rem);
+  right: var(--space-6, 1.5rem);
+  color: #0a919b;
+}
+.wwd__stat p.text--caption {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: #0a919b;
+}
+.wwd__stat-desc {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-body, #12474c);
+}
+.wwd__stat-value.weight--300 {
+  font-weight: 700;
+}

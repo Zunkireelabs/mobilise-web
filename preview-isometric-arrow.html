@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MOBILISE — isometric arrow motion thesis</title>
+<style>
+  :root{
+    --coral: #E8573A;
+    --coral-dark: #B23B21;
+    --coral-tint: #FDEDE8;
+    --black: #171717;
+    --muted: #7B7E84;
+    --white: #FFFFFF;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; padding:48px 24px 120px; background:#F4F3F1; color:var(--black); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;}
+  .wrap{max-width:1080px; margin:0 auto;}
+  h1{font-size:15px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:600; margin:0 0 8px;}
+  .thesis{font-size:21px; line-height:1.55; max-width:800px; margin:0 0 6px; font-weight:500;}
+  .allowed{font-size:13px; color:var(--muted); margin:0 0 4px;}
+  .allowed b{color:var(--black);}
+  .note{font-size:12px; color:var(--muted); margin:0 0 32px; font-style:italic;}
+  .dna{font-size:12px; color:var(--muted); background:#fff; border:1px solid #E3E1DD; border-radius:10px; padding:14px 16px; margin:0 0 40px; max-width:800px; line-height:1.7;}
+  .dna b{color:var(--black);}
+
+  section.block{margin-bottom:48px;}
+  .block h2{font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:600; margin:0 0 16px; border-bottom:1px solid #E3E1DD; padding-bottom:10px;}
+
+  .controls{display:flex; gap:12px; align-items:center; margin-bottom:20px; flex-wrap:wrap;}
+  button.replay{appearance:none; border:1px solid var(--black); background:var(--black); color:#fff; font-size:13px; font-weight:600; padding:9px 16px; border-radius:999px; cursor:pointer;}
+  button.replay:hover{opacity:.85;}
+  label.rm{font-size:13px; color:var(--muted); display:flex; align-items:center; gap:8px; cursor:pointer;}
+
+  /* ===== hero composition ===== */
+  .hero{
+    position:relative; background:#fff; border-radius:20px; padding:0; overflow:hidden;
+    display:grid; grid-template-columns:1fr 1.15fr; gap:0; border:1px solid #ECEAE6;
+    box-shadow:0 30px 70px rgba(20,20,20,.08);
+  }
+  .hero__copy{padding:48px; align-self:center;}
+  .hero__copy .tag{font-size:12px; letter-spacing:.1em; color:var(--muted); display:block; margin-bottom:10px;}
+  .hero__copy h3{font-size:27px; margin:0 0 12px; font-weight:500; color:var(--black);}
+  .hero__copy p{font-size:14px; line-height:1.6; color:var(--muted); margin:0 0 18px; max-width:380px;}
+  .hero__copy a.cta{color:var(--black); font-size:13px; font-weight:600; text-decoration:none; border-bottom:1.5px solid var(--coral); padding-bottom:2px;}
+
+  .stage{position:relative; min-height:520px; background:
+      radial-gradient(60% 50% at 70% 20%, #EAF6F6 0%, #ffffff 60%);
+  }
+  .stage svg.illo{position:absolute; inset:0; width:100%; height:100%;}
+  .mock-float{
+    position:absolute; right:34px; bottom:36px; width:258px; background:#fff; border-radius:16px;
+    padding:30px 26px; box-shadow:0 20px 40px rgba(20,20,20,.1); border:1px solid #F3F2EF;
+  }
+  .mock-bar{display:flex; gap:16px; margin-bottom:22px; border-bottom:1px solid #F3F2EF;}
+  .chip{font-size:11px; font-weight:600; letter-spacing:.02em; color:#C7C5C0; background:none; padding:0 0 10px; position:relative;}
+  .chip.on{color:var(--coral);}
+  .chip.on::after{content:''; position:absolute; left:0; right:0; bottom:0; height:2px; background:var(--coral); border-radius:2px;}
+
+  .fields{margin-bottom:24px;}
+  .field{display:flex; flex-direction:column; gap:2px; padding:9px 0;}
+  .field .k{font-size:10.5px; letter-spacing:.04em; text-transform:uppercase; color:#B9B7B2;}
+  .field .v{font-size:13.5px; font-weight:600; color:var(--black);}
+
+  .stat{padding:4px 0 28px; border-bottom:1px solid #F3F2EF; margin-bottom:24px;}
+  .stat .val{display:block; font-size:34px; font-weight:600; color:var(--coral); font-variant-numeric:tabular-nums; line-height:1;}
+  .stat .label{display:block; margin-top:6px; font-size:11.5px; color:var(--muted); line-height:1.4;}
+
+  .timeline{display:flex; flex-direction:column; gap:20px;}
+  .event{display:flex; gap:10px; align-items:baseline;}
+  .event .b{color:var(--coral); font-size:12px; flex:none; line-height:1.5;}
+  .event b{display:block; font-size:13px; font-weight:600; color:var(--black); margin-bottom:2px;}
+  .event small{font-size:11.5px; color:var(--muted);}
+
+  /* reveal utility, mirrors project's [data-motion-rise] (0.6s / cubic-bezier(.22,1,.36,1) / 90ms stagger) */
+  .rise{opacity:0; translate:0 24px; transition:opacity .6s var(--ease), translate .6s var(--ease); transition-delay:var(--d,0ms);}
+  .rise.in{opacity:1; translate:0 0;}
+  body.reduced .rise{transition:none !important; opacity:1 !important; translate:0 0 !important;}
+  body.reduced .illo *{animation:none !important; stroke-dashoffset:0 !important; opacity:1 !important;}
+
+  /* illustration draw-in */
+  .step-edge{fill:none; stroke-linejoin:round; stroke-linecap:round;}
+  .arrow-main{fill:var(--coral); stroke:var(--coral-dark); stroke-width:2;}
+  .arrow-shadow{fill:var(--coral-dark); opacity:.9;}
+  .arrow-side{fill:url(#stipple); stroke:var(--coral-dark); stroke-width:1.1;}
+  .arrow-side-base{fill:#F6CBBE;}
+  .guide{stroke:#E8D8D3; stroke-width:1.25; stroke-dasharray:4 5;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Interaction thesis v2 — isometric brand-arrow illustration</h1>
+  <p class="thesis">The flat mock card gets a staged isometric backdrop: a coral ascending-steps form (computed isometric projection, hairline stroke-draw entrance, dot-stipple on the shaded face, dashed construction guides) topped by a 3D-extruded version of MOBILISE's own brand arrow — white-dominant, coral as the single accent, pure SVG + the project's existing CSS stagger, zero new dependencies.</p>
+  <p class="allowed">Allowed patterns: <b>isometric line-art</b> (stroke-draw + dot-stipple + dashed guides — technique only, not the reference's maroon/purple palette), <b>true 3-face extrusion</b> on the brand arrow (lit front face + stippled side walls + dark back face, same convention as the steps), coral accent, reused arrow glyph. None else.</p>
+  <p class="note">This page is the proposal, not the build.</p>
+
+  <div class="dna">
+    <b>Design DNA extracted from your reference (Miter onboarding flow)</b> — measured, not eyeballed: field <b>#6f1516</b>, card <b>#fefefe</b>, CTA accent <b>#680dbd</b>, success <b>#067144</b> (scripts/measure-colors.mjs, k=8 clustering). Technique taken forward: isometric 30° projection, flat-shaded faces (no gradients), dot-stipple on exactly one face per form, dashed construction lines off solid edges, white card floated on a bold field via contrast alone. Colors NOT carried forward — that palette is the reference brand's, not ours; MOBILISE's adaptation below swaps to coral-on-white per your direction.
+  </div>
+
+  <section class="block">
+    <h2>Live demo</h2>
+    <div class="controls">
+      <button class="replay" id="replayBtn">↻ Replay</button>
+      <label class="rm"><input type="checkbox" id="rmToggle"/> Simulate prefers-reduced-motion</label>
+    </div>
+
+    <div class="hero">
+      <div class="hero__copy">
+        <span class="tag rise" style="--d:0ms">N°05</span>
+        <h3 class="rise" style="--d:90ms">Marketing &amp; Sales Strategy</h3>
+        <p class="rise" style="--d:180ms">A discovery and assessment process, combined with decades of experience, ensures your marketing and sales strategy delivers results.</p>
+        <a class="cta rise" style="--d:270ms" href="#">Explore Strategy →</a>
+      </div>
+      <div class="stage">
+        <svg class="illo" id="illoSvg" viewBox="0 0 520 520" preserveAspectRatio="xMidYMax meet"></svg>
+        <div class="mock-float rise" style="--d:620ms">
+          <div class="mock-bar">
+            <span class="chip">Discovery</span><span class="chip">Positioning</span>
+            <span class="chip on">Roadmap</span>
+          </div>
+          <div class="fields">
+            <div class="field"><span class="k">Client</span><span class="v">Enterprise SaaS</span></div>
+            <div class="field"><span class="k">Scope</span><span class="v">3 new markets</span></div>
+          </div>
+          <div class="stat"><span class="val" id="statVal">0</span><span class="label">Years of word-of-mouth relationships</span></div>
+          <div class="timeline">
+            <div class="event"><span class="b">→</span><div><b>Workshop complete</b><small>Stakeholder alignment, week 1</small></div></div>
+            <div class="event"><span class="b">→</span><div><b>Roadmap delivered</b><small>Go-to-market plan live, week 3</small></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Timing</h2>
+    <div class="dna">
+      <b>Sequence</b> (total ≈1.3s, nothing slower than the project's existing 600ms building block):<br/>
+      0ms copy tag rises · 90ms title rises · 180ms desc rises · 260ms step 1 edges draw (320ms) · 420ms step 2 edges draw · 560ms step 3 edges draw + stipple fades in · 680ms dashed guides extend · 760ms brand arrow extrudes in (back face + stippled sides + lit front, 380ms) · 620ms card rises (overlaps arrow, same beat family) · 900ms stat counts up.
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* ---- isometric projector (30deg, symmetric), computed not hand-placed ---- */
+const ORIGIN = {x: 90, y: 430};
+const UNIT = 42;
+function iso(x,y,z){
+  const a = Math.PI/6;
+  return {
+    x: ORIGIN.x + (x - z) * Math.cos(a) * UNIT,
+    y: ORIGIN.y - (x + z) * Math.sin(a) * UNIT - y*UNIT
+  };
+}
+function pts(arr){ return arr.map(p=>`${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' '); }
+
+function boxFaces(ox,oy,oz,w,h,d){
+  const c = {
+    '000':iso(ox,oy,oz),        '100':iso(ox+w,oy,oz),       '010':iso(ox,oy+h,oz),
+    '001':iso(ox,oy,oz+d),      '110':iso(ox+w,oy+h,oz),     '101':iso(ox+w,oy,oz+d),
+    '011':iso(ox,oy+h,oz+d),    '111':iso(ox+w,oy+h,oz+d)
+  };
+  return {
+    top:   [c['010'], c['110'], c['111'], c['011']],
+    right: [c['100'], c['110'], c['111'], c['101']],
+    front: [c['001'], c['101'], c['111'], c['011']]
+  };
+}
+
+const svg = document.getElementById('illoSvg');
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs){ const e=document.createElementNS(NS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); return e; }
+
+// defs: stipple pattern + lit-face gradient + soft ground-shadow filter
+const defs = el('defs',{});
+const pattern = el('pattern',{id:'stipple', width:6, height:6, patternUnits:'userSpaceOnUse'});
+pattern.appendChild(el('circle',{cx:1.5,cy:1.5,r:0.9,fill:'#E8573A',opacity:0.6}));
+defs.appendChild(pattern);
+const gradRight = el('linearGradient',{id:'gradRight', x1:'0', y1:'0', x2:'0', y2:'1'});
+gradRight.appendChild(el('stop',{offset:'0%', 'stop-color':'#F0724F'}));
+gradRight.appendChild(el('stop',{offset:'100%', 'stop-color':'#D84A2E'}));
+defs.appendChild(gradRight);
+const blur = el('filter',{id:'groundBlur', x:'-60%', y:'-60%', width:'220%', height:'220%'});
+blur.appendChild(el('feGaussianBlur',{stdDeviation:6}));
+defs.appendChild(blur);
+svg.appendChild(defs);
+
+const stepGroups = [];
+for(let i=0;i<3;i++){
+  const ox=i*1.5, oy=i*1.0, oz=-i*1.5;
+  const f = boxFaces(ox,oy,oz,1.9,1.0,1.9);
+  const g = el('g',{class:'step', style:`--order:${i}`});
+  const top = el('polygon',{points:pts(f.top), fill:'#FADDD2', stroke:'#B23B21', 'stroke-width':1.5});
+  const right = el('polygon',{points:pts(f.right), fill:'url(#gradRight)', stroke:'#B23B21', 'stroke-width':1.5});
+  const front = el('polygon',{points:pts(f.front), fill:'url(#stipple)', stroke:'#B23B21', 'stroke-width':1.5});
+  const frontBase = el('polygon',{points:pts(f.front), fill:'#F6CBBE'});
+  g.appendChild(top); g.appendChild(frontBase); g.appendChild(front); g.appendChild(right);
+  svg.appendChild(g);
+  stepGroups.push(g);
+  // dashed guide from the step's near-bottom corner down to baseline
+  const base = iso(ox, 0, oz+1.9);
+  const ground = iso(ox, -0.6, oz+1.9);
+  svg.appendChild(el('line',{class:'guide step-guide', x1:base.x,y1:base.y,x2:ground.x,y2:ground.y}));
+}
+// soft contact shadow under the staircase
+const stairShadow = el('ellipse',{cx:140, cy:440, rx:150, ry:16, fill:'#B23B21', opacity:0.14, filter:'url(#groundBlur)'});
+svg.insertBefore(stairShadow, stepGroups[0]);
+
+// brand arrow: true 3-face extrusion (front / stippled side / dark back), not a flat shadow trick
+const arrowPts = [[10,41],[65,41],[65,32],[100,50],[65,68],[65,59],[10,59]];
+const arrowLocal = 'M' + arrowPts.map(p=>p.join(',')).join(' L') + ' Z';
+const edx = 11, edy = 11;
+const arrowBase = el('g',{transform:'translate(46,54) rotate(-48 55 50) scale(1.3)'});
+const arrowG = el('g',{id:'arrowG'});
+
+// back face (darkest, fully offset copy)
+arrowG.appendChild(el('path',{class:'arrow-shadow', d:arrowLocal, transform:`translate(${edx},${edy})`}));
+// side walls: one stippled quad per edge, connecting front path to back copy
+for(let i=0;i<arrowPts.length;i++){
+  const a0 = arrowPts[i], a1 = arrowPts[(i+1)%arrowPts.length];
+  const quad = [a0, a1, [a1[0]+edx,a1[1]+edy], [a0[0]+edx,a0[1]+edy]];
+  const base = quad.map(p=>p.join(',')).join(' ');
+  arrowG.appendChild(el('polygon',{class:'arrow-side-base', points:base}));
+  arrowG.appendChild(el('polygon',{class:'arrow-side', points:base}));
+}
+// front face (lit, on top)
+arrowG.appendChild(el('path',{class:'arrow-main', d:arrowLocal}));
+arrowBase.appendChild(arrowG);
+svg.appendChild(arrowBase);
+
+// ground it: guide line + contact shadow from the arrow down toward the staircase
+svg.appendChild(el('ellipse',{cx:95, cy:205, rx:46, ry:10, fill:'#B23B21', opacity:0.1, filter:'url(#groundBlur)'}));
+svg.appendChild(el('line',{class:'guide arrow-guide', x1:95, y1:195, x2:70, y2:245}));
+
+/* ---- draw-in animation ---- */
+function perimeter(node){ try{ return node.getTotalLength?.() ?? 0; }catch(e){ return 0; } }
+function prepDraw(poly, len){
+  poly.style.strokeDasharray = len; poly.style.strokeDashoffset = len; poly.style.fillOpacity = 0;
+  poly.style.transition = 'none';
+}
+function runReveal(){
+  document.querySelectorAll('.rise').forEach(e=>e.classList.remove('in'));
+  void document.body.offsetWidth;
+  requestAnimationFrame(()=>document.querySelectorAll('.rise').forEach(e=>e.classList.add('in')));
+
+  stepGroups.forEach((g,i)=>{
+    const polys = g.querySelectorAll('polygon');
+    polys.forEach(p=>{
+      const len = p.getTotalLength ? p.getTotalLength() : 300;
+      p.style.transition='none';
+      p.style.strokeDasharray=len; p.style.strokeDashoffset=len;
+      if(p===polys[2] || p===polys[3]) p.style.opacity=0; // stipple + right face fade in after outline
+    });
+  });
+  document.querySelectorAll('.step-guide').forEach(l=>{ l.style.strokeDasharray='4 5'; l.style.opacity=0; });
+  arrowG.style.transition='none';
+  arrowG.style.opacity = 0; arrowG.style.transform = 'translateY(10px)';
+
+  requestAnimationFrame(()=>{
+    stepGroups.forEach((g,i)=>{
+      const base = 260 + i*160;
+      const polys = g.querySelectorAll('polygon');
+      polys.forEach((p,pi)=>{
+        p.style.transition = `stroke-dashoffset 360ms var(--d-ease,cubic-bezier(.22,1,.36,1)) ${base}ms, fill-opacity 300ms ease ${base+180}ms, opacity 300ms ease ${base+180}ms`;
+        p.style.strokeDashoffset = 0; p.style.fillOpacity = (p.getAttribute('fill')==='url(#stipple)')? 1 : 1;
+        if(pi===2||pi===3) p.style.opacity = 1;
+      });
+    });
+    document.querySelectorAll('.step-guide').forEach((l,i)=>{
+      l.style.transition = `opacity 240ms ease ${680+i*40}ms`;
+      l.style.opacity = 0.9;
+    });
+    arrowG.style.transition = 'opacity 380ms cubic-bezier(.22,1,.36,1) 760ms, transform 380ms cubic-bezier(.22,1,.36,1) 760ms';
+    arrowG.style.opacity = 1;
+    arrowG.style.transform = 'translateY(0)';
+  });
+
+  const statEl = document.getElementById('statVal');
+  let start=null, dur=600, target=10;
+  statEl.textContent='0';
+  function step(ts){ if(!start)start=ts; const p=Math.min(1,(ts-start)/dur); statEl.textContent='+'+Math.round(p*target); if(p<1) requestAnimationFrame(step); else statEl.textContent='+10'; }
+  setTimeout(()=>requestAnimationFrame(step), 900);
+}
+document.getElementById('replayBtn').addEventListener('click', runReveal);
+document.getElementById('rmToggle').addEventListener('change',(e)=>{
+  document.body.classList.toggle('reduced', e.target.checked);
+  runReveal();
+});
+window.addEventListener('load', ()=> setTimeout(runReveal, 50));
+</script>
+</body>
+</html>

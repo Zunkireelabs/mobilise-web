@@ -1,0 +1,19 @@
+node_modules
+dist
+.astro
+pnpm-lock.yaml
+
+# Pre-existing static prototype files, not part of the Astro project
+index.html
+index2.html
+about.html
+services.html
+assets/
+assets2/
+css/
+undefined/
+brand-colors.md
+mobilise-website-content.md
+product-context.md
+.claude/
+.mcp.json
