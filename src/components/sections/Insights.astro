@@ -1,0 +1,271 @@
+---
+// Migrated from src/data/section-insights.html (raw HTML via RawSection)
+// to a real Astro component: the 4 posts collapsed into a typed data
+// array + a loop instead of 4 hand-copied <li> blocks. Matching CSS moved
+// here (scoped) from reference-index.css. Same pattern as previous
+// migrations: shared utility classes (.section, .rails, .column,
+// .text/.tone/.weight, .eyebrow) keep their original data-astro-cid-*
+// attribute; this component's own .latest* classes use Astro's real
+// auto-scoping.
+//
+// The drag-to-scroll reel (data-reel/data-reel-track/data-reel-thumb) has
+// no JS initializer anywhere in the project — confirmed inert on the live
+// site today (the thumb's inline-size/transform are a static snapshot,
+// not scroll-linked). Kept as-is rather than wiring up new behavior.
+interface Post {
+  href: string;
+  cover: string;
+  title: string;
+}
+
+const posts: Post[] = [
+  {
+    href: '/blog/the-death-of-curiosity-in-marketing',
+    cover: '/images/assets_images_newsroom-cover-1.webp',
+    title: 'The Death of Curiosity in Marketing',
+  },
+  {
+    href: '/blog/beyond-four-day-week',
+    cover: '/images/assets_images_newsroom-cover-2.webp',
+    title: 'Beyond the Four-Day Week: Why Flexibility Matters',
+  },
+  {
+    href: '/blog/dark-social-attribution',
+    cover: '/images/assets_images_newsroom-cover-3.webp',
+    title: 'Dark Social: The Blind Spot in Marketing Attribution',
+  },
+  {
+    href: '/blog/ai-influencers-brand-marketing',
+    cover: '/images/assets_images_newsroom-cover-4.webp',
+    title: 'AI Influencers: Transforming Brand Marketing',
+  },
+];
+---
+
+<section
+  aria-label="See the latest from MOBILISE"
+  class="section section--page-secondary section--rhythm-none"
+  data-astro-cid-pi6vcj26
+  data-section="latest-from-thrad"
+  id="insights"
+>
+  <div class="latest">
+    <div aria-hidden="true" class="rails rails--ground" data-astro-cid-75uivqud></div>
+    <div class="column latest__heading" data-astro-cid-5lyysmr3 data-motion-rise>
+      <p class="eyebrow eyebrow--accent" data-astro-cid-zedojbgr>
+        <span aria-hidden="true" class="eyebrow__mark" data-astro-cid-zedojbgr></span>What's happening
+      </p>
+      <h2 class="text text--h2 tone--heading weight--300 text--balance" data-astro-cid-io6xibmp>
+        See the latest from MOBILISE
+      </h2>
+    </div>
+
+    <div class="latest__reel" data-motion-rise data-reel>
+      <ul class="latest__track" data-reel-track>
+        {
+          posts.map((post) => (
+            <li class="latest__slide">
+              <a class="latest__card" draggable="false" href={post.href}>
+                <img
+                  alt=""
+                  class="latest__cover"
+                  decoding="async"
+                  draggable="false"
+                  height="552"
+                  loading="lazy"
+                  src={post.cover}
+                  width="736"
+                />
+                <span aria-hidden="true" class="latest__scrim" />
+                <span class="latest__foot">
+                  <span class="text text--h3 tone--inherit weight--300 latest__title" data-astro-cid-io6xibmp>
+                    {post.title}
+                  </span>
+                  <span aria-hidden="true" class="latest__more">
+                    <svg aria-hidden="true" class="icon" fill="currentColor" focusable="false" height="16" viewBox="0 0 256 256" width="16" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z" />
+                    </svg>
+                  </span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="column latest__bar" data-astro-cid-5lyysmr3>
+      <span class="latest__hint">
+        <svg aria-hidden="true" class="icon" fill="currentColor" focusable="false" height="20" viewBox="0 0 256 256" width="20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M213.66,181.66l-32,32a8,8,0,0,1-11.32-11.32L188.69,184H48a8,8,0,0,1,0-16H188.69l-18.35-18.34a8,8,0,0,1,11.32-11.32l32,32A8,8,0,0,1,213.66,181.66Zm-139.32-64a8,8,0,0,0,11.32-11.32L67.31,88H208a8,8,0,0,0,0-16H67.31L85.66,53.66A8,8,0,0,0,74.34,42.34l-32,32a8,8,0,0,0,0,11.32Z" />
+        </svg>
+        <span class="text text--caption tone--muted" data-astro-cid-io6xibmp>Drag to explore</span>
+      </span>
+      <span aria-hidden="true" class="latest__progress">
+        <span class="latest__thumb" data-reel-thumb style={{ inlineSize: '21.815%', transform: 'translateX(0%)' }} />
+      </span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .latest {
+    padding-block: var(--space-32) var(--space-20);
+    row-gap: var(--space-16);
+    display: grid;
+    position: relative;
+    overflow: clip;
+  }
+  .latest > :global(.latest__heading) {
+    justify-items: center;
+    row-gap: var(--space-3);
+    text-align: center;
+    display: grid;
+    position: relative;
+  }
+  .latest__reel {
+    --reel-inset: var(--space-6);
+    --reel-gap: var(--space-6);
+    --reel-count: 3;
+    --reel-peek: var(--space-16);
+    cursor: grab;
+    inline-size: 100%;
+    max-inline-size: var(--rail-measure);
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    user-select: none;
+    margin-inline: auto;
+    position: relative;
+    overflow-x: auto;
+    container-type: inline-size;
+  }
+  .latest__reel::-webkit-scrollbar {
+    display: none;
+  }
+  .latest__reel[data-dragging] {
+    cursor: grabbing;
+  }
+  .latest__track {
+    gap: var(--reel-gap);
+    inline-size: max-content;
+    padding: 0 var(--reel-inset);
+    margin: 0;
+    list-style: none;
+    display: flex;
+  }
+  .latest__card {
+    aspect-ratio: 4 / 3;
+    background: var(--color-ember);
+    border-radius: var(--radius-md);
+    color: var(--white);
+    inline-size: calc((100cqi - var(--reel-inset) - var(--reel-count) * var(--reel-gap) - var(--reel-peek)) / var(--reel-count));
+    min-block-size: 260px;
+    text-decoration: none;
+    display: block;
+    position: relative;
+    overflow: clip;
+  }
+  .latest__cover {
+    object-fit: cover;
+    block-size: 100%;
+    inline-size: 100%;
+    transition: transform var(--duration-slow) var(--ease);
+    display: block;
+  }
+  .latest__card:hover .latest__cover {
+    transform: scale(1.03);
+  }
+  .latest__scrim {
+    background: linear-gradient(to top, var(--color-scrim-strong), #00000040 50%, transparent);
+    block-size: 180px;
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline: 0;
+  }
+  .latest__foot {
+    align-items: flex-end;
+    gap: var(--space-4);
+    inset-block-end: var(--space-5);
+    inset-inline: var(--space-5);
+    justify-content: space-between;
+    display: flex;
+    position: absolute;
+  }
+  .latest :global(.latest__title) {
+    letter-spacing: -0.02em;
+    flex: 0 280px;
+  }
+  .latest__more {
+    backdrop-filter: blur(8px);
+    block-size: 32px;
+    inline-size: 32px;
+    transition: background-color var(--duration-base) var(--ease);
+    background: #fff3;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
+  }
+  .latest__card:hover .latest__more {
+    background: #ffffff52;
+  }
+  .latest > :global(.latest__bar) {
+    block-size: var(--space-6);
+    padding-inline: calc(var(--gutter) + var(--space-6));
+    justify-content: space-between;
+    align-items: center;
+    margin-block-start: calc(-1 * var(--space-8));
+    display: flex;
+    position: relative;
+  }
+  .latest__hint {
+    block-size: var(--space-5);
+    color: var(--color-muted);
+    align-items: center;
+    gap: 10px;
+    display: inline-flex;
+  }
+  .latest__progress {
+    background: var(--color-border);
+    block-size: 2px;
+    inline-size: 96px;
+    display: flex;
+  }
+  .latest__thumb {
+    background: var(--color-muted);
+    block-size: 2px;
+    inline-size: 50%;
+    transition: transform var(--duration-fast) linear;
+  }
+  @media (width <= 1199px) {
+    .latest {
+      padding-block: var(--space-24);
+    }
+    .latest__reel {
+      --reel-count: 2;
+    }
+  }
+  @media (width <= 809px) {
+    .latest {
+      padding-block: var(--space-16);
+      row-gap: var(--space-10);
+    }
+    .latest__reel {
+      --reel-inset: 0px;
+      --reel-gap: var(--space-3);
+      --reel-peek: var(--space-4);
+    }
+    .latest > :global(.latest__bar) {
+      padding-inline: var(--gutter);
+    }
+    .latest__card {
+      aspect-ratio: auto;
+      block-size: 300px;
+    }
+  }
+  @media (width <= 609px) {
+    .latest__reel {
+      --reel-count: 1;
+    }
+  }
+</style>
