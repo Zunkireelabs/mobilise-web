@@ -1,0 +1,98 @@
+---
+// Migrated from src/data/section-close.html (raw HTML via RawSection) to
+// a real Astro component. Same pattern as previous migrations: shared
+// utility classes (.section, .rails, .column, .text/.tone/.weight,
+// .button*, .star-mark) keep their original data-astro-cid-* attribute to
+// match the global reference-*.css rules; this component's own
+// .close/.close__*  classes use Astro's real auto-scoping.
+//
+// The canvas (#dot-terrain-footer, class="dot-mountain") has no JS
+// initializer anywhere in the project (checked: nothing references
+// "dot-mountain"/"dot-terrain" in src/scripts or elsewhere) — it's inert
+// on the live site today. Kept as-is rather than wiring up new behavior,
+// since this migration preserves current behavior, not adds to it.
+---
+
+<section
+  aria-label="Ready to make B2B interesting?"
+  class="section section--page-secondary section--rhythm-none"
+  data-astro-cid-pi6vcj26
+  data-section="close"
+  id="close"
+>
+  <div class="close">
+    <div aria-hidden="true" class="rails rails--ground rails--rule" data-astro-cid-75uivqud></div>
+    <div aria-hidden="true" class="close__art">
+      <canvas aria-hidden="true" class="dot-mountain" id="dot-terrain-footer"></canvas>
+    </div>
+    <div class="column close__inner" data-astro-cid-5lyysmr3>
+      <div class="close__copy" data-motion-rise>
+        <h2 class="text text--display tone--heading weight--300 text--balance" data-astro-cid-io6xibmp>
+          Ready to make<br />B2B interesting?
+        </h2>
+        <a class="button button--secondary button--lg close__action" data-astro-cid-j6ocf6pu href="/contact">
+          Let's Talk
+          <svg
+            aria-hidden="true"
+            class="star-mark button__mark"
+            data-astro-cid-46jskub6
+            fill="none"
+            focusable="false"
+            height="16"
+            viewBox="0 0 20.475 20.474"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6.724 11.631C7.878 11.67 8.805 12.597 8.843 13.751L9.067 20.474L11.407 20.474L11.631 13.751C11.67 12.597 12.597 11.67 13.751 11.631L20.475 11.407L20.475 9.067L13.751 8.843C12.597 8.805 11.67 7.878 11.631 6.724L11.407 0L9.067 0L8.843 6.724C8.805 7.878 7.878 8.805 6.724 8.843L0 9.067L0 11.407L6.724 11.631Z"
+              fill="currentColor"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .close {
+    position: relative;
+  }
+  .close > .close__inner {
+    position: relative;
+  }
+  .close__art {
+    --site-header-height: 0px;
+    max-inline-size: var(--rail-measure);
+    pointer-events: none;
+    margin-inline: auto;
+    position: absolute;
+    inset: 0;
+  }
+  .close__art :global(.dot-mountain) {
+    block-size: 100%;
+    inline-size: 100%;
+    display: block;
+  }
+  .close__copy {
+    padding-block: var(--space-section-lg);
+    justify-items: start;
+    row-gap: var(--space-5);
+    padding-inline-start: var(--space-6);
+    display: grid;
+  }
+  .close__copy .close__action {
+    margin-block-start: var(--space-4);
+  }
+  @media (width <= 809px) {
+    .close__art {
+      block-size: 240px;
+      position: relative;
+      mask-image: linear-gradient(#000 55%, transparent);
+    }
+    .close__copy {
+      padding-block: var(--space-6) var(--space-16);
+      padding-inline: var(--space-5);
+    }
+  }
+</style>
