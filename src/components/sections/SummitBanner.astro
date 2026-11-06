@@ -1,0 +1,368 @@
+---
+// Migrated from src/data/section-summit-banner.html (raw HTML via
+// RawSection) to a real Astro component: the 3 slides collapsed into a
+// typed data array + a loop instead of 3 hand-copied blocks. Matching CSS
+// moved here (scoped) from reference-index.css — same pattern as
+// previous migrations: shared utility classes (.section, .rails,
+// .column, .text/.tone/.weight, .button*, .star-mark) keep their
+// original data-astro-cid-* attribute; this component's own .summit*
+// classes use Astro's real auto-scoping.
+//
+// The autoplay slider script is real, working behavior (unlike several
+// previous sections' dead markup) — ported as-is into this component's
+// own <script>, same spot it lived in the raw HTML.
+interface Slide {
+  slug: string;
+  href: string;
+  photo: string;
+  photoPosition: string;
+  photoPositionNarrow: string;
+  photoGround?: string;
+  title: string;
+  titleBreak?: boolean;
+  summary: string;
+  actionLabel: string;
+  dotLabel: string;
+}
+
+const slides: Slide[] = [
+  {
+    slug: 'inside',
+    href: '/inside',
+    photo: '/images/world-map-tech.jpg',
+    photoPosition: '50% 50%',
+    photoPositionNarrow: '50% 50%',
+    photoGround: 'rgb(19 42 51)',
+    title: 'Inside',
+    titleBreak: true,
+    summary: 'Culture, built on word-of-mouth and a decade of trust.',
+    actionLabel: 'Learn more',
+    dotLabel: 'Inside MOBILISE',
+  },
+  {
+    slug: 'ndtv',
+    href: '/resources/brand-safe-marketing-ai',
+    photo: '/images/summit-ai-abstract.png',
+    photoPosition: '50% 50%',
+    photoPositionNarrow: '50% 50%',
+    photoGround: 'rgb(230 232 238)',
+    title: 'Brand-safe marketing,',
+    titleBreak: true,
+    summary: 'Our take on marketing governance as AI reshapes the funnel.',
+    actionLabel: 'Read the whitepaper',
+    dotLabel: 'Brand-safe marketing, in the AI era',
+  },
+  {
+    slug: 'office',
+    href: '/careers',
+    photo: '/images/summit-team-office.jpg',
+    photoPosition: '50% 42%',
+    photoPositionNarrow: '50% 38%',
+    title: 'Recognition',
+    titleBreak: true,
+    summary: 'Peer-driven, client-backed feedback — real rewards, not symbolic ones.',
+    actionLabel: 'See life inside',
+    dotLabel: 'Recognition that shines',
+  },
+];
+
+const titleEnd: Record<string, string> = {
+  inside: 'MOBILISE',
+  ndtv: 'in the AI era',
+  office: 'that shines',
+};
+---
+
+<section
+  aria-label="Sponsored Intelligence Summit"
+  class="section section--page-secondary section--rhythm-none"
+  data-astro-cid-pi6vcj26
+  data-section="summit-banner"
+  id="summit-banner"
+>
+  <div class="summit">
+    <div aria-hidden="true" class="rails rails--ground" data-astro-cid-75uivqud></div>
+    <div class="column summit__column" data-astro-cid-5lyysmr3>
+      <div class="summit__banner" data-motion-rise data-offscreen data-summit-slider style={{ borderRadius: 0 }}>
+        {
+          slides.map((s, i) => (
+            <a
+              class="summit__slide"
+              data-active={i === 0 ? true : undefined}
+              data-slide={s.slug}
+              href={s.href}
+              style={{
+                '--photo-position': s.photoPosition,
+                '--photo-position-narrow': s.photoPositionNarrow,
+                ...(s.photoGround ? { '--photo-ground': s.photoGround } : {}),
+              }}
+            >
+              <img alt="" class="summit__photo" decoding="async" height="1190" loading="lazy" src={s.photo} width="2048" />
+              <span aria-hidden="true" class="summit__wash" />
+              <span class="summit__lede">
+                <h2 class="text text--display tone--on-canvas weight--300 summit__title" data-astro-cid-io6xibmp>
+                  {s.title}
+                  {s.titleBreak && <br />}
+                  {titleEnd[s.slug]}
+                </h2>
+                <span class="text text--body-lg tone--on-canvas-muted summit__summary" data-astro-cid-io6xibmp>
+                  {s.summary}
+                </span>
+                <span class="button button--tertiary button--md button--static summit__action" data-astro-cid-j6ocf6pu>
+                  {s.actionLabel}
+                  <svg aria-hidden="true" class="star-mark button__mark" data-astro-cid-46jskub6 fill="none" focusable="false" height="16" viewBox="0 0 20.475 20.474" width="16" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.724 11.631C7.878 11.67 8.805 12.597 8.843 13.751L9.067 20.474L11.407 20.474L11.631 13.751C11.67 12.597 12.597 11.67 13.751 11.631L20.475 11.407L20.475 9.067L13.751 8.843C12.597 8.805 11.67 7.878 11.631 6.724L11.407 0L9.067 0L8.843 6.724C8.805 7.878 7.878 8.805 6.724 8.843L0 9.067L0 11.407L6.724 11.631Z" fill="currentColor" />
+                  </svg>
+                </span>
+              </span>
+            </a>
+          ))
+        }
+        <div aria-label="Events" class="summit__dots" role="group">
+          {
+            slides.map((s, i) => (
+              <button aria-current={i === 0 ? 'true' : undefined} aria-label={s.dotLabel} class="summit__dot" data-slide-to={s.slug} type="button" />
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var containerEl = document.querySelector('#summit-banner [data-summit-slider]');
+    if (!containerEl) return;
+    var container = containerEl;
+    var slides = Array.prototype.slice.call(container.querySelectorAll(':scope > .summit__slide'));
+    var dots = Array.prototype.slice.call(container.querySelectorAll('.summit__dot'));
+    if (!slides.length || !dots.length) return;
+
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function setActive(key: string) {
+      slides.forEach(function (slide: HTMLElement) {
+        if (slide.dataset.slide === key) slide.setAttribute('data-active', '');
+        else slide.removeAttribute('data-active');
+      });
+      dots.forEach(function (dot: HTMLElement) {
+        var match = dot.dataset.slideTo === key;
+        if (match) dot.setAttribute('aria-current', 'true');
+        else dot.removeAttribute('aria-current');
+      });
+    }
+
+    function currentKey() {
+      var active = slides.find(function (s: HTMLElement) {
+        return s.hasAttribute('data-active');
+      });
+      return active ? active.dataset.slide : slides[0].dataset.slide;
+    }
+
+    function step() {
+      var index = slides.findIndex(function (s: HTMLElement) {
+        return s.dataset.slide === currentKey();
+      });
+      var next = slides[(index + 1) % slides.length];
+      setActive(next.dataset.slide);
+    }
+
+    var AUTOPLAY_DELAY = 6000;
+    var timer: number | null = null;
+
+    function start() {
+      if (reduceMotion) return;
+      stop();
+      timer = window.setInterval(step, AUTOPLAY_DELAY);
+    }
+
+    function stop() {
+      if (timer) {
+        window.clearInterval(timer);
+        timer = null;
+      }
+    }
+
+    dots.forEach(function (dot: HTMLElement) {
+      dot.addEventListener('click', function (event) {
+        event.preventDefault();
+        setActive(dot.dataset.slideTo as string);
+        start();
+      });
+    });
+
+    ['pointerenter', 'focusin'].forEach(function (evt) {
+      container.addEventListener(evt, stop);
+    });
+    ['pointerleave', 'focusout'].forEach(function (evt) {
+      container.addEventListener(evt, start);
+    });
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) stop();
+      else start();
+    });
+
+    start();
+  })();
+</script>
+
+<style>
+  .summit {
+    --summit-interval: 5s;
+    padding-block-start: var(--space-24);
+    position: relative;
+    overflow: clip;
+  }
+  .summit > :global(.summit__column) {
+    padding-inline: calc(var(--gutter) + var(--space-6));
+    position: relative;
+  }
+  .summit__banner {
+    aspect-ratio: 1152 / 432;
+    border-radius: var(--radius-md);
+    color: var(--color-on-canvas);
+    position: relative;
+    overflow: clip;
+  }
+  .summit__slide {
+    background: var(--photo-ground, none);
+    color: inherit;
+    opacity: 0;
+    transition:
+      opacity var(--duration-fade) var(--ease-fade),
+      visibility 0s var(--duration-fade);
+    visibility: hidden;
+    text-decoration: none;
+    display: block;
+    position: absolute;
+    inset: 0;
+  }
+  .summit__slide[data-active] {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  .summit__photo {
+    block-size: 100%;
+    inline-size: var(--photo-width, 100%);
+    mask-image: var(--photo-mask, none);
+    object-fit: cover;
+    object-position: var(--photo-position);
+    transition: transform var(--duration-slow) var(--ease);
+    margin-inline-start: var(--photo-shift, 0);
+    display: block;
+  }
+  .summit__slide:hover .summit__photo {
+    transform: scale(1.02);
+  }
+  .summit__wash {
+    background:
+      linear-gradient(90deg, #000000b3, #0006 34%, #0000 62%),
+      linear-gradient(#0000 45%, #000000a6),
+      radial-gradient(120% 90% at 50% 60%, #0000 55%, #00000073 100%);
+    position: absolute;
+    inset: 0;
+  }
+  .summit__lede {
+    align-items: flex-start;
+    gap: var(--space-4);
+    flex-direction: column;
+    max-inline-size: 36rem;
+    display: flex;
+    position: absolute;
+    inset-block-end: var(--space-10);
+    inset-inline-start: var(--space-10);
+  }
+  .summit :global(.summit__title) {
+    letter-spacing: -0.055em;
+  }
+  .summit :global(.summit__action) {
+    margin-block-start: var(--space-3);
+  }
+  .summit__dots {
+    gap: var(--space-2);
+    display: flex;
+    position: absolute;
+    inset-block-end: var(--space-10);
+    inset-inline-end: var(--space-10);
+  }
+  .summit__dot {
+    cursor: pointer;
+    background: none;
+    border: 0;
+    block-size: 44px;
+    inline-size: 44px;
+    padding: 0;
+    position: relative;
+  }
+  .summit__dot::before,
+  .summit__dot::after {
+    content: '';
+    block-size: 2px;
+    position: absolute;
+    inset: 50% 0 auto;
+    transform: translateY(-50%);
+  }
+  .summit__dot::before {
+    background: #ffffff61;
+  }
+  .summit__dot::after {
+    background: var(--color-on-canvas);
+    transform-origin: 0;
+    transform: translateY(-50%) scaleX(0);
+  }
+  .summit__dot[aria-current]::after {
+    animation: summit-fill var(--summit-interval) linear forwards;
+  }
+  .summit__banner:focus-within .summit__dot::after,
+  .summit__banner[data-offscreen] .summit__dot::after {
+    animation-play-state: paused;
+  }
+  @keyframes summit-fill {
+    to {
+      transform: translateY(-50%) scaleX(1);
+    }
+  }
+  @media (width <= 1199px) {
+    .summit {
+      padding-block-start: var(--space-20);
+    }
+  }
+  @media (width <= 809px) {
+    .summit {
+      padding-block-start: var(--space-16);
+    }
+    .summit__banner {
+      aspect-ratio: 4 / 3;
+    }
+    .summit__wash {
+      background: linear-gradient(#0000 30%, #00000080 60%, #000000c7);
+    }
+    .summit__lede {
+      gap: var(--space-3);
+      inset: auto var(--space-5) var(--space-16) var(--space-5);
+      max-inline-size: none;
+    }
+    .summit :global(.summit__action) {
+      display: none;
+    }
+    .summit__dots {
+      inset: auto auto var(--space-2) var(--space-5);
+    }
+    .summit__photo {
+      object-position: var(--photo-position-narrow);
+      inline-size: 100%;
+      margin-inline-start: 0;
+      mask-image: none;
+    }
+  }
+  @media (width <= 609px) {
+    .summit__banner {
+      aspect-ratio: 4 / 5;
+    }
+    .summit :global(.summit__summary) {
+      display: none;
+    }
+  }
+</style>
