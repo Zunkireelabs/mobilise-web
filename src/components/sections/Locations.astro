@@ -1,0 +1,62 @@
+---
+// Migrated from src/data/section-locations.html (raw HTML via RawSection)
+// to a real Astro component: the 4 studio entries collapsed into a typed
+// data array + a loop instead of 4 hand-copied <li> blocks. Entirely
+// composed of shared utility classes (.section, .column,
+// .wwd__heading/.wwd__step, .eyebrow, .text/.tone/.weight, .panel*) — no
+// component-local <style> needed, same pattern as About.astro.
+interface Studio {
+  city: string;
+  address: string;
+}
+
+const studios: Studio[] = [
+  { city: 'Seattle, USA', address: '150th Court, NE, Redmond, Seattle WA 98052' },
+  { city: 'Dubai, UAE', address: 'Building A1, DDP, Silicon Oasis, Dubai, UAE' },
+  { city: 'Bangalore, India', address: 'tūvi pixel, 1, Assaye Rd., Bangalore 560042' },
+  { city: 'Singapore', address: 'International Plaza, 10, Anson Rd., Singapore 079903' },
+];
+---
+
+<section
+  aria-label="Studio locations"
+  class="section section--page-secondary section--rhythm-none"
+  data-astro-cid-pi6vcj26
+  data-section="locations"
+  id="locations"
+>
+  <div class="column" data-astro-cid-5lyysmr3 data-astro-cid-7xbdjwkz>
+    <div class="wwd__heading" data-astro-cid-7xbdjwkz>
+      <p class="eyebrow eyebrow--accent" data-astro-cid-zedojbgr>
+        <span aria-hidden="true" class="eyebrow__mark" data-astro-cid-zedojbgr></span>Locations
+      </p>
+      <h2 class="text text--h2 tone--heading weight--300" data-astro-cid-io6xibmp data-astro-cid-7xbdjwkz>
+        Four studios, one team
+      </h2>
+    </div>
+    <ol
+      class="panel panel--ground panel--edges-block"
+      data-astro-cid-7xbdjwkz
+      data-astro-cid-nsy5nupg
+      style={{ '--panel-columns': studios.length }}
+    >
+      <div aria-hidden="true" class="panel__guides" data-astro-cid-nsy5nupg>
+        {studios.slice(1).map((_, i) => <span class="panel__guide" data-astro-cid-nsy5nupg style={{ gridColumn: i + 2 }} />)}
+      </div>
+      <div class="panel__grid" data-astro-cid-nsy5nupg>
+        {
+          studios.map((s) => (
+            <li class="wwd__step" data-astro-cid-7xbdjwkz>
+              <p class="text text--body tone--inherit weight--500" data-astro-cid-io6xibmp data-astro-cid-7xbdjwkz>
+                {s.city}
+              </p>
+              <p class="text text--caption tone--inherit" data-astro-cid-io6xibmp data-astro-cid-7xbdjwkz>
+                {s.address}
+              </p>
+            </li>
+          ))
+        }
+      </div>
+    </ol>
+  </div>
+</section>
