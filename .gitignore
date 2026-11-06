@@ -21,6 +21,9 @@ node_modules/
 # Claude Code local settings
 .claude/settings.local.json
 
+# Claude Code skills (reinstallable plugin content, not project source)
+.claude/skills/
+
 # logs
 *.log
 npm-debug.log*

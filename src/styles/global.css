@@ -354,6 +354,136 @@
 }
 
 /*
+  Industries accordion (.proof__accordion) — replaces the numbered "flow"
+  step list (which drove an unfinished auto-advancing stage indicator that
+  was never wired to any JS or screenshot). Single-open disclosure pattern:
+  native <details name="industries-row"> gives exclusive-group accordion
+  behavior with zero JS, the open row gets the project's existing dark-panel
+  pair (--ember-800 background, --accent-400 label/icon) and the Learn More
+  CTA reuses the site's standard arrow-icon link. Interaction thesis adapted
+  from a reference accordion screenshot per DESIGN_ORCHESTRATOR.md's
+  reference principle — the pattern (one open row, icon + tracked label,
+  +/× glyph swap) is kept, the reference's literal bright-green-on-near-black
+  palette is not; square corners/hairline dividers reuse the house look
+  already used by .case.
+*/
+.proof__accordion {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.proof__row {
+  margin-inline: calc(-1 * var(--space-5, 1.25rem));
+  border-block-end: 1px solid var(--color-border);
+}
+.proof__row:last-child {
+  border-block-end: 0;
+}
+.proof__row[open] {
+  border-block-end: 0;
+  background: var(--ember-800, #0b4247);
+}
+.proof__row-trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4, 1rem);
+  padding: 1.5rem var(--space-5, 1.25rem);
+  cursor: pointer;
+  list-style: none;
+  color: var(--color-heading);
+  transition: color var(--duration-base, 0.2s) var(--ease, ease);
+}
+.proof__row-trigger::-webkit-details-marker,
+.proof__row-trigger::marker {
+  display: none;
+}
+.proof__row[open] .proof__row-trigger {
+  color: var(--white, #fff);
+}
+.proof__row-icon {
+  flex: none;
+  display: flex;
+  color: var(--color-muted);
+  transition: color var(--duration-base, 0.2s) var(--ease, ease);
+}
+.proof__row[open] .proof__row-icon {
+  color: var(--accent-400, #34a0a2);
+}
+.proof__row-label {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-mono, 'Martian Mono', 'MartianMono', Arial, sans-serif);
+  font-weight: 500;
+  font-size: var(--text-body, 1rem);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.proof__row[open] .proof__row-label {
+  color: var(--accent-400, #34a0a2);
+}
+.proof__row-glyph {
+  flex: none;
+  display: flex;
+  transition: transform var(--duration-base, 0.2s) var(--ease, ease);
+}
+.proof__row[open] .proof__row-glyph {
+  transform: rotate(45deg);
+}
+.proof__row-fold {
+  padding: 0 var(--space-5, 1.25rem) var(--space-6, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4, 1rem);
+  color: var(--white, #fff);
+  animation: proof-row-reveal var(--duration-slow, 0.3s) var(--ease, ease);
+}
+.proof__row-body {
+  margin: 0;
+  font-size: var(--text-body, 1rem);
+  line-height: 1.5;
+  opacity: 0.85;
+  max-width: 48ch;
+}
+.proof__row-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+  font-weight: 600;
+  color: var(--white, #fff);
+  text-decoration: none;
+  border-bottom: 1px dashed currentColor;
+  padding-bottom: 2px;
+}
+.proof__row-cta:hover {
+  color: var(--accent-400, #34a0a2);
+}
+.proof__row-cta .icon {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+@keyframes proof-row-reveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .proof__row-trigger,
+  .proof__row-icon,
+  .proof__row-glyph {
+    transition: none;
+  }
+  .proof__row-fold {
+    animation: none;
+  }
+}
+
+/*
   "Who we are" intro (.wwa) — a small 3D brand-arrow mark sits next to the
   eyebrow/heading row, the lede spans the full column width below. Arrow
   technique (true 3-face isometric extrusion) adapted from the project's own
@@ -606,4 +736,103 @@
 }
 .wwd__stat-value.weight--300 {
   font-weight: 700;
+}
+
+/*
+  The 4-step process row ("Uncovers the market..." -> "Measures what's
+  working...") used to be a flat numbered list with no visual weight of
+  its own. Technique adapted from buildops.com's "What makes BuildOps
+  different" split panel (light intro half + dark bordered-row half,
+  a notch cut where the two halves meet) -- MOBILISE's teal tint and
+  canvas tone instead of their sage/green, numbered badges kept (not
+  icons) since that's this section's own established step-index
+  language, and the intro CTA reuses the site's existing "Let's Talk" ->
+  /contact pattern rather than inventing a second, unlinked destination.
+*/
+.wwd__steps {
+  margin-block-start: var(--space-20, 5rem);
+  padding-block-start: 0;
+  padding-inline: var(--space-6, 1.5rem);
+}
+.wwd__steps-split {
+  --notch: 28px;
+  grid-template-columns: minmax(260px, 38%) 1fr;
+  clip-path: polygon(var(--notch) 0, 100% 0, 100% 100%, 0 100%, 0 var(--notch));
+  display: grid;
+}
+.wwd__steps-intro {
+  background: var(--color-accent-surface, #e6f1ef);
+  padding: var(--space-10, 2.5rem) var(--space-8, 2rem);
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-4, 1rem);
+  display: flex;
+}
+.wwd__steps-intro .eyebrow {
+  margin: 0;
+}
+.wwd__steps-heading {
+  max-width: 14ch;
+  margin: 0;
+}
+.wwd__steps-lede {
+  max-width: 32ch;
+  margin: 0;
+}
+.wwd__steps-cta {
+  margin-block-start: var(--space-2, 0.5rem);
+}
+.wwd__steps-rows {
+  background: var(--color-canvas, #0b4247);
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+}
+.wwd__steps-rows .wwd__step {
+  border-block-start: 1px solid var(--color-canvas-line, #ffffff1f);
+  padding: var(--space-6, 1.5rem) var(--space-8, 2rem);
+  gap: var(--space-5, 1.25rem);
+  align-items: flex-start;
+  display: flex;
+}
+.wwd__steps-rows .wwd__step:first-child {
+  border-block-start: 0;
+}
+.wwd__steps-rows .wwd__badge {
+  background: none;
+  border: 1px solid var(--color-canvas-line-strong, #ffffff4d);
+  color: var(--color-accent-on-canvas, #34a0a2);
+  inline-size: 28px;
+  block-size: 28px;
+  flex: none;
+}
+.wwd__step-copy {
+  gap: var(--space-1, 0.25rem);
+  display: grid;
+}
+.wwd__step-copy .text--h3 {
+  margin: 0;
+}
+.wwd__step-copy .text--caption {
+  max-width: 48ch;
+  margin: 0;
+}
+@media (width<=809px) {
+  .wwd__steps {
+    margin-block-start: var(--space-16, 4rem);
+    padding-inline: var(--space-5, 1.25rem);
+  }
+  .wwd__steps-split {
+    --notch: 20px;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .wwd__steps-intro {
+    padding: var(--space-8, 2rem) var(--space-5, 1.25rem);
+  }
+  .wwd__steps-rows .wwd__step {
+    padding: var(--space-5, 1.25rem);
+  }
 }
